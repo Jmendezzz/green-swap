@@ -18,6 +18,6 @@ public class Product {
   private Double price;
   private Category category;
   private String urlImage;
-  private Condition useState;
+  private Condition condition;
   private LocalTime createdAt;
 }
