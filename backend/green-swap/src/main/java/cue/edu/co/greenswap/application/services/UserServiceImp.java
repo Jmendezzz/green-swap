@@ -8,6 +8,7 @@ import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.User;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

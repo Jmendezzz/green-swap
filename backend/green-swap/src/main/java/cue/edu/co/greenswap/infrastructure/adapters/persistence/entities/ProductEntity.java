@@ -1,15 +1,24 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
 import cue.edu.co.greenswap.domain.enums.Category;
-import cue.edu.co.greenswap.domain.enums.Condition;
-import cue.edu.co.greenswap.domain.models.User;
+import cue.edu.co.greenswap.domain.enums.Quality;
+import cue.edu.co.greenswap.domain.enums.Status;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalTime;
 
 @Entity
+@Table(name = "products")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ProductEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +29,14 @@ public class ProductEntity {
   private UserEntity owner;
   private String name;
   private String description;
-
   private Double price;
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Category category;
   private String urlImage;
-  @Enumerated
-  private Condition condition;
-
+  @Enumerated(EnumType.STRING)
+  private Quality quality;
+  @Enumerated(EnumType.STRING)
+  private Status status;
   @CreatedDate
   @Column(updatable = false, nullable = false)
   private LocalTime createdAt;
