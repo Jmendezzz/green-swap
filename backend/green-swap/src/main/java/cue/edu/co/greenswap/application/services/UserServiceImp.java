@@ -10,6 +10,8 @@ import cue.edu.co.greenswap.domain.models.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
@@ -24,5 +26,10 @@ public class UserServiceImp implements UserService {
     User userSaved =  repository.save(mapper.toDomain(user));
 
     return mapper.toDTO(userSaved);
+  }
+
+  @Override
+  public Optional<UserDTO> getByEmail(String email) {
+    return repository.findByEmail(email).map(mapper::toDTO);
   }
 }
