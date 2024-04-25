@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class UserRepositoryJpaAdapter implements UserRepository {
   private UserRepositoryJpa userRepository;
   @Override
-  public User create(User user) {
+  public User save(User user) {
     UserEntity userSaved = null; //TODO  userRepository.save(userMapper.toEntity(user));
     userRepository.save(null); //TODO userMapper.toDomain(userEntity)
     return null;

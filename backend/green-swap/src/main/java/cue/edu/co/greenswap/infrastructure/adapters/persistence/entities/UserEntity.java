@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalTime;
 
@@ -19,6 +20,6 @@ public class UserEntity {
   private String email;
   private String phoneNumber;
   private String password;
+  @CreatedDate
   private LocalTime createdAt;
-
 }
