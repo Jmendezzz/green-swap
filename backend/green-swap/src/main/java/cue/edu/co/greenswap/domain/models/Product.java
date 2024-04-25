@@ -1,7 +1,7 @@
 package cue.edu.co.greenswap.domain.models;
 
 import cue.edu.co.greenswap.domain.enums.Category;
-import cue.edu.co.greenswap.domain.enums.Condition;
+import cue.edu.co.greenswap.domain.enums.Quality;
 import cue.edu.co.greenswap.domain.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +20,6 @@ public class Product {
   private Category category;
   private Status status;
   private String urlImage;
-  private Condition condition;
+  private Quality quality;
   private LocalTime createdAt;
 }

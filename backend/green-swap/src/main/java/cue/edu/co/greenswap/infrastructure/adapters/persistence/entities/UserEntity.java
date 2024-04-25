@@ -1,15 +1,21 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalTime;
 
 @Entity
+@Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class UserEntity {
 
   @Id
@@ -18,6 +24,7 @@ public class UserEntity {
   private String firstName;
   private String lastName;
   private String email;
+  private String urlProfilePicture;
   private String phoneNumber;
   private String password;
   @CreatedDate
