@@ -27,8 +27,8 @@ public class SpringSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagement -> sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authorizeRequests -> {
-              authorizeRequests.requestMatchers("/auth/**").permitAll();
+            .authorizeRequests(authorizeRequests -> {
+              authorizeRequests.requestMatchers("/auth/*").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
             .addFilterBefore(new JwtTokenValidationFilter(jwtUtil), BasicAuthenticationFilter.class)

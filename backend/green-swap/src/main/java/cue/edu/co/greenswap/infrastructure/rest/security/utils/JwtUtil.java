@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,8 +28,9 @@ public class JwtUtil {
     String username = authentication.getName();
 
     return JWT.create()
-      .withSubject(username)
       .withIssuer(userGenerator)
+      .withSubject(username)
+      .withClaim("authorities", Collections.emptyList())
       .withIssuedAt(new Date(System.currentTimeMillis()))
       .withJWTId(UUID.randomUUID().toString())
       .withExpiresAt(new Date(System.currentTimeMillis() + expiration))

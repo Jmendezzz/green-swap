@@ -45,7 +45,7 @@ public class AuthService {
         Authentication authentication = authenticate(email, password);
         String token = jwtUtil.generateToken(authentication);
 
-        return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Logged in", token);
+        return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Signed up", token);
     }
 
 
@@ -58,7 +58,7 @@ public class AuthService {
             throw new BadCredentialsException("Invalid password"); //Todo change exception message
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
 
