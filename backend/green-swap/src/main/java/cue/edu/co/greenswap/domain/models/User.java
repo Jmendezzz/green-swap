@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @AllArgsConstructor
@@ -17,6 +18,6 @@ public class User {
   private String phoneNumber;
   private String urlProfilePicture;
   private String password;
-  private LocalTime createdAt;
+  private LocalDateTime createdAt;
 
 }

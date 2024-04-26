@@ -7,13 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository {
   Product save(Product product);
-  Product findById(Long id);
+  Optional<Product> findById(Long id);
   List<Product> findAll(Pageable pageable);
-
   Page<Product> findBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable);
-
 
 }

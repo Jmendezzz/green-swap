@@ -1,6 +1,6 @@
 package cue.edu.co.greenswap.domain.dtos.user;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public record UserDTO(
         Long id,
@@ -9,7 +9,7 @@ public record UserDTO(
         String email,
         String urlProfilePicture,
         String phoneNumber,
-        LocalTime createdAt
+        LocalDateTime createdAt
 
 ) {
 }

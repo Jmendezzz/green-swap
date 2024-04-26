@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 @Getter
 @Setter
@@ -21,5 +22,5 @@ public class Product {
   private Status status;
   private String urlImage;
   private Quality quality;
-  private LocalTime createdAt;
+  private LocalDateTime createdAt;
 }
