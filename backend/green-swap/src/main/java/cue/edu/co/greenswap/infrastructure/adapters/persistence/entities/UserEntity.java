@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -30,5 +32,5 @@ public class UserEntity {
   private String phoneNumber;
   private String password;
   @CreatedDate
-  private LocalTime createdAt;
+  private LocalDateTime createdAt;
 }

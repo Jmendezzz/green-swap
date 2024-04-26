@@ -5,6 +5,7 @@ import cue.edu.co.greenswap.domain.enums.Category;
 import cue.edu.co.greenswap.domain.enums.Quality;
 import cue.edu.co.greenswap.domain.enums.Status;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record ProductDTO(
@@ -17,6 +18,6 @@ public record ProductDTO(
     String urlImage,
     Quality quality,
     Status status,
-    LocalTime createdAt
+    LocalDateTime createdAt
 ) {
 }

@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -40,5 +41,5 @@ public class ProductEntity {
   private Status status;
   @CreatedDate
   @Column(updatable = false, nullable = false)
-  private LocalTime createdAt;
+  private LocalDateTime createdAt;
 }
