@@ -1,8 +1,8 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
 import cue.edu.co.greenswap.domain.enums.Category;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.enums.Quality;
-import cue.edu.co.greenswap.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "products")
@@ -38,7 +37,7 @@ public class ProductEntity {
   @Enumerated(EnumType.STRING)
   private Quality quality;
   @Enumerated(EnumType.STRING)
-  private Status status;
+  private ProductStatus status;
   @CreatedDate
   @Column(updatable = false, nullable = false)
   private LocalDateTime createdAt;

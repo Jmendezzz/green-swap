@@ -1,7 +1,7 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence;
 
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
-import cue.edu.co.greenswap.domain.enums.Status;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.models.Product;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.entities.ProductEntity;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.ProductRepositoryJpa;
@@ -90,7 +90,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
 
     List<Predicate> predicates = getSearchCriteriaPredicates(searchCriteriaProduct, countCriteriaBuilder, root);
 
-    predicates.add(countCriteriaBuilder.equal(root.get("status"), Status.PUBLISHED));
+    predicates.add(countCriteriaBuilder.equal(root.get("status"), ProductStatus.PUBLISHED));
 
     countCriteriaQuery.where(predicates.toArray(new Predicate[0]));
 
@@ -100,7 +100,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
   private List<Predicate> getSearchCriteriaPredicates(SearchCriteriaProduct searchCriteriaProduct, CriteriaBuilder criteriaBuilder, Root<ProductEntity> root) {
     List<Predicate> predicates = new ArrayList<>();
 
-    predicates.add(criteriaBuilder.equal(root.get("status"), Status.PUBLISHED));
+    predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.PUBLISHED));
 
     if (searchCriteriaProduct.name() != null) {
       Predicate namePredicate = criteriaBuilder.like(

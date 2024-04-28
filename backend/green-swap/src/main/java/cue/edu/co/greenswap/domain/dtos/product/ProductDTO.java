@@ -2,11 +2,10 @@ package cue.edu.co.greenswap.domain.dtos.product;
 
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.enums.Category;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.enums.Quality;
-import cue.edu.co.greenswap.domain.enums.Status;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public record ProductDTO(
     Long id,
@@ -17,7 +16,7 @@ public record ProductDTO(
     Category category,
     String urlImage,
     Quality quality,
-    Status status,
+    ProductStatus status,
     LocalDateTime createdAt
 ) {
 }
