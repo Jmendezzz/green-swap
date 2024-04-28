@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 public class Exchange {
   private Long id;
   private Product productRequested;

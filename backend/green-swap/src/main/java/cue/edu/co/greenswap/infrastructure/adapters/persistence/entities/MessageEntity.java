@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
+@Entity(name = "messages")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,9 +19,7 @@ public class MessageEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
   private String content;
-
   @ManyToOne
   @CreatedBy
   private UserEntity sender;
