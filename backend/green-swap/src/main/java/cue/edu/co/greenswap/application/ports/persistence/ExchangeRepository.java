@@ -9,5 +9,6 @@ public interface ExchangeRepository {
   Exchange save(Exchange exchange);
   Optional<Exchange> findById(Long id);
   List<Exchange> findByProduct(Long productId);
+  void deleteById(Long id);
 
 }

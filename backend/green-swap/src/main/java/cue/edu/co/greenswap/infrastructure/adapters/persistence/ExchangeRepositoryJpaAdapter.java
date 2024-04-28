@@ -34,4 +34,9 @@ public class ExchangeRepositoryJpaAdapter implements ExchangeRepository {
     return mapper.toDomain(exchanges);
 
   }
+
+  @Override
+  public void deleteById(Long id) {
+    repository.deleteById(id);
+  }
 }
