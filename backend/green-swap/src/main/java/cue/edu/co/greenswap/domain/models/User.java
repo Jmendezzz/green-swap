@@ -19,5 +19,5 @@ public class User {
   private String urlProfilePicture;
   private String password;
   private LocalDateTime createdAt;
-
+  private boolean isVerified;
 }

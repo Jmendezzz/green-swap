@@ -9,6 +9,7 @@ import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,5 +33,9 @@ public class UserServiceImp implements UserService {
   @Override
   public Optional<UserDTO> getByEmail(String email) {
     return repository.findByEmail(email).map(mapper::toDTO);
+  }
+  @Override
+  public UserDTO setVerified(UserDTO user) {
+    return mapper.toDTO(repository.setVerified(mapper.toDomain(user)));
   }
 }

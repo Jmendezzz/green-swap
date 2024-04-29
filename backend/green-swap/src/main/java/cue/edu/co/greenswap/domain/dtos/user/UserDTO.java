@@ -9,7 +9,7 @@ public record UserDTO(
         String email,
         String urlProfilePicture,
         String phoneNumber,
-        LocalDateTime createdAt
-
+        LocalDateTime createdAt,
+        boolean isVerified
 ) {
 }
