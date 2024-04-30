@@ -1,8 +1,7 @@
 package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
-import com.sendgrid.Response;
+
 import cue.edu.co.greenswap.application.ports.usecases.ConfirmationTokenService;
-import cue.edu.co.greenswap.domain.models.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mail")
 @AllArgsConstructor
 public class EmailController {
-    private ConfirmationTokenService confirmationTokenService;
-
-    @PostMapping("/send/email/validation")
-    public ResponseEntity<Response> sendEmailValidation(){
-        return ResponseEntity.ok(confirmationTokenService.sendEmailToken());
+    private ConfirmationTokenService service;
+    @PostMapping("/send-email-validation")
+    public ResponseEntity<?> sendEmailValidation(){
+        service.sendEmailToken();
+        return ResponseEntity.ok().build();
     }
 }

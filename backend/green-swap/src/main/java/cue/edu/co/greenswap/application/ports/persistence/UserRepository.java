@@ -8,4 +8,5 @@ public interface UserRepository {
   User save(User user);
   Optional<User> findByEmail(String email);
   User setVerified(User user);
+  User update(User user);
 }

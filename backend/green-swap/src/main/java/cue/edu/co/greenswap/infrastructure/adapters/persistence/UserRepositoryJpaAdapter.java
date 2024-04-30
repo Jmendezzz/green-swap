@@ -6,6 +6,7 @@ import cue.edu.co.greenswap.infrastructure.adapters.persistence.entities.UserEnt
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.UserRepositoryJpa;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.mappers.UserMapperDBO;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -34,9 +35,16 @@ public class UserRepositoryJpaAdapter implements UserRepository {
   public User setVerified(User user) {
     Optional<UserEntity> userEntity = repository.findByEmail(user.getEmail());
     if (userEntity.isEmpty()) {
-      throw new RuntimeException("User not found");
+      throw new UsernameNotFoundException("User not found");
     }
-    userEntity.get().setVerified(true);
-    return mapper.toDomain(repository.save(userEntity.get()));
+    UserEntity userEntityUpdated = userEntity.get();
+    userEntityUpdated.setVerified(true);
+
+    return mapper.toDomain(repository.save(userEntityUpdated));
+  }
+
+  @Override
+  public User update(User user) {
+    return mapper.toDomain(repository.save(mapper.toDBO(user)));
   }
 }
