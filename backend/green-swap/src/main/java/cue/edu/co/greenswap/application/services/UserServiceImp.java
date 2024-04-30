@@ -38,4 +38,9 @@ public class UserServiceImp implements UserService {
   public UserDTO setVerified(UserDTO user) {
     return mapper.toDTO(repository.setVerified(mapper.toDomain(user)));
   }
+
+  @Override
+  public UserDTO update(UserDTO user) {
+    return mapper.toDTO(repository.save(mapper.toDomain(user)));
+  }
 }

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class AuthController {
   private final AuthService service;
-  private final UserService userService;
   private final ConfirmationTokenService confirmationTokenService;
 
   @PostMapping("/signup")
@@ -34,6 +33,6 @@ public class AuthController {
 
   @PostMapping("/confirm/email")
   public ResponseEntity<Boolean> validateUserEmail(@RequestBody ConfirmationTokenDTO token){
-    return ResponseEntity.ok(confirmationTokenService.confirmToken(token.token()));
+    return ResponseEntity.ok(confirmationTokenService.confirmToken(token));
   }
 }

@@ -10,6 +10,7 @@ import cue.edu.co.greenswap.application.ports.persistence.ConfirmationTokenRepos
 import cue.edu.co.greenswap.application.ports.usecases.ConfirmationTokenService;
 import cue.edu.co.greenswap.application.ports.usecases.EmailService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.token.ConfirmationTokenDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.ConfirmationToken;
 import cue.edu.co.greenswap.domain.models.User;
@@ -54,15 +55,19 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
 
     @Override
     @Transactional
-    public boolean confirmToken(String token) {
-        ConfirmationToken validatingToken = constraint.validateToken(token);
-        constraint.validateTokenExpired(token);
-        constraint.validateTokenUsed(token);
-        validatingToken.setConfirmedAt(java.time.LocalDateTime.now());
+    public boolean confirmToken(ConfirmationTokenDTO token){
 
+        ConfirmationToken validatingToken = constraint.validateToken(token.token());
+
+        constraint.validateTokenExpired(token.token());
+        constraint.validateTokenUsed(token.token());
+
+        validatingToken.setConfirmedAt(LocalDateTime.now());
         User user = validatingToken.getUser();
         user.setVerified(true);
+
         userService.setVerified(userMapperDTO.toDTO(user));
+
         repository.save(validatingToken);
 
         return true;
@@ -72,17 +77,11 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
     public Response sendEmailToken() {
         UserDTO userDto = authenticationUtil.getUser();
 
-        if (userDto.isVerified()) return null;
+        constraint.validateUserIsConfirmed(userMapperDTO.toDomain(userDto));
 
-        expireLastToken(userMapperDTO.toDomain(userDto));
+        expireLastUserToken(userMapperDTO.toDomain(userDto));
 
-        String emailToken = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = ConfirmationToken.builder()
-                .token(emailToken)
-                .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusMinutes(EmailConstant.TOKEN_EXPIRATION_TIME))
-                .user(userMapperDTO.toDomain(userDto))
-                .build();
+        ConfirmationToken confirmationToken = createToken(userDto);
 
         ConfirmationToken savedToken = this.save(confirmationToken);
         String magic_link = EmailConstant.URL_VALIDATE_EMAIL + savedToken.getToken();
@@ -95,7 +94,17 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
         return emailService.sendEmail(mail);
     }
 
-    private void expireLastToken(User user){
+    private ConfirmationToken createToken(UserDTO user){
+        String emailToken = UUID.randomUUID().toString();
+        return ConfirmationToken.builder()
+                .token(emailToken)
+                .createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusMinutes(EmailConstant.TOKEN_EXPIRATION_TIME))
+                .user(userMapperDTO.toDomain(user))
+                .build();
+    }
+
+    private void expireLastUserToken(User user){
         List<ConfirmationToken> tokens = repository.findByUser(user);
         tokens.forEach(token -> {
             token.setExpiresAt(LocalDateTime.now());

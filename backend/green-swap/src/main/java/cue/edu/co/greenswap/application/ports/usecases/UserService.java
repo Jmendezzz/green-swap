@@ -10,4 +10,5 @@ public interface UserService {
   UserDTO create(CreateUserDTO user);
   Optional<UserDTO> getByEmail(String email);
   UserDTO setVerified(UserDTO user);
+  UserDTO update(UserDTO user);
 }
