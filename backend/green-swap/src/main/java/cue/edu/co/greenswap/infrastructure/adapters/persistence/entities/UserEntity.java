@@ -33,4 +33,5 @@ public class UserEntity {
   private String password;
   @CreatedDate
   private LocalDateTime createdAt;
+  private boolean isVerified;
 }
