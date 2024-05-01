@@ -32,6 +32,7 @@ const Heading = styled.h1<Props>`
     `}
 
   font-weight:600;
+  text-align: center;
 `;
 
 export default Heading;

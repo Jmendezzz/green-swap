@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./pages/Login"
 import "./index.css"
 import { QueryClient, QueryClientProvider } from "react-query"
+import GlobalStyles from "./styles/GlobalStyles"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <GlobalStyles/>
       <BrowserRouter>
       <Routes>
 
