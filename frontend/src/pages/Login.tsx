@@ -1,25 +1,13 @@
 import LoginForm from '@/features/auth/LoginForm';
-import { useLogin } from '@/features/auth/useLogin';
-import Button from '@/features/ui/Button';
 import Heading from '@/features/ui/Heading';
-import Input from '@/features/ui/Input';
 import Logo from '@/features/ui/Logo';
 import Row from '@/features/ui/Row';
 import Section from '@/features/ui/Section';
 import { Devices } from '@/styles/Devices';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function Login() {
-  const { login, isLoading } = useLogin();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    login({ email, password });
-  }
+function Login() {
   return (
     <LoginSection>
       <Row type="vertical" className='gap-20'>
@@ -35,9 +23,8 @@ function Login() {
 
 const LoginSection = styled(Section)`
   background-image: url('assets/login-background.png');
-  //Todo: Responsive background image
   background-size: cover;
-  background-position: center;
+  background-position:bottom;
   background-repeat: no-repeat;
   background-attachment: scroll;
 `;

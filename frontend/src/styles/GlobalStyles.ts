@@ -3,8 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
     *{
         --primary-color: #1B232E;
-        --white: rgb(226 232 240);
         --contrast-color: #1AC760;
+        --white: rgb(226 232 240);
+        --red: rgb(185 28 28);
         font-family: "Space Grotesk", sans-serif;
  
     }

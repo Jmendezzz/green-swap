@@ -4,13 +4,12 @@ interface Props{
 }
 
 const Input = styled.input<Props>`
-    padding: 0.6rem 2.5rem;
+    padding: 0.8rem 2.5rem;
     border-radius: 1rem;
     font-size: 1.6rem;
 
     transition: all 0.3s ease;
     border: none;
-    margin: 0.5rem;
     width: 100%;
     &:focus{
         outline: none;

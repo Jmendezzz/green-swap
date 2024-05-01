@@ -3,6 +3,7 @@ import Login from "./pages/Login"
 import "./index.css"
 import { QueryClient, QueryClientProvider } from "react-query"
 import GlobalStyles from "./styles/GlobalStyles"
+import ToasterStyled from "./features/ui/ToasterStyled"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +26,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
-
+    <ToasterStyled />
     </QueryClientProvider>
     
   )
