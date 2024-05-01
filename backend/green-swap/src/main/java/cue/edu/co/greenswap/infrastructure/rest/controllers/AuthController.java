@@ -9,6 +9,7 @@ import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthSignupRequestD
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthLoginRequestDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthResponseDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.services.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,10 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthLoginRequestDTO authLoginRequestDTO){
-    return ResponseEntity.ok(service.login(authLoginRequestDTO));
+  public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthLoginRequestDTO authLoginRequestDTO, HttpServletResponse response){
+    return ResponseEntity.ok(service.login(authLoginRequestDTO, response));
   }
+  //Todo /me and /logout
 
   @PostMapping("/confirm/email")
   public ResponseEntity<Boolean> validateUserEmail(@RequestBody ConfirmationTokenDTO token){

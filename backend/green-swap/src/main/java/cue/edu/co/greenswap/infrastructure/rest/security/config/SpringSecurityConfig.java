@@ -4,6 +4,8 @@ package cue.edu.co.greenswap.infrastructure.rest.security.config;
 import cue.edu.co.greenswap.infrastructure.rest.security.filters.JwtTokenValidationFilter;
 import cue.edu.co.greenswap.infrastructure.rest.security.utils.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +23,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @Configuration
-@AllArgsConstructor
 @EnableWebSecurity
 public class SpringSecurityConfig {
   private final JwtUtil jwtUtil;
+  public SpringSecurityConfig(JwtUtil jwtUtil) {
+    this.jwtUtil = jwtUtil;
+  }
+  @Value("${cookie-name}")
+  private String cookieName;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +42,7 @@ public class SpringSecurityConfig {
               authorizeRequests.requestMatchers("/auth/**").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
-            .addFilterBefore(new JwtTokenValidationFilter(jwtUtil), BasicAuthenticationFilter.class)
+            .addFilterBefore(new JwtTokenValidationFilter(jwtUtil,cookieName), BasicAuthenticationFilter.class)
             .build();
 
   }
