@@ -1,5 +1,6 @@
 import LoginRequestDTO from '@/domain/LoginRequestDTO';
 import { loginService } from '@/services/authService';
+import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,7 +22,9 @@ export function useLogin() {
     mutationFn: (loginRequest: LoginRequestDTO) =>
       loginService(loginRequest.email, loginRequest.password),
     onSuccess: ()=> navigate('/'),
-    onError: (error: AxiosError) => console.error(error.response.data.message),
+    onError: (error: AxiosError) => {
+      toast.error(error.response.data.message)
+    },
   });
   return {
     login: mutate,
