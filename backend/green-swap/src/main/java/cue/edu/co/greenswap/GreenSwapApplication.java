@@ -24,7 +24,7 @@ public class GreenSwapApplication {
 								.addMapping("/**")
 								.allowedMethods(CorsConfiguration.ALL)
 								.allowedHeaders(CorsConfiguration.ALL)
-								.allowedOrigins("http://localhost:5174");
+								.allowedOrigins("http://localhost:5173");
 			}
 		};
 
