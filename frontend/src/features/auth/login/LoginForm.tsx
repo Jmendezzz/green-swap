@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
+import Button from '../../ui/Button';
+import Input from '../../ui/Input';
 import { useLogin } from './useLogin';
 import { useForm } from 'react-hook-form';
-import LoginRequestDTO from '@/domain/LoginRequestDTO';
+import LoginRequestDTO from '@/domain/auth/LoginRequestDTO';
 import { ClipLoader } from 'react-spinners';
-import FormRow from '../ui/FormRow';
+import FormRow from '../../ui/FormRow';
 
 function LoginForm() {
   const { login, isLoading } = useLogin();
@@ -62,7 +62,7 @@ function LoginForm() {
       <div className="p-10">
         <p>
           ¿No tienes una cuenta?{' '}
-          <Link to={'/signup'} className="text-contrast underline">
+            <Link to={'/register'} className="text-contrast underline">
             Registrate
           </Link>
         </p>

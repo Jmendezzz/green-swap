@@ -10,6 +10,10 @@ export default {
         'primary': '#1B232E',
         'contrast': '#1AC760'
       },
+      backgroundColor:{
+        'primary': '#1B232E',
+        'contrast': '#1AC760'      
+      }
     },
   },
   plugins: [],
