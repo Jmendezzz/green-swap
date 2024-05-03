@@ -9,9 +9,10 @@ const AuthFormContainer = styled(Row)`
   gap: 2rem;
   max-width: 700px;
   min-width: 300px;
-  padding: 8rem 5rem;
+  padding: 5rem 3rem;
   border-radius: 2.5rem;
   box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.2);
+
   @media (max-width: ${Devices.tablet}) {
     width: 90%;
     padding: 4rem 2rem;

@@ -1,24 +1,33 @@
 import SignUpRequestDTO from "@/domain/auth/SignUpRequestDTO";
+import useMultiStepForm from "@/hooks/useMultiStepForm";
 import { createContext, useContext, useState } from "react";
 
 interface SignUpContextState {
     signUpData:SignUpRequestDTO;
-    setSignUpData: (data: SignUpRequestDTO) => void;
+    addSignUpData: (data: Partial<SignUpRequestDTO>) => void;
+    currentStep: number;
+    stepsNumber: number;
 }
 const SignUpContext = createContext<SignUpContextState | undefined>(undefined);
 
+
+const STEPS_NUMBER = 3;
+
 export function SignUpContextProvider ({children}: {children: React.ReactNode | React.ReactNode[]}) {
     const [signUpData, setSignUpData] = useState<SignUpRequestDTO>({
-        fisrtName: '',
+        firstName: '',
         lastName: '',
         email: '',
         phoneNumber: '',
         password: ''
     });
-
+    const addSignUpData = (data: Partial<SignUpRequestDTO>) => {
+        setSignUpData((prev) => ({...prev, ...data}));
+    };
+    const {currentStep} = useMultiStepForm(STEPS_NUMBER);
 
     return (
-        <SignUpContext.Provider value={{signUpData, setSignUpData}}>
+        <SignUpContext.Provider value={{signUpData,addSignUpData, currentStep, stepsNumber: STEPS_NUMBER}}>
             {children}
         </SignUpContext.Provider>
     );

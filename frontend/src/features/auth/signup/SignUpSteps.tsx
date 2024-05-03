@@ -1,37 +1,24 @@
-const steps = [
-  {
-    id: 1,
-    title: 'Datos Personales',
-  },
-  {
-    id: 2,
-    title: 'Datos de la Cuenta',
-  },
-  {
-    id: 3,
-    title: 'Imagen de Perfil',
-  },
-];
+import { useSignUpContext } from "@/context/SignUpContext";
 
-function SignUpSteps({ step,setStep,}: {step: number; setStep: (step: number) => void;}) {
+function SignUpSteps() {
+  const {currentStep, stepsNumber} = useSignUpContext();
+
+
   return (
     <header>
-      <ul className="flex justify-center gap-4">
-        {steps.map((s) => (
+      <ul className="flex justify-center gap-10">
+        {Array.from({ length: stepsNumber }).map((_, index) => (
           <li
-            key={s.id}
-            className={`text-5xl font-semibold rounded-full  text-zinc-100 py-6 px-10 cursor-pointer bg-primary
-            ${
-              step == s.id && 'bg-contrast' 
+            key={index}
+            className={`w-10 h-10 rounded-full flex items-center justify-center py-10 px-10 text-primary font-bold text-5xl ${
+              currentStep === index ? "bg-contrast" : "bg-gray-200"
             }`}
-            onClick={() => setStep(s.id)}
           >
-            {s.id}
+            {index + 1}
           </li>
         ))}
       </ul>
     </header>
   );
 }
-
 export default SignUpSteps;
