@@ -2,7 +2,7 @@ import { useSignUpContext } from '@/context/SignUpContext';
 import Button from '@/features/ui/Button';
 
 function SingUpFormsButtons() {
-  const { currentStep, stepsNumber } = useSignUpContext();
+  const { currentStep, stepsNumber, prevStep } = useSignUpContext();
   if (currentStep === 0) {
     return (
       <div className="flex justify-center gap-5">
@@ -15,7 +15,7 @@ function SingUpFormsButtons() {
   if (currentStep === stepsNumber - 1) {
     return (
       <div className="flex justify-between gap-5">
-        <Button type="submit" variant="secondary">
+        <Button type="button" variant="secondary" onClick={()=> prevStep()}>
           Atras
         </Button>
         <Button type="submit" variant="primary">
@@ -26,7 +26,7 @@ function SingUpFormsButtons() {
   }
   return (
     <div className="flex justify-between gap-5">
-      <Button type="submit" variant="secondary">
+      <Button type="button" variant="secondary" type="button" variant="secondary" onClick={()=> prevStep()}>
         Atras
       </Button>
       <Button type="submit" variant="primary">

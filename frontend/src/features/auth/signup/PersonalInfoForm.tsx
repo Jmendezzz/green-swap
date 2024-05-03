@@ -13,7 +13,7 @@ interface PersonalInfoForm {
 }
 
 function PersonalInfoForm() {
-  const { addSignUpData,  signUpData} = useSignUpContext();
+  const { addSignUpData,  signUpData, nextStep} = useSignUpContext();
   const {
     register,
     formState: { errors},
@@ -23,6 +23,7 @@ function PersonalInfoForm() {
 
   const onSubmit = handleSubmit((data) => {
     addSignUpData(data);
+    nextStep(); 
   });
   return (
     <AuthFormContainer type="vertical">
