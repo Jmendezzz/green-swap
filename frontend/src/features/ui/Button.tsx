@@ -14,6 +14,17 @@ const Button = styled.button<Props>`
     transition: all 0.3s ease;
     border: none;
     text-align:center;
+
+    &:disabled{
+        background-color: #abbea5;
+;
+        cursor: not-allowed;
+    }
+
+    &:disabled:hover{
+        background-color: #abbea5;
+        cursor: not-allowed
+    }
     
     
     ${(props:Props) => 
