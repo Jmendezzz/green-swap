@@ -7,6 +7,8 @@ interface SignUpContextState {
     addSignUpData: (data: Partial<SignUpRequestDTO>) => void;
     currentStep: number;
     stepsNumber: number;
+    nextStep: () => void;
+    prevStep: () => void;
 }
 const SignUpContext = createContext<SignUpContextState | undefined>(undefined);
 
@@ -24,10 +26,10 @@ export function SignUpContextProvider ({children}: {children: React.ReactNode | 
     const addSignUpData = (data: Partial<SignUpRequestDTO>) => {
         setSignUpData((prev) => ({...prev, ...data}));
     };
-    const {currentStep} = useMultiStepForm(STEPS_NUMBER);
+    const {currentStep, next, prev} = useMultiStepForm(STEPS_NUMBER);
 
     return (
-        <SignUpContext.Provider value={{signUpData,addSignUpData, currentStep, stepsNumber: STEPS_NUMBER}}>
+        <SignUpContext.Provider value={{signUpData,addSignUpData, currentStep, stepsNumber: STEPS_NUMBER, nextStep:next, prevStep:prev}}>
             {children}
         </SignUpContext.Provider>
     );

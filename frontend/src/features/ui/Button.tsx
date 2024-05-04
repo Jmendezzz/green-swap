@@ -36,6 +36,18 @@ const Button = styled.button<Props>`
             }
         `
     }
+
+        ${(props:Props) => 
+        props.variant === 'secondary' && `
+            background-color: transparent;
+            color: var(--contrast-color);
+            border: 2px solid var(--contrast-color);
+            &:hover{
+                background-color: #2bd66f;
+                color: var(--primary-color);
+            }
+        `
+    }
     
 `
 
