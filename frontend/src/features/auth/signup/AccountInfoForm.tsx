@@ -5,6 +5,9 @@ import Heading from '@/features/ui/Heading';
 import Input from '@/features/ui/Input';
 import { useForm } from 'react-hook-form';
 import SingUpFormsButtons from './SingUpFormsButtons';
+import { hasNumber, hasSpecialCharacter, hasUpperCase } from './utils/passwordRegexFunctions';
+import PasswordStrengthIndicator from './PasswordStrengthIndicator';
+
 
 interface AccountInfoForm {
   email: string;
@@ -17,7 +20,8 @@ function AccountInfoForm() {
     register,
     handleSubmit,
     formState: { errors },
-    getValues
+    getValues,
+    watch
   } = useForm<AccountInfoForm>({
     mode: 'onTouched',
   });
@@ -31,6 +35,13 @@ function AccountInfoForm() {
     });
     nextStep();
   });
+
+  const onBackHandler=()=>{
+    addSignUpData({
+        email: getValues('email'),
+        password: getValues('password'),
+    });
+  }
                             
   return (
     <AuthFormContainer type="vertical">
@@ -57,7 +68,7 @@ function AccountInfoForm() {
             })}
           />
         </FormRow>
-        <FormRow error={errors?.password?.message}>
+        <FormRow error={errors?.password?.type == 'required' ? errors?.password.message : undefined}>
           <Input
             defaultValue={signUpData.password}
             type="password"
@@ -69,12 +80,18 @@ function AccountInfoForm() {
                 value: 8,
                 message: 'La contraseña debe tener al menos 8 caracteres',
               },
+              validate: {
+                hasUpperCase: (value) => hasUpperCase(value)|| 'La contraseña debe tener al menos una letra mayúscula',
+                hasNumber: (value) => hasNumber(value)|| 'La contraseña debe tener al menos un número',
+                hasSpecialCharacter: (value) => hasSpecialCharacter(value) || 'La contraseña debe tener al menos un caracter especial',
+              }
+              
             })}
           />
+          <PasswordStrengthIndicator password={watch('password')} />
         </FormRow>
         <FormRow error={errors?.confirmPassword?.message}>
             <Input 
-                defaultValue={signUpData.password}
                 type="password"
                 variant="outlined"
                 placeholder="Confirma tu contraseña"
@@ -84,7 +101,7 @@ function AccountInfoForm() {
                 })}
                 />
             </FormRow>
-            <SingUpFormsButtons/>
+            <SingUpFormsButtons onBack={onBackHandler}/>
       </form>
     </AuthFormContainer>
   );
