@@ -7,6 +7,9 @@ const AuthFormContainer = styled(Row)`
   background-color: rgba(33, 43, 56, 0.5);
   width: 60%;
   gap: 2rem;
+  height:500px;
+  min-height: 300px;
+  max-height: 700px;
   max-width: 700px;
   min-width: 300px;
   padding: 5rem 3rem;
