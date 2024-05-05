@@ -1,13 +1,17 @@
 import { useSignUpContext } from '@/context/SignUpContext';
 import AuthFormContainer from '@/features/ui/AuthFormContainer';
 import FormRow from '@/features/ui/FormRow';
-import Heading from '@/features/ui/Heading';
 import Input from '@/features/ui/Input';
 import { useForm } from 'react-hook-form';
 import SingUpFormsButtons from './SingUpFormsButtons';
-import { hasNumber, hasSpecialCharacter, hasUpperCase } from './utils/passwordRegexFunctions';
+import {
+  hasNumber,
+  hasSpecialCharacter,
+  hasUpperCase,
+} from './utils/passwordRegexFunctions';
 import PasswordStrengthIndicator from './PasswordStrengthIndicator';
-
+import SignUpFormHeader from './SignUpFormHeader';
+import Form from '@/features/ui/Form';
 
 interface AccountInfoForm {
   email: string;
@@ -16,46 +20,46 @@ interface AccountInfoForm {
 }
 
 function AccountInfoForm() {
+  const { addSignUpData, signUpData, nextStep } = useSignUpContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-    watch
+    watch,
   } = useForm<AccountInfoForm>({
     mode: 'onTouched',
+    defaultValues: {
+      email: signUpData.email,
+      password: signUpData.password,
+      confirmPassword: signUpData.confirmPassword,
+    },
   });
-
-  const { addSignUpData, signUpData, nextStep } = useSignUpContext();
+  console.log(errors);
 
   const onSubmit = handleSubmit((data) => {
     addSignUpData({
       email: data.email,
       password: data.password,
+      confirmPassword: data.confirmPassword,
     });
     nextStep();
   });
 
-  const onBackHandler=()=>{
+  const onBackHandler = () => {
     addSignUpData({
-        email: getValues('email'),
-        password: getValues('password'),
+      email: getValues('email'),
+      password: getValues('password'),
+      confirmPassword: getValues('confirmPassword'),
     });
-  }
-                            
+  };
+
   return (
     <AuthFormContainer type="vertical">
-      <header className="text-center">
-        <Heading type="h1">Crea tu cuenta</Heading>
-        <p>Ahora configura los datos de tu cuenta</p>
-      </header>
-      <form
-        className="flex flex-col w-full items-center gap-10"
-        onSubmit={onSubmit}
-      >
+      <SignUpFormHeader label="Ingresa los datos de tu cuenta" />
+      <Form onSubmit={onSubmit}>
         <FormRow error={errors?.email?.message}>
           <Input
-            defaultValue={signUpData.email}
             type="text"
             variant="outlined"
             placeholder="Correo electrónico"
@@ -68,9 +72,14 @@ function AccountInfoForm() {
             })}
           />
         </FormRow>
-        <FormRow error={errors?.password?.type == 'required' ? errors?.password.message : undefined}>
+        <FormRow
+          error={
+            errors?.password?.type == 'required'
+              ? errors?.password.message
+              : undefined
+          }
+        >
           <Input
-            defaultValue={signUpData.password}
             type="password"
             variant="outlined"
             placeholder="Contraseña"
@@ -81,28 +90,35 @@ function AccountInfoForm() {
                 message: 'La contraseña debe tener al menos 8 caracteres',
               },
               validate: {
-                hasUpperCase: (value) => hasUpperCase(value)|| 'La contraseña debe tener al menos una letra mayúscula',
-                hasNumber: (value) => hasNumber(value)|| 'La contraseña debe tener al menos un número',
-                hasSpecialCharacter: (value) => hasSpecialCharacter(value) || 'La contraseña debe tener al menos un caracter especial',
-              }
-              
+                hasUpperCase: (value) =>
+                  hasUpperCase(value) ||
+                  'La contraseña debe tener al menos una letra mayúscula',
+                hasNumber: (value) =>
+                  hasNumber(value) ||
+                  'La contraseña debe tener al menos un número',
+                hasSpecialCharacter: (value) =>
+                  hasSpecialCharacter(value) ||
+                  'La contraseña debe tener al menos un caracter especial',
+              },
             })}
           />
           <PasswordStrengthIndicator password={watch('password')} />
         </FormRow>
         <FormRow error={errors?.confirmPassword?.message}>
-            <Input 
-                type="password"
-                variant="outlined"
-                placeholder="Confirma tu contraseña"
-                {...register('confirmPassword', {
-                    required: 'La contraseña es requerida',
-                    validate: (value) => value === getValues('password') || 'Las contraseñas no coinciden'
-                })}
-                />
-            </FormRow>
-            <SingUpFormsButtons onBack={onBackHandler}/>
-      </form>
+          <Input
+            type="password"
+            variant="outlined"
+            placeholder="Confirma tu contraseña"
+            {...register('confirmPassword', {
+              required: 'La contraseña es requerida',
+              validate: (value) =>
+                value === getValues('password') ||
+                'Las contraseñas no coinciden',
+            })}
+          />
+        </FormRow>
+        <SingUpFormsButtons onBack={onBackHandler} />
+      </Form>
     </AuthFormContainer>
   );
 }
