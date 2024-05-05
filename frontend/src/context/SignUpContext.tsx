@@ -24,6 +24,7 @@ export function SignUpContextProvider({
     lastName: '',
     email: '',
     phoneNumber: '',
+    confirmPassword: '',
     password: '',
   });
   const addSignUpData = (data: Partial<SignUpRequestDTO>) => {

@@ -53,7 +53,7 @@ function PasswordStrengthIndicator({ password = '' }: Props) {
             <Tooltip
               anchorSelect="#password-strength-info"
               place="bottom"
-              style={{ backgroundColor: 'rgba(0, 0, 0, 0.8))' }}
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.8))', zIndex: 999}}
             >
               <div className="flex flex-col gap-2 ">
                 <span className="font-bold">La contraseña debe:</span>

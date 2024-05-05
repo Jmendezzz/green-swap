@@ -9,9 +9,9 @@ import Form from '@/features/ui/Form';
 function SignUpProfilePictureForm() {
   const {
     addSignUpData,
-    signUpData: { firstName, lastName },
+    signUpData,
   } = useSignUpContext();
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [profilePicture, setProfilePicture] = useState<File | undefined>(signUpData.profilePicture);
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -21,11 +21,22 @@ function SignUpProfilePictureForm() {
       setProfilePicture(file);
     }
   };
+
+  function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(signUpData)
+  }
+
+  function onBackHandler() {
+    addSignUpData({
+      profilePicture: profilePicture,
+    });
+  }
   return (
     <AuthFormContainer type="vertical" className='gap-10'>
         <SignUpFormHeader label="Pesonaliza tu perfil agregando una foto. Este paso es opcional"/>
 
-        <Form>
+        <Form onSubmit={submitHandler}>
           <div onClick={() => ref.current?.click()}>
             <div className="flex justify-center">
               {profilePicture ? (
@@ -51,8 +62,8 @@ function SignUpProfilePictureForm() {
                       hovered ? 'opacity-0 invisible' : 'opacity-100 visible'
                     } transition-all duration-500`}
                   >
-                    {firstName[0]}
-                    {lastName[0]}
+                    {signUpData.firstName[0]}
+                    {signUpData.lastName[0]}
                   </h1>
                 </div>
               )}
@@ -68,7 +79,7 @@ function SignUpProfilePictureForm() {
             />
           </div>
 
-          <SingUpFormsButtons />
+          <SingUpFormsButtons onBack={onBackHandler}/>
         </Form>
     </AuthFormContainer>
   );

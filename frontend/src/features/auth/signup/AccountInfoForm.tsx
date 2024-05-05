@@ -12,6 +12,7 @@ import {
 import PasswordStrengthIndicator from './PasswordStrengthIndicator';
 import SignUpFormHeader from './SignUpFormHeader';
 import Form from '@/features/ui/Form';
+import PasswordInput from '@/features/ui/PasswordInput';
 
 interface AccountInfoForm {
   email: string;
@@ -35,7 +36,6 @@ function AccountInfoForm() {
       confirmPassword: signUpData.confirmPassword,
     },
   });
-  console.log(errors);
 
   const onSubmit = handleSubmit((data) => {
     addSignUpData({
@@ -79,11 +79,8 @@ function AccountInfoForm() {
               : undefined
           }
         >
-          <Input
-            type="password"
-            variant="outlined"
-            placeholder="Contraseña"
-            {...register('password', {
+          <PasswordInput
+            register={register('password', {
               required: 'La contraseña es requerida',
               minLength: {
                 value: 8,
@@ -101,15 +98,14 @@ function AccountInfoForm() {
                   'La contraseña debe tener al menos un caracter especial',
               },
             })}
+            placeholder="Contraseña"
           />
           <PasswordStrengthIndicator password={watch('password')} />
         </FormRow>
         <FormRow error={errors?.confirmPassword?.message}>
-          <Input
-            type="password"
-            variant="outlined"
+          <PasswordInput
             placeholder="Confirma tu contraseña"
-            {...register('confirmPassword', {
+            register={register('confirmPassword', {
               required: 'La contraseña es requerida',
               validate: (value) =>
                 value === getValues('password') ||
