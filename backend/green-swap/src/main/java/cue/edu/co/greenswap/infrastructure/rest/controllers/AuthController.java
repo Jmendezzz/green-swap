@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
 import cue.edu.co.greenswap.application.ports.usecases.ConfirmationTokenService;
+import cue.edu.co.greenswap.application.ports.usecases.FileService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.token.ConfirmationTokenDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
@@ -12,19 +13,33 @@ import cue.edu.co.greenswap.infrastructure.rest.security.services.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthController {
   private final AuthService service;
+  private final FileService fileService;
   private final ConfirmationTokenService confirmationTokenService;
 
-  @PostMapping("/signup")
-  public ResponseEntity<AuthResponseDTO> signUp(@RequestBody @Valid AuthSignupRequestDTO authSignupRequestDTO) {
-    return ResponseEntity.ok(service.signUp(authSignupRequestDTO));
+  @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<AuthResponseDTO> signUp(
+          @RequestPart("signUpInfo") @Valid AuthSignupRequestDTO authSignupRequestDTO,
+          HttpServletResponse response,
+          @RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture
+          ) {
+
+    if(profilePicture != null){
+      String profilePictureUrl = fileService.uploadFile(profilePicture).get("url").toString();
+      AuthSignupRequestDTO withProfilePicture =  authSignupRequestDTO.withProfilePicture(profilePictureUrl);
+      return ResponseEntity.ok(service.signUp(withProfilePicture, response));
+    }
+
+    return ResponseEntity.ok(service.signUp(authSignupRequestDTO, response));
   }
 
   @PostMapping("/login")
@@ -33,7 +48,7 @@ public class AuthController {
   }
   //Todo /me and /logout
 
-  @PostMapping("/confirm/email")
+  @PostMapping("/confirm-email")
   public ResponseEntity<Boolean> validateUserEmail(@RequestBody ConfirmationTokenDTO token){
     return ResponseEntity.ok(confirmationTokenService.confirmToken(token));
   }

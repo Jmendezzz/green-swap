@@ -83,7 +83,7 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
 
         ConfirmationToken confirmationToken = createToken(userDto);
 
-        ConfirmationToken savedToken = this.save(confirmationToken);
+        ConfirmationToken savedToken = save(confirmationToken);
         String magic_link = EmailConstant.URL_VALIDATE_EMAIL + savedToken.getToken();
 
         Map<String, Object> properties = new HashMap<>();
