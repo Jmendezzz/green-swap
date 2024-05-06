@@ -1,10 +1,13 @@
 import SignUpRequestDTO from '@/domain/auth/SignUpRequestDTO';
+import useSignUp from '@/features/auth/signup/useSignUp';
 import useMultiStepForm from '@/hooks/useMultiStepForm';
 import { createContext, useContext, useState } from 'react';
 
 interface SignUpContextState {
   signUpData: SignUpRequestDTO;
   addSignUpData: (data: Partial<SignUpRequestDTO>) => void;
+  submitSignUp: () => void;
+  isLoading: boolean;
   currentStep: number;
   stepsNumber: number;
   nextStep: () => void;
@@ -32,6 +35,12 @@ export function SignUpContextProvider({
   };
   const { currentStep, next, prev } = useMultiStepForm(STEPS_NUMBER);
 
+  const { signUp, isLoading } = useSignUp();
+
+  const submitSignUp = () => {
+    signUp(signUpData);
+  }
+
   return (
     <SignUpContext.Provider
       value={{
@@ -41,6 +50,8 @@ export function SignUpContextProvider({
         stepsNumber: STEPS_NUMBER,
         nextStep: next,
         prevStep: prev,
+        submitSignUp,
+        isLoading,
       }}
     >
       {children}

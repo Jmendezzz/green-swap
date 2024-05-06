@@ -34,5 +34,7 @@ const Heading = styled.h1<Props>`
   font-weight:600;
   text-align: center;
 `;
-
+Heading.defaultProps = {
+  type: 'h1',
+}
 export default Heading;

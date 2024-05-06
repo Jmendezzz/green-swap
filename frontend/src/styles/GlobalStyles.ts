@@ -30,7 +30,9 @@ const GlobalStyles = createGlobalStyle`
     hyphens: auto;
     color: var(--white);
     font-family: "Space Grotesk", sans-serif;
-
+    }
+    p{
+        font-size: 1.9rem;
     }
  
 `;

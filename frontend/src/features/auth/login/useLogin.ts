@@ -5,13 +5,9 @@ import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-export interface AxiosApiError {
-  response: {
-    data: {
+export interface ErrorResponse  {
       message: string;
       status: number;
-    };
-  };
 }
 
 export function useLogin() {
@@ -21,11 +17,12 @@ export function useLogin() {
     mutationFn: (loginRequest: LoginRequestDTO) =>
       loginService(loginRequest.email, loginRequest.password),
     onSuccess: () => navigate('/'),
-    onError: (error: unknown) => {
-      if (error instanceof AxiosError) {
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if(error.response?.data){
+        toast.error(error.response.data.message);
+      }
+      else{
         toast.error('Error inesperado, por favor intenta de nuevo');
-      } else {
-        toast.error((error as AxiosApiError).response.data.message);
       }
     },
   });
