@@ -100,7 +100,6 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
                 .token(emailToken)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(EmailConstant.TOKEN_EXPIRATION_TIME))
-                .user(userMapperDTO.toDomain(user))
                 .build();
     }
 
