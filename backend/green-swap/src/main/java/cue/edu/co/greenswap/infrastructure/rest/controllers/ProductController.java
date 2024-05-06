@@ -46,10 +46,4 @@ public class ProductController {
             service.getBySearchCriteria(searchCriteriaProduct, pageable)
     );
   }
-
-  @GetMapping("/test")
-  public String test() {
-    return "Test";
-  }
-
 }

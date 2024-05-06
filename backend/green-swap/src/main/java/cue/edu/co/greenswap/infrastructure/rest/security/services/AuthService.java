@@ -54,7 +54,7 @@ public class AuthService {
         return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Logged in", token);
     }
 
-    public AuthResponseDTO signUp(AuthSignupRequestDTO authLoginRequestDTO) {
+    public AuthResponseDTO signUp(AuthSignupRequestDTO authLoginRequestDTO, HttpServletResponse response) {
         String email = authLoginRequestDTO.email();
         String password = authLoginRequestDTO.password();
 
@@ -62,6 +62,7 @@ public class AuthService {
 
         Authentication authentication = authenticate(email, password);
         String token = jwtUtil.generateToken(authentication);
+        cookieUtil.create(response, cookieName, token, false, -1, "localhost");
 
         return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Signed up", token);
     }

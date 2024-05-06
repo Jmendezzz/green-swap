@@ -20,6 +20,10 @@ public record AuthSignupRequestDTO (
 
         @NotBlank(message = UserConstantMessage.PASSWORD_NOT_BLANK)
         @ValidPassword
-        String password
+        String password,
+        String urlProfilePicture
 ){
+        public AuthSignupRequestDTO withProfilePicture(String profilePicture){
+                return new AuthSignupRequestDTO(firstName, lastName, email, phoneNumber, password, profilePicture);
+        }
 }

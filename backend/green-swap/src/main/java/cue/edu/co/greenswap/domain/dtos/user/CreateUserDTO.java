@@ -5,6 +5,7 @@ public record CreateUserDTO (
         String lastName,
         String email,
         String phoneNumber,
-        String password
+        String password,
+        String urlProfilePicture
 ){
 }
