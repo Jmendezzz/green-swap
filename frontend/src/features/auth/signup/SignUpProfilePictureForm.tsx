@@ -10,6 +10,7 @@ function SignUpProfilePictureForm() {
   const {
     addSignUpData,
     signUpData,
+    submitSignUp
   } = useSignUpContext();
   const [profilePicture, setProfilePicture] = useState<File | undefined>(signUpData.profilePicture);
   const [hovered, setHovered] = useState(false);
@@ -19,12 +20,15 @@ function SignUpProfilePictureForm() {
     const file = ref.current?.files?.[0];
     if (file) {
       setProfilePicture(file);
+      addSignUpData({
+        profilePicture: file,
+      });
     }
   };
 
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(signUpData)
+    submitSignUp(); 
   }
 
   function onBackHandler() {

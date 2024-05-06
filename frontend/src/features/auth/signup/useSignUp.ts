@@ -3,20 +3,24 @@ import { signUpService } from "@/services/authService";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useMutation } from "react-query";
-import { redirect } from "react-router-dom";
-import { AxiosApiError } from "../login/useLogin";
+import { useNavigate } from "react-router-dom";
+import { ErrorResponse } from "../login/useLogin";
+import { ROUTES } from "@/constants/routes";
 
 function useSignUp(){
+    const navigate = useNavigate();
     const {mutate, isLoading} = useMutation({
         mutationFn: (data: SignUpRequestDTO) => signUpService(data),
         onSuccess: () => {
-            redirect('/login')
+            toast.success('Te has registrado exitosamente, por favor revisa tu correo para confirmar tu cuenta');
+            navigate(ROUTES.sendEmailConfirmation);
         },
-        onError: (error: unknown) => {
-            if (error instanceof AxiosError) {
+        onError: (error: AxiosError<ErrorResponse>) => {
+            if(error.response?.data){
+              toast.error(error.response.data.message);
+            }
+            else{
               toast.error('Error inesperado, por favor intenta de nuevo');
-            } else {
-              toast.error((error as AxiosApiError).response.data.message);
             }
           },
         });
