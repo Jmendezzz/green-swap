@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class ConfirmationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,7 @@ public class ConfirmationTokenEntity {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
+    @CreatedBy
     private UserEntity user;
 
 }

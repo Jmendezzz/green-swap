@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @AllArgsConstructor
 public class ConfirmationTokenConstraint {
@@ -21,7 +23,7 @@ public class ConfirmationTokenConstraint {
                         HttpStatus.NOT_FOUND));
     }
     public void validateTokenExpired(String token) {
-        if (repository.findByToken(token).get().getExpiresAt().isBefore(java.time.LocalDateTime.now())) {
+        if (repository.findByToken(token).get().getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new ConfirmationTokenException(
                     ConfirmationTokenMessage.TOKEN_EXPIRED,
                     HttpStatus.BAD_REQUEST);
