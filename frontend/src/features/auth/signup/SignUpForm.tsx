@@ -39,7 +39,7 @@ function SignUpForm() {
         variants={variants}
         initial="enter"
         animate="center"
-        className="w-full flex justify-center flex-col items-center gap-5 "
+        className="w-full flex flex-col items-center gap-5 "
       >
         <SignUpSteps />
         {FORM_STEPS[currentStep]}

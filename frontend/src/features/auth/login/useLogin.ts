@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-interface AxiosApiError {
+export interface AxiosApiError {
   response: {
     data: {
       message: string;

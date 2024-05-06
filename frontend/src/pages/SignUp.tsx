@@ -1,5 +1,6 @@
 import { SignUpContextProvider } from '@/context/SignUpContext';
 import SignUpForm from '@/features/auth/signup/SignUpForm';
+import Logo from '@/features/ui/Logo';
 import Row from '@/features/ui/Row';
 import Section from '@/features/ui/Section';
 import styled from 'styled-components';
@@ -7,7 +8,8 @@ import styled from 'styled-components';
 function SignUp() {
   return (
     <SignUpSection>
-      <Row type="vertical" className="gap-20 h-full items-center justify-center">
+      <Row type="vertical" className="gap-20">
+        <Logo />
         <SignUpContextProvider>
           <SignUpForm />
         </SignUpContextProvider>
