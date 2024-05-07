@@ -11,5 +11,6 @@ public interface ConfirmationTokenRepository {
     ConfirmationToken save(ConfirmationToken confirmationToken);
     Optional<ConfirmationToken> findByToken(String token);
     List<ConfirmationToken> findByUser(User user);
+    Optional<ConfirmationToken> findLastUserToken(User user);
     ConfirmationToken update(ConfirmationToken confirmationToken);
 }
