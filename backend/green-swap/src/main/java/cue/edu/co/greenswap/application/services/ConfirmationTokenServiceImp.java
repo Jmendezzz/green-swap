@@ -79,6 +79,8 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
 
         constraint.validateUserIsConfirmed(userMapperDTO.toDomain(userDto));
 
+        constraint.validateNonExistingValidTokens(userMapperDTO.toDomain(userDto));
+
         expireLastUserToken(userMapperDTO.toDomain(userDto));
 
         ConfirmationToken confirmationToken = createToken(userDto);

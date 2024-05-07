@@ -20,6 +20,7 @@ public class ConfirmationTokenRepositoryJpaAdapter implements ConfirmationTokenR
     private ConfirmationTokenRepositoryJpa repository;
     private UserMapperDBO userMapper;
     private ConfirmationTokenMapperDBO mapper;
+    private EntityManager entityManager;
 
     @Override
     public ConfirmationToken save(ConfirmationToken confirmationToken) {
@@ -35,6 +36,16 @@ public class ConfirmationTokenRepositoryJpaAdapter implements ConfirmationTokenR
     @Override
     public List<ConfirmationToken> findByUser(User user) {
         return repository.findByUser(userMapper.toDBO(user)).stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public Optional<ConfirmationToken> findLastUserToken(User user) {
+        return repository.findByUser(userMapper.toDBO(user))
+                .stream()
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+                .map(mapper::toDomain)
+                .findFirst();
+
     }
 
     @Override

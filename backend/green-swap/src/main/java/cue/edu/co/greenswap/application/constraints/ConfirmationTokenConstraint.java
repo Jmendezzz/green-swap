@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -41,6 +42,15 @@ public class ConfirmationTokenConstraint {
         if (user.isVerified()) {
             throw new ConfirmationTokenException(
                     ConfirmationTokenMessage.USER_ALREADY_CONFIRMED,
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void validateNonExistingValidTokens(User user) {
+        Optional<ConfirmationToken> lastToken = repository.findLastUserToken(user);
+        if (lastToken.isPresent() && lastToken.get().getExpiresAt().isAfter(LocalDateTime.now())) {
+            throw new ConfirmationTokenException(
+                    ConfirmationTokenMessage.TOKEN_ALREADY_SENT,
                     HttpStatus.BAD_REQUEST);
         }
     }
