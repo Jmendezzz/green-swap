@@ -1,9 +1,36 @@
+import { useEffect, useRef } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 import styled from "styled-components";
 interface Props{
-    variant?: 'filled' | 'outlined'
+    variant?: 'filled' | 'outlined',
+    type?: string,
+    placeholder?: string,
+    register?: UseFormRegisterReturn
 }
 
-const Input = styled.input<Props>`
+
+
+function Input({variant = 'outlined', type, placeholder} : Props ){
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const handleFocus = () => {
+            inputRef.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+
+        inputRef.current?.addEventListener('focus', handleFocus);
+
+        return () => {
+            inputRef.current?.removeEventListener('focus', handleFocus);
+        }
+    },[])
+
+    return (
+        <StyledInput type={type} placeholder={placeholder} ref={inputRef} variant={variant} />
+    )
+}
+
+const StyledInput = styled.input<Props>`
     padding: 0.8rem 2.5rem;
     border-radius: 1rem;
     font-size: 1.6rem;
@@ -36,4 +63,5 @@ const Input = styled.input<Props>`
         `
     }
 `
-export default Input;
+
+export default StyledInput;
