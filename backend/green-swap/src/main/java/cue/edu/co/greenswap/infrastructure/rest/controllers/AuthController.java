@@ -48,6 +48,13 @@ public class AuthController {
   }
   //Todo /me and /logout
 
+  @GetMapping("/me")
+  public ResponseEntity<UserDTO> me(){
+    return service.getUserDetails()
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+  }
+
   @PostMapping("/confirm-email")
   public ResponseEntity<Boolean> validateUserEmail(@RequestBody ConfirmationTokenDTO token){
     return ResponseEntity.ok(confirmationTokenService.confirmToken(token));

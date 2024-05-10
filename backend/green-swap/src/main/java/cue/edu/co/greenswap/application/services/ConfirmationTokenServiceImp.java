@@ -83,7 +83,7 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
 
         expireLastUserToken(userMapperDTO.toDomain(userDto));
 
-        ConfirmationToken confirmationToken = createToken(userDto);
+        ConfirmationToken confirmationToken = createToken();
 
         ConfirmationToken savedToken = save(confirmationToken);
         String magic_link = EmailConstant.URL_VALIDATE_EMAIL + savedToken.getToken();
@@ -96,7 +96,7 @@ public class ConfirmationTokenServiceImp implements ConfirmationTokenService {
         return emailService.sendEmail(mail);
     }
 
-    private ConfirmationToken createToken(UserDTO user){
+    private ConfirmationToken createToken(){
         String emailToken = UUID.randomUUID().toString();
         return ConfirmationToken.builder()
                 .token(emailToken)

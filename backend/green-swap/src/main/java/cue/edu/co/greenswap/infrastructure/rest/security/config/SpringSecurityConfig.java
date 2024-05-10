@@ -39,7 +39,9 @@ public class SpringSecurityConfig {
             .sessionManagement(sessionManagement -> sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeRequests(authorizeRequests -> {
-              authorizeRequests.requestMatchers("/auth/**").permitAll();
+              authorizeRequests.requestMatchers("/auth/signup").permitAll();
+              authorizeRequests.requestMatchers("/auth/login").permitAll();
+              authorizeRequests.requestMatchers("/auth/confirm-email").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
             .addFilterBefore(new JwtTokenValidationFilter(jwtUtil,cookieName), BasicAuthenticationFilter.class)

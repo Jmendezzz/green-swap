@@ -7,19 +7,24 @@ import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthSignupRequestD
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthLoginRequestDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthMapperDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthResponseDTO;
+import cue.edu.co.greenswap.infrastructure.rest.security.utils.AuthenticationUtil;
 import cue.edu.co.greenswap.infrastructure.rest.security.utils.CookieUtil;
 import cue.edu.co.greenswap.infrastructure.rest.security.utils.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -29,6 +34,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final AuthMapperDTO mapper;
+    @Value("${security.jwt.expiration}")
+    private int cookieExpirationTime;
     public AuthService(JwtUtil jwtUtil, CookieUtil cookieUtil, UserDetailServiceImp userDetailServiceImp, PasswordEncoder passwordEncoder, UserService userService, AuthMapperDTO mapper) {
         this.jwtUtil = jwtUtil;
         this.cookieUtil = cookieUtil;
@@ -47,24 +54,23 @@ public class AuthService {
 
         Authentication authentication = authenticate(email, password);
         String token = jwtUtil.generateToken(authentication);
-
-        cookieUtil.create(response, cookieName, token, false, -1, "localhost");
+        cookieUtil.create(response, cookieName, token, false, cookieExpirationTime, "localhost");
 
         UserDTO userDTO = userService.getByEmail(email).get();
-        return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Logged in", token);
+        return new AuthResponseDTO(userDTO.firstName() + " " + userDTO.lastName() ,userDTO.urlProfilePicture(),"User Logged in");
     }
 
-    public AuthResponseDTO signUp(AuthSignupRequestDTO authLoginRequestDTO, HttpServletResponse response) {
-        String email = authLoginRequestDTO.email();
-        String password = authLoginRequestDTO.password();
+    public AuthResponseDTO signUp(AuthSignupRequestDTO authSignupRequestDTO, HttpServletResponse response) {
+        String email = authSignupRequestDTO.email();
+        String password = authSignupRequestDTO.password();
 
-        UserDTO userDTO = userService.create(mapper.toCreateUserDTO(authLoginRequestDTO));
+        UserDTO userDTO = userService.create(mapper.toCreateUserDTO(authSignupRequestDTO));
 
         Authentication authentication = authenticate(email, password);
         String token = jwtUtil.generateToken(authentication);
-        cookieUtil.create(response, cookieName, token, false, -1, "localhost");
+        cookieUtil.create(response, cookieName, token, false, cookieExpirationTime, "localhost");
 
-        return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Signed up", token);
+        return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Signed up");
     }
 
 
@@ -80,5 +86,7 @@ public class AuthService {
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
-
+    public Optional<UserDTO> getUserDetails() {
+        return userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 }
