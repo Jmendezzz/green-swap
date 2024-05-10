@@ -3,8 +3,8 @@ package cue.edu.co.greenswap.infrastructure.rest.security.dtos;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"username", "urlProfilePicture", "message", "jwt"})
+@JsonPropertyOrder({"username", "urlProfilePicture", "message"})
 public record AuthResponseDTO(
-        String username, String urlProfilePicture, String message, String jwt
+        String fullName, String urlProfilePicture, String message
 ) {
 }
