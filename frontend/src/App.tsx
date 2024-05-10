@@ -7,6 +7,8 @@ import ToasterStyled from "./features/ui/ToasterStyled"
 import SignUp from "./pages/SignUp"
 import { ROUTES } from "./constants/routes"
 import SendEmailConfirmation from "./pages/SendEmailConfirmation"
+import Home from "./pages/Home"
+import AppLayout from "./features/ui/AppLayout"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,13 +24,15 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <GlobalStyles/>
       <BrowserRouter>
-      <Routes>
-        <Route path={ROUTES.home} element={<h1>Home</h1>} />
-        <Route path={ROUTES.login} element={<Login/>} />
-        <Route path={ROUTES.signUp} element={<SignUp />} />
-        <Route path={ROUTES.sendEmailConfirmation} element={<SendEmailConfirmation/>} />
-        <Route path = "*" element={<h1>Not Found</h1>} />
-      </Routes>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path={ROUTES.home} element={<Home />} />
+          </Route>
+          <Route path={ROUTES.login} element={<Login/>} />
+          <Route path={ROUTES.signUp} element={<SignUp />} />
+          <Route path={ROUTES.sendEmailConfirmation} element={<SendEmailConfirmation/>} />
+          <Route path = "*" element={<h1>Not Found</h1>} />
+        </Routes>
     </BrowserRouter>
     <ToasterStyled />
     </QueryClientProvider>

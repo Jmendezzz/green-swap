@@ -6,7 +6,7 @@ interface Props {
 
 function Section({ children, className }: Props) {
   return (
-    <section className={`w-screen h-screen overflow-y-auto px-10 py-10 ${className}`}>
+    <section className={`w-full h-screen overflow-y-auto px-10 py-10 ${className}`}>
         {children}
     </section>
   )

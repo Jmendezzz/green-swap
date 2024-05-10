@@ -1,5 +1,6 @@
 import SignUpRequestDTO from '@/domain/auth/SignUpRequestDTO';
 import { axiosInstace } from './axiosConfig';
+import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
 
 const REQUEST_MAPPING = '/auth';
 
@@ -44,4 +45,13 @@ export function signUpService(signUpData: SignUpRequestDTO) {
 
 export function sendEmailConfirmationService() {
   return axiosInstace.post(`/mail/send-email-validation`);
+}
+
+
+export async function getBasicInfoCurrentUser() : Promise<BasicInfoUserDTO | null>{
+  try{
+    return await axiosInstace.get(`${REQUEST_MAPPING}/me`).then((response) => response.data).then((data) => data as BasicInfoUserDTO);
+  }catch(error){
+    return null;
+  }
 }
