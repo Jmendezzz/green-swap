@@ -1,7 +1,9 @@
+import { Devices } from "@/styles/Devices"
 import styled from "styled-components"
 
 interface Props{
-    variant?: 'primary' | 'secondary' | 'tertiary'
+    variant?: 'primary' | 'secondary' | 'tertiary',
+    size?: 'small' | 'medium' | 'large',
 }
 
 const Button = styled.button<Props>`
@@ -15,6 +17,11 @@ const Button = styled.button<Props>`
     border: none;
     text-align:center;
 
+    @media (max-width: ${Devices.tablet}){
+        font-size: 1.8rem;
+    
+    }
+
     &:disabled{
         background-color: #abbea5;
 ;
@@ -25,6 +32,28 @@ const Button = styled.button<Props>`
         background-color: #abbea5;
         cursor: not-allowed
     }
+
+    ${(props:Props) =>{
+        if(props.size === 'small'){
+            return `
+                padding: 1rem;
+                font-size: 1.6rem;
+            `
+        }
+        if(props.size === 'medium'){
+            return `
+                padding: 1.4rem;
+                font-size: 2.3rem;
+            `
+        }
+        if(props.size === 'large'){
+            return `
+                padding: 1.8rem;
+                font-size: 3rem;
+            `
+        }
+    
+    }}
     
     
     ${(props:Props) => 

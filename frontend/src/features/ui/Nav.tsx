@@ -1,26 +1,68 @@
-import styled from "styled-components"
-import useUser from "../auth/user/useUser"
-import Logo from "./Logo"
+import styled from 'styled-components';
+import useUser from '../auth/user/useUser';
+import Logo from './Logo';
+import { Devices } from '@/styles/Devices';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import Button from './Button';
+import NavItem from './NavItem';
 
 function Nav() {
-  const { user,isLoading } = useUser()
+  const { user, isLoading } = useUser();
   return (
     <StyledNav>
-        <ul className="">
-            <Logo />
-            <div>
-                {isLoading && <p>Loading...</p>}
-                {user && <p>{user.fullName}</p>}
-                {!user && <p>Log in</p>}
-            </div>
-        </ul>
+      <StyledUl>
+        <Logo />
+        <div className="flex items-center gap-20">
+          <NavItem>
+            <Link to={ROUTES.products}>Productos</Link>
+          </NavItem>
+          <NavItem>
+            <Link to={ROUTES.contact}>Contacto</Link>
+          </NavItem>
+          <li>
+            {isLoading && <p>Loading...</p>}
+            {user && <p>{user.fullName}</p>}
+            {!user && (
+              <Link to={ROUTES.login}>
+                <Button variant="primary" size="small">
+                  Ingresar
+                </Button>
+              </Link>
+            )}
+          </li>
+        </div>
+      </StyledUl>
     </StyledNav>
-  )
+  );
 }
 
 const StyledNav = styled.nav`
-    width:100%;
-    background-color: #333;
-`
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  padding: 6rem 2rem;
+  width: 100%;
+  @media (max-width: ${Devices.tablet}) {
+    padding: 2rem 1rem;
+  }
 
-export default Nav
+`;
+
+const StyledUl = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: ${Devices.desktop};
+
+  & > div{
+    display:flex;
+    @media (max-width: ${Devices.tablet}){
+      display:none;
+    }
+  }
+
+`;
+
+export default Nav;
