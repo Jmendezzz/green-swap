@@ -1,5 +1,5 @@
 export const Devices = {
-    mobile: '360px',
+    mobile: '380px',
     tablet: '768px',
     laptop: '1024px',
     desktop: '1366px',
