@@ -10,7 +10,9 @@ const Heading = styled.h1<Props>`
   ${(props: Props) =>
     props.type === 'h1' &&
     css`
-      font-size: 4rem;
+      font-size: 5rem;
+      font-weight: 1000;
+      text-decoration
       @media (max-width: ${Devices.tablet}) {
         font-size: 3rem;
       }
@@ -43,7 +45,7 @@ const Heading = styled.h1<Props>`
       font-size: 1.4rem;
     `}
   width: 100%;
-  font-weight: 600;
+
   text-align: ${(props) => props.align};
 `;
 Heading.defaultProps = {

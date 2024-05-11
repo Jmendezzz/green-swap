@@ -7,9 +7,9 @@ function Logo({ className }: { className?: string }) {
 }
 
 const StyledLogo = styled.img`
-  width: 400px;
-
- 
+  width: 350px;
+  display:flex;
+  justify-content:center;
   @media (max-width: ${Devices.desktop}) {
     width: 300px;
   } 
