@@ -8,7 +8,7 @@ import { Devices } from '@/styles/Devices';
 function HeroSection() {
   return (
     <StyledHeroSection>
-      <div className='flex flex-col gap-20 h-full'>
+      <StyledHeroContent>
         <header className="flex w-full flex-col">
           <div className='w-[100%] space-y-4 flex flex-col justify-center'>
             <Heading type="h1" align="left">
@@ -24,8 +24,10 @@ function HeroSection() {
             </div>
           </div>
         </header>
-            <StyledImage src={heroImage} alt="" />
-      </div>
+        <div className='w-full h-full'>
+        <StyledImage src={heroImage} alt="" />
+        </div>
+      </StyledHeroContent>
     </StyledHeroSection>
   );
 }
@@ -39,26 +41,34 @@ const StyledHeroSection = styled(Section)`
     rgba(27, 35, 46, 1) 69%
   );
   width: 100%;
-  height: 100vh;
-  & > div{
-    width:100%;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-
-    @media (max-width: ${Devices.tablet}){
-        flex-direction: column;
-    }
+  height: 80vh;
+  padding-bottom: 0;
+  @media (max-width: ${Devices.tablet}) {
+    height: 100vh;
+  
   }
 `;
 const StyledImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    position:block;
     @media (max-width: ${Devices.tablet}){
-        height: 50%;
+        height: 90%;
         width: 100%;
     }
+`
+
+const StyledHeroContent = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    @media (max-width: ${Devices.tablet}){
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 2rem;
+    }
+
 `
 export default HeroSection;
