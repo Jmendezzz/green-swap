@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
 import cue.edu.co.greenswap.application.constants.ProductConstantMessage;
+import cue.edu.co.greenswap.application.ports.usecases.FileService;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
 import cue.edu.co.greenswap.domain.dtos.product.CreateProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
@@ -12,8 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -22,9 +25,19 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductController {
   private ProductService service;
+  private FileService fileService;
 
-  @PostMapping
-  public ResponseEntity<ProductDTO> createProduct(@RequestBody CreateProductDTO product) {
+  @PostMapping(name="/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<ProductDTO> createProduct(
+          @RequestPart("productInfo") CreateProductDTO product,
+          @RequestPart(value = "productImage", required = false) MultipartFile productImage) {
+
+    if(productImage != null){
+      String productImageUrl = fileService.uploadFile(productImage).get("url").toString();
+      CreateProductDTO createProductWithImage = product.withUrlImage(productImageUrl);
+      return ResponseEntity.ok(service.create(createProductWithImage));
+    }
+
     return ResponseEntity.ok(service.create(product));
   }
 

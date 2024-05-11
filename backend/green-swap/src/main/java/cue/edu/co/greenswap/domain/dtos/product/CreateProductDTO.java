@@ -13,4 +13,7 @@ public record CreateProductDTO(
     Quality quality,
     ProductStatus status
 ) {
+  public CreateProductDTO withUrlImage(String urlImage) {
+    return new CreateProductDTO(name, description, price, category, urlImage, quality, status);
+  }
 }
