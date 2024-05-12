@@ -41,7 +41,7 @@ const StyledNav = styled.nav`
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   width: 100%;
   @media (max-width: ${Devices.tablet}) {
     padding: 2rem 1rem;

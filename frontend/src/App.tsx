@@ -9,6 +9,7 @@ import { ROUTES } from "./constants/routes"
 import SendEmailConfirmation from "./pages/SendEmailConfirmation"
 import Home from "./pages/Home"
 import AppLayout from "./features/ui/AppLayout"
+import Products from "./pages/Products"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route path={ROUTES.home} element={<Home />} />
+            <Route path={ROUTES.products} element={<Products />} />
           </Route>
           <Route path={ROUTES.login} element={<Login/>} />
           <Route path={ROUTES.signUp} element={<SignUp />} />
