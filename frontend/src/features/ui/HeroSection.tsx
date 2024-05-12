@@ -64,7 +64,7 @@ const StyledHeroContent = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    @media (max-width: ${Devices.tablet}){
+    @media (max-width: ${Devices.laptop}){
         flex-direction: column;
         justify-content: space-around;
         gap: 2rem;
