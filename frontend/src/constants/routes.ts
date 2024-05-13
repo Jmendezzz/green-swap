@@ -4,4 +4,5 @@ export const ROUTES = {
     signUp: '/register',
     sendEmailConfirmation: '/send-email-confirmation',
     products: '/products',
+    contact: '/contact',
 }

@@ -24,7 +24,7 @@ function HeroSection() {
             </div>
           </div>
         </header>
-        <div className='w-full h-full'>
+        <div className='w-full h-[80%]'>
         <StyledImage src={heroImage} alt="" />
         </div>
       </StyledHeroContent>
@@ -41,7 +41,7 @@ const StyledHeroSection = styled(Section)`
     rgba(27, 35, 46, 1) 69%
   );
   width: 100%;
-  height: 80vh;
+  min-height: 80vh;
   padding-bottom: 0;
   @media (max-width: ${Devices.tablet}) {
     height: 100vh;
@@ -52,6 +52,7 @@ const StyledImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
     position:block;
     @media (max-width: ${Devices.tablet}){
         height: 90%;
