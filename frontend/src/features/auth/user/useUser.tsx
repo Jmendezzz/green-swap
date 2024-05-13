@@ -1,13 +1,20 @@
+import { useUserContext } from "@/context/UserContext";
 import { getBasicInfoCurrentUser } from "@/services/authService";
-import { useQuery } from "react-query";
+import { useMutation} from "react-query";
 
 function useUser(){
-    const {data:user, isLoading} = useQuery({
-        queryKey: ['user'],
-        queryFn: getBasicInfoCurrentUser
+    const {setUser} = useUserContext();
+    const {mutate:getUser, isLoading} = useMutation({
+        mutationFn: getBasicInfoCurrentUser,
+        onSuccess: (user) => {
+            setUser(user);
+        },
+        onError: () => {
+            setUser(null);
+        }
     })
 
-    return {user, isLoading};
+    return {getUser, isLoading};
 
 }
 
