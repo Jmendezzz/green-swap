@@ -1,5 +1,5 @@
 export enum Category {
-    TECHNOLOGY,
-    CLOTHING,
-    BOOKS
+    TECHNOLOGY="Tecnologia",
+    CLOTHING="Ropa",
+    BOOKS= "Libros",
 }
