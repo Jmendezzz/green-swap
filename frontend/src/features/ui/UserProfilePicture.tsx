@@ -1,18 +1,21 @@
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
+import useClickOutside from '@/hooks/useClickOutside';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState} from 'react';
 import styled from 'styled-components';
 
 function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
   const { urlProfilePicture } = user;
   const [showDropdown, setShowDropDown] = useState(false);
 
+  const ref = useClickOutside(() => setShowDropDown(false));
+
   const onClickHandler = () => {
     setShowDropDown(prev => !prev);
   }
 
   return (
-    <StyledUserProfilePicture onClick={onClickHandler}>
+    <StyledUserProfilePicture onClick={onClickHandler} ref={ref}>
       {user.urlProfilePicture ? (
         <img src={urlProfilePicture} alt="Foto de perfil" />
       ) : (
@@ -37,11 +40,10 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
 }
 
 const StyledUserProfilePicture = styled.div`
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 60px;
+  max-height: 60px;
   border-radius: 50%;
   background-color: var(--primary-color-light);
-  padding: 1.4rem 2rem;
   font-size: 2rem;
   font-weight: 700;
   cursor: pointer;
@@ -50,6 +52,7 @@ const StyledUserProfilePicture = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
   }
 `;
 

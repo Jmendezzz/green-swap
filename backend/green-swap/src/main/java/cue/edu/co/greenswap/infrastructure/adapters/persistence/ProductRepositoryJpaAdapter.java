@@ -47,7 +47,6 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
     return repository.findAll(pageable).map(productMapperDBO::toDomain).getContent();
   }
 
-  //Todo
   @Override
   public Page<Product> findBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable) {
     CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -68,7 +67,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
     }
 
     TypedQuery<ProductEntity> typedQuery = em.createQuery(criteriaQuery);
-    typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+    typedQuery.setFirstResult((pageable.getPageNumber() - 1) * pageable.getPageSize());
     typedQuery.setMaxResults(pageable.getPageSize());
 
     List<ProductEntity> productEntities = typedQuery.getResultList();

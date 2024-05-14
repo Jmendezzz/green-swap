@@ -73,6 +73,11 @@ public class AuthService {
         return new AuthResponseDTO(userDTO.email(),userDTO.urlProfilePicture(),"User Signed up");
     }
 
+    public Boolean logout(HttpServletResponse response) {
+        cookieUtil.clear(response, cookieName);
+        return true;
+    }
+
 
     public Authentication authenticate(String email, String password) {
         UserDetails userDetails = userDetailServiceImp.loadUserByUsername(email);

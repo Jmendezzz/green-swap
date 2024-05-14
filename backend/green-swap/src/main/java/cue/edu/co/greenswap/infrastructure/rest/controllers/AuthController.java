@@ -46,7 +46,11 @@ public class AuthController {
   public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthLoginRequestDTO authLoginRequestDTO, HttpServletResponse response){
     return ResponseEntity.ok(service.login(authLoginRequestDTO, response));
   }
-  //Todo /me and /logout
+
+  @GetMapping("/logout")
+  public ResponseEntity<Boolean> logout(HttpServletResponse response){
+    return ResponseEntity.ok(service.logout(response));
+  }
 
   @GetMapping("/me")
   public ResponseEntity<UserDTO> me(){

@@ -42,6 +42,7 @@ public class SpringSecurityConfig {
               authorizeRequests.requestMatchers("/auth/signup").permitAll();
               authorizeRequests.requestMatchers("/auth/login").permitAll();
               authorizeRequests.requestMatchers("/auth/confirm-email").permitAll();
+              authorizeRequests.requestMatchers("/products/search").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
             .addFilterBefore(new JwtTokenValidationFilter(jwtUtil,cookieName), BasicAuthenticationFilter.class)
