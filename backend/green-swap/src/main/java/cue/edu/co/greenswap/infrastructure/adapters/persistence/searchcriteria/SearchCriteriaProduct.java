@@ -8,6 +8,6 @@ public record SearchCriteriaProduct(
         Double minPrice,
         Double maxPrice,
         Category category,
-        Quality condition
+        Quality quality
 ) {
 }
