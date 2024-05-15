@@ -24,7 +24,7 @@ function HeroSection() {
             </div>
           </div>
         </header>
-        <div className='w-full h-[80%]'>
+        <div className='w-full h-full'>
         <StyledImage src={heroImage} alt="" />
         </div>
       </StyledHeroContent>

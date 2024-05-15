@@ -20,17 +20,22 @@ function AppLayout() {
   return (
     <StyledAppLayout>
         <Nav />
-        <main>
+        <Main>
             <Outlet />
-        </main>
+        </Main>
     </StyledAppLayout>
   )
 }
-
 const StyledAppLayout = styled.div`
-    display:flex;
-    flex-direction:column;
-    
-    `
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+
+  `;
+
+const Main = styled.main`
+  flex: 1;
+`;
 
 export default AppLayout

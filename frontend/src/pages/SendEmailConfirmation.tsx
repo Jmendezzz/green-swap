@@ -17,9 +17,12 @@ function SendEmailConfirmation() {
   
     return (
       <StyledSection>
+        <div className='flex justify-center'>
         {isLoading && <FullScreenSpinner/>}
         {isSuccess && <SuccessEmailSentValidation />}
         {error != null && <ErrorEmailSentValidation onRetry={()=> sendEmailValidation()}/>}
+        </div>
+    
       </StyledSection>
     );
 

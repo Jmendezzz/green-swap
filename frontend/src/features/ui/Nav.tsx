@@ -39,12 +39,12 @@ const StyledNav = styled.nav`
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   width: 100%;
   @media (max-width: ${Devices.tablet}) {
     padding: 2rem 1rem;
   }
-`;
+  `;
 
 const StyledUl = styled.ul`
   width: 100%;

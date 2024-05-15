@@ -3,10 +3,13 @@ import useClickOutside from '@/hooks/useClickOutside';
 import { motion } from 'framer-motion';
 import { useState} from 'react';
 import styled from 'styled-components';
+import { useLogout } from '../auth/logout/useLogout';
 
 function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
   const { urlProfilePicture } = user;
   const [showDropdown, setShowDropDown] = useState(false);
+
+  const {logout} = useLogout();
 
   const ref = useClickOutside(() => setShowDropDown(false));
 
@@ -32,7 +35,7 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
 
             >
             <li>Editar perfil</li>
-            <li>Cerrar sesión</li>
+            <li onClick={()=>logout()}>Cerrar sesión</li>
             </DropdownMenu>
         )}
     </StyledUserProfilePicture>
@@ -40,43 +43,52 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
 }
 
 const StyledUserProfilePicture = styled.div`
-  max-width: 60px;
-  max-height: 60px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100px;
+  max-height: 100px;
   border-radius: 50%;
   background-color: var(--primary-color-light);
+  padding: 1.4rem 2rem;
   font-size: 2rem;
-  font-weight: 700;
   cursor: pointer;
-  position: relative;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
   }
+  h1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+ 
 `;
 
 const DropdownMenu = styled(motion.ul)`
   position: absolute;
-  top: 110%;
-  right: 0;
-  width: 200px;
+  top: calc(100% + 9.1px); 
+  right: calc(15%); 
   background-color: var(--primary-color-light);
   border-radius: 4px;
   padding: 1rem;
   list-style: none;
   z-index: 1000;
+  width: 200px;
+
   &:before {
     content: '';
     position: absolute;
     top: -10px;
-    left:160px;
-	width: 0;
-	height: 0;
-	border-left:10px solid transparent;
-	border-right: 10px solid transparent;
-	border-bottom: 10px solid var(--primary-color-light);
-    z-index:-100;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--primary-color-light);
   }
 
   & > li {
