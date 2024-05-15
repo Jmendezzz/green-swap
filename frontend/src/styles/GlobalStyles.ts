@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
         --primary-color-light: #2B3648;
         --contrast-color: #1AC760;
         --white: rgb(226 232 240);
+        --dark-white: rgb(209 213 219);
         --red: rgb(185 28 28);
         font-family: "Space Grotesk", sans-serif;
  

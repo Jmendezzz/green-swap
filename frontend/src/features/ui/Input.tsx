@@ -42,7 +42,7 @@ const StyledInput = styled.input<Props>`
         outline: none;
     }
     &::placeholder{
-        color: var(--white);
+        color: var(--dark-white);
 
     }
     ${(props:Props) => 

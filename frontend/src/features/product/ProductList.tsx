@@ -2,29 +2,21 @@ import styled from 'styled-components';
 import ProductItemCard from './ProductItemCard';
 import { useProducts } from './useProducts';
 import { ClipLoader } from 'react-spinners';
-import { SearchCriteriaProductDTO } from '@/domain/product/SearchCriteriaProductDTO';
 import ProductFilter from './ProductFilter';
 
 function ProductList() {
-  const { data, isLoading, setSearhCriteria, setPageable } = useProducts();
-
-  function handleSearch(criteriaSearch: Partial<SearchCriteriaProductDTO>) {
-    setSearhCriteria((prev) => ({ ...prev, ...criteriaSearch }));
-  }
-
-  if (isLoading) {
-    return (
-      <StyledProductItemsContainer>
-        <ClipLoader color="white" size={150} />
-      </StyledProductItemsContainer>
-    );
-  }
+  const { data, isLoading } = useProducts();
 
   return (
     <>
-      <div className='flex'>
-        <ProductFilter setFilter={handleSearch} />
+      <div className="flex">
+        <ProductFilter />
         <StyledProductItemsContainer>
+          {isLoading && (
+            <div className="flex w-full h-full items-center justify-center">
+              <ClipLoader color={'white'} loading={isLoading} size={150} />
+            </div>
+          )}
           {data?.content.map((product) => (
             <ProductItemCard key={product.id} product={product} />
           ))}
@@ -35,10 +27,10 @@ function ProductList() {
 }
 const StyledProductItemsContainer = styled.div`
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  gap: 3rem;
   width: 100%;
   min-height: 100vh;
 `;
