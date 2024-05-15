@@ -33,5 +33,6 @@ public class UserTokenEntity {
     @CreatedBy
     private UserEntity user;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TokenType type;
 }

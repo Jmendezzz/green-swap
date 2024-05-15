@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.application.ports.persistence;
 
 import cue.edu.co.greenswap.domain.models.Exchange;
+import cue.edu.co.greenswap.domain.models.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,5 +11,5 @@ public interface ExchangeRepository {
   Optional<Exchange> findById(Long id);
   List<Exchange> findByProduct(Long productId);
   void deleteById(Long id);
-
+  List<Exchange> findAllByProductRequested(Product productRequested);
 }

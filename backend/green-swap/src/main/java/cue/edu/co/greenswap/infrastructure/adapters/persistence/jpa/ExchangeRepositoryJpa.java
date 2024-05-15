@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ExchangeRepositoryJpa extends JpaRepository<ExchangeEntity, Long> {
   List<ExchangeEntity> findByProductOfferedId(Long productId);
+  List<ExchangeEntity> findAllByProductRequestedId(Long id);
 }
