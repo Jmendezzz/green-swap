@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +57,10 @@ public class ProductServiceImp implements ProductService {
   public Page<ListProductDTO> getBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable) {
     Page<Product> products = repository.findBySearchCriteria(searchCriteriaProduct, pageable);
     return new PageImpl<>(mapper.toDTO(products.getContent()), pageable, products.getTotalElements());
+  }
+
+  @Override
+  public List<String> getSearchSuggestions(String query) {
+    return repository.findSearchSuggestions(query);
   }
 }

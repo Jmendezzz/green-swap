@@ -8,11 +8,12 @@ import cue.edu.co.greenswap.infrastructure.adapters.persistence.searchcriteria.S
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
   ProductDTO create(CreateProductDTO product);
   Optional<ProductDTO> getById(Long id);
   Page<ListProductDTO> getBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable);
-
+  List<String> getSearchSuggestions(String query);
 }

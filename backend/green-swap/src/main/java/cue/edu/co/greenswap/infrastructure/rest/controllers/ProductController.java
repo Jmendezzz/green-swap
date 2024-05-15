@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -57,6 +58,13 @@ public class ProductController {
                                                           @RequestBody SearchCriteriaProduct searchCriteriaProduct) {
     return ResponseEntity.ok(
             service.getBySearchCriteria(searchCriteriaProduct, pageable)
+    );
+  }
+
+  @GetMapping("/search-suggestions")
+  public ResponseEntity<List<String>> getSearchSuggestions(@RequestParam String query) {
+    return ResponseEntity.ok(
+            service.getSearchSuggestions(query)
     );
   }
 }
