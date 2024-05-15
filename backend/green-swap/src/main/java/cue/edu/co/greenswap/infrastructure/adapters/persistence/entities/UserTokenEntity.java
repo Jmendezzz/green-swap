@@ -1,5 +1,6 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
+import cue.edu.co.greenswap.domain.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,19 +12,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "confirmation_token")
+@Table(name = "user_token")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class ConfirmationTokenEntity {
+public class UserTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String token;
-    @Column(updatable = false, nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime expiresAt;
@@ -31,5 +32,6 @@ public class ConfirmationTokenEntity {
     @ManyToOne
     @CreatedBy
     private UserEntity user;
-
+    @Column(nullable = false)
+    private TokenType type;
 }

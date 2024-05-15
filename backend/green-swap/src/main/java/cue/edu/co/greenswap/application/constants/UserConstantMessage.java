@@ -10,4 +10,8 @@ public class UserConstantMessage {
   public static final String PHONE_NUMBER_NOT_BLANK = "El número de teléfono no puede ser nulo o vacío";
 
   public static final String INVALID_EMAIL = "El correo electrónico no es válido";
+  public static final String INVALID_NEW_PASSWORD = "La contraseña debe ser diferente";
+  public static final String INVALID_CONFIRM_PASSWORD = "Las nuevas contraseñas no coinciden";
+
+  public static final String USER_ALREADY_CONFIRMED = "Tu cuenta ya ha sido confirmada";
 }

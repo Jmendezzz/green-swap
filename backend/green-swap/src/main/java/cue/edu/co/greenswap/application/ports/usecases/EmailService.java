@@ -4,5 +4,5 @@ import com.sendgrid.Response;
 import com.sendgrid.helpers.mail.Mail;
 
 public interface EmailService {
-    Response sendEmail(Mail mail);
+    boolean sendEmail(Mail mail);
 }

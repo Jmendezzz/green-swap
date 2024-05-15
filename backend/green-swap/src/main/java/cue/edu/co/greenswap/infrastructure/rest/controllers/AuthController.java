@@ -1,11 +1,9 @@
 package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
-import cue.edu.co.greenswap.application.ports.usecases.ConfirmationTokenService;
 import cue.edu.co.greenswap.application.ports.usecases.FileService;
-import cue.edu.co.greenswap.application.ports.usecases.UserService;
-import cue.edu.co.greenswap.domain.dtos.token.ConfirmationTokenDTO;
+import cue.edu.co.greenswap.application.ports.usecases.UserTokenService;
+import cue.edu.co.greenswap.domain.dtos.token.UserTokenDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
-import cue.edu.co.greenswap.domain.models.ConfirmationToken;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthSignupRequestDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthLoginRequestDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthResponseDTO;
@@ -24,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AuthController {
   private final AuthService service;
   private final FileService fileService;
-  private final ConfirmationTokenService confirmationTokenService;
+  private final UserTokenService userTokenService;
 
   @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<AuthResponseDTO> signUp(
@@ -60,7 +58,7 @@ public class AuthController {
   }
 
   @PostMapping("/confirm-email")
-  public ResponseEntity<Boolean> validateUserEmail(@RequestBody ConfirmationTokenDTO token){
-    return ResponseEntity.ok(confirmationTokenService.confirmToken(token));
+  public ResponseEntity<Boolean> validateUserEmail(@RequestBody UserTokenDTO token){
+    return ResponseEntity.ok(userTokenService.confirmEmailToken(token));
   }
 }
