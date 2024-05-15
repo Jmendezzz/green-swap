@@ -1,4 +1,4 @@
-package cue.edu.co.greenswap.application.factories;
+package cue.edu.co.greenswap.application.factories.mail;
 
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;

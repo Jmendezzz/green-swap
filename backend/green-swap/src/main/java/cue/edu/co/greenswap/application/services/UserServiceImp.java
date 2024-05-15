@@ -1,19 +1,23 @@
 package cue.edu.co.greenswap.application.services;
 
+import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
+import cue.edu.co.greenswap.domain.dtos.user.ResetUserPasswordDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -69,5 +73,15 @@ public class UserServiceImp implements UserService {
   @Override
   public UserDTO update(UserDTO user) {
     return mapper.toDTO(repository.save(mapper.toDomain(user)));
+  }
+
+  @Override
+  public void resetPassword(String email, String password, String confirmPassword) {
+    constraint.validateUserEmail(email);
+    constraint.validateConfirmPassword(password, confirmPassword);
+    constraint.validateNewPassword(email, password);
+    User user = repository.findByEmail(email).get();
+    user.setPassword(password);
+    repository.save(user);
   }
 }

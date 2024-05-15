@@ -1,6 +1,6 @@
 package cue.edu.co.greenswap.domain.dtos.token;
 
-public record ConfirmationTokenDTO(
+public record UserTokenDTO(
         String token
 ) {
 }

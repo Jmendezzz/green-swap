@@ -17,7 +17,7 @@ public class EmailServiceImp implements EmailService {
 
     private SendGrid sendGrid;
     @Override
-    public Response sendEmail(Mail mail) {
+    public boolean sendEmail(Mail mail) {
         Request request = new Request();
         Response response = null;
         try {
@@ -28,6 +28,6 @@ public class EmailServiceImp implements EmailService {
         } catch (IOException ex) {
             ex.printStackTrace(); //TODO: HANDLE EXCEPTION
         }
-        return response;
+        return true;
     }
 }
