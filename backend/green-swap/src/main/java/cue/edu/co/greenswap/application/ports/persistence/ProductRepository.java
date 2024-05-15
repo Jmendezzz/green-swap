@@ -14,5 +14,6 @@ public interface ProductRepository {
   Optional<Product> findById(Long id);
   List<Product> findAll(Pageable pageable);
   Page<Product> findBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable);
+  List<String> findSearchSuggestions(String query);
 
 }
