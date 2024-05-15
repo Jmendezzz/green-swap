@@ -1,28 +1,26 @@
 import styled from 'styled-components';
-import useUser from '../auth/user/useUser';
 import Logo from './Logo';
 import { Devices } from '@/styles/Devices';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import Button from './Button';
-import NavItem from './NavItem';
+import { useUserContext } from '@/context/UserContext';
+import UserProfilePicture from './UserProfilePicture';
 
 function Nav() {
-  const { user, isLoading } = useUser();
+  const { user } = useUserContext();
   return (
     <StyledNav>
       <StyledUl>
-        <Logo />
+        <NavLink to={ROUTES.home}>
+          <Logo />
+        </NavLink>
         <div className="flex items-center gap-20">
-          <NavItem>
-            <Link to={ROUTES.products}>Productos</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={ROUTES.contact}>Contacto</Link>
-          </NavItem>
+          <StyledNavLink to={ROUTES.products}>Productos </StyledNavLink>
+
+          <StyledNavLink to={ROUTES.contact}>Contacto</StyledNavLink>
           <li>
-            {isLoading && <p>Loading...</p>}
-            {user && <p>{user.fullName}</p>}
+            {user && <UserProfilePicture user={user} />}
             {!user && (
               <Link to={ROUTES.login}>
                 <Button variant="primary" size="small">
@@ -41,28 +39,39 @@ const StyledNav = styled.nav`
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
-  padding: 6rem 2rem;
+  padding: 3rem 2rem;
   width: 100%;
   @media (max-width: ${Devices.tablet}) {
     padding: 2rem 1rem;
   }
-
-`;
+  `;
 
 const StyledUl = styled.ul`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+
   max-width: ${Devices.desktop};
 
-  & > div{
-    display:flex;
-    @media (max-width: ${Devices.tablet}){
-      display:none;
+  & > div {
+    display: flex;
+    @media (max-width: ${Devices.tablet}) {
+      display: none;
     }
   }
-
 `;
 
+const StyledNavLink = styled(NavLink)`
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  &:hover {
+    background-color: var(--primary-color-light);
+  }
+  border-radius: 1rem;
+
+  &.active{
+    background-color: var(--primary-color-light);
+  }
+`;
 export default Nav;

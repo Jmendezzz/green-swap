@@ -12,7 +12,6 @@ const Heading = styled.h1<Props>`
     css`
       font-size: 5rem;
       font-weight: 1000;
-      text-decoration
       @media (max-width: ${Devices.tablet}) {
         font-size: 3rem;
       }

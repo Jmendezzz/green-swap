@@ -24,6 +24,7 @@ const SignUpSection = styled(Section)`
   background-position: bottom;
   background-repeat: no-repeat;
   background-attachment: scroll;
+  height: 100vh;
 `;
 
 export default SignUp;

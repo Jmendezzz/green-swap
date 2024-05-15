@@ -41,7 +41,7 @@ const StyledHeroSection = styled(Section)`
     rgba(27, 35, 46, 1) 69%
   );
   width: 100%;
-  height: 80vh;
+  min-height: 80vh;
   padding-bottom: 0;
   @media (max-width: ${Devices.tablet}) {
     height: 100vh;
@@ -52,6 +52,7 @@ const StyledImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
     position:block;
     @media (max-width: ${Devices.tablet}){
         height: 90%;
@@ -64,7 +65,7 @@ const StyledHeroContent = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    @media (max-width: ${Devices.tablet}){
+    @media (max-width: ${Devices.laptop}){
         flex-direction: column;
         justify-content: space-around;
         gap: 2rem;
