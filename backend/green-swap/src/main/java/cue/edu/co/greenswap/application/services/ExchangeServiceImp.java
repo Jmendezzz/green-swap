@@ -9,6 +9,7 @@ import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,5 +39,23 @@ public class ExchangeServiceImp implements ExchangeService {
   @Override
   public void deleteExchange(Long id) {
     repository.deleteById(id);
+  }
+
+  @Override
+  public ExchangeDTO acceptExchange(Long id) {
+    Exchange exchange = constraint.validateExchangeExists(id);
+    constraint.validateProductRequestedOwner(exchange);
+    exchange.setStatus(ExchangeStatus.ACCEPTED);
+
+    return null;
+  }
+  private void declineAfterAccept(Exchange exchange) {
+    repository.findAllByProductRequested(exchange.getProductRequested())
+      .stream()
+      .filter(e -> e.getStatus().equals(ExchangeStatus.AWAITING_RESPONSE))
+      .forEach(e -> {
+        e.setStatus(ExchangeStatus.DECLINED);
+        repository.save(e);
+      });
   }
 }

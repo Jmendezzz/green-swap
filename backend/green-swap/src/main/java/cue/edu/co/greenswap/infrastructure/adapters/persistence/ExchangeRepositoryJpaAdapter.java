@@ -2,6 +2,7 @@ package cue.edu.co.greenswap.infrastructure.adapters.persistence;
 
 import cue.edu.co.greenswap.application.ports.persistence.ExchangeRepository;
 import cue.edu.co.greenswap.domain.models.Exchange;
+import cue.edu.co.greenswap.domain.models.Product;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.entities.ExchangeEntity;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.ExchangeRepositoryJpa;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.mappers.ExchangeMapperDBO;
@@ -38,5 +39,11 @@ public class ExchangeRepositoryJpaAdapter implements ExchangeRepository {
   @Override
   public void deleteById(Long id) {
     repository.deleteById(id);
+  }
+
+  @Override
+  public List<Exchange> findAllByProductRequested(Product productRequested) {
+    List<ExchangeEntity> exchanges = repository.findAllByProductRequestedId(productRequested.getId());
+    return mapper.toDomain(exchanges);
   }
 }
