@@ -55,3 +55,8 @@ export async function getBasicInfoCurrentUser() : Promise<BasicInfoUserDTO | nul
     return null;
   }
 }
+
+
+export async function logoutService() {
+  return axiosInstace.get(`${REQUEST_MAPPING}/logout`, {});
+}

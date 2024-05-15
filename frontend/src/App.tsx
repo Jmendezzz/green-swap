@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import AppLayout from './features/ui/AppLayout';
 import Products from './pages/Products';
 import { UserContextProvider } from './context/UserContext';
+import ProductDetail from './features/product/ProductDetail';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +31,10 @@ function App() {
             <Route element={<AppLayout />}>
               <Route path={ROUTES.home} element={<Home />} />
               <Route path={ROUTES.products} element={<Products />} />
+              <Route
+                path={`${ROUTES.products}/:productId`}
+                element={<ProductDetail />}
+              />
             </Route>
             <Route path={ROUTES.login} element={<Login />} />
             <Route path={ROUTES.signUp} element={<SignUp />} />

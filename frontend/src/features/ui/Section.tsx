@@ -8,7 +8,7 @@ interface Props {
 
 function Section({ children, className }: Props) {
   return (
-    <StyledSection className={`w-full h-screen overflow-y-auto px-10 py-10 ${className}`}>
+    <StyledSection className={`w-full h-full overflow-y-auto px-7 py-10 ${className}`}>
         <StyledSecytionContent>
             {children}
         </StyledSecytionContent>
@@ -18,14 +18,14 @@ function Section({ children, className }: Props) {
 
 const StyledSection = styled.section`
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
-  padding:5rem 2rem;
+  padding:4rem 2rem;
 `
 const StyledSecytionContent = styled.div`
   width: 100%;
   max-width: ${Devices.desktop};
+  position:relative;
   `
 
 export default Section
