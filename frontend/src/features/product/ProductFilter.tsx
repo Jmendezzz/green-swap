@@ -1,45 +1,54 @@
-import { Category, getCategoryKeys, getCategoryValue } from "@/domain/product/Category";
-import { SearchCriteriaProductDTO } from "@/domain/product/SearchCriteriaProductDTO"
-import { useState } from "react";
-import styled from "styled-components";
+import styled from 'styled-components';
+import Heading from '../ui/Heading';
+import Input from '../ui/Input';
+import ProductCategoryFilter from './ProductCategoryFilter';
+import ProductPriceFilter from './ProductPriceFilter';
 
-interface Props {
-    setFilter: ( searchCriteriaProductDTO : Partial<SearchCriteriaProductDTO>) => void
-}
-function ProductFilter({setFilter}: Props) {
 
-  const [category, setCategory] = useState<Category | undefined>(undefined);
+function ProductFilter() {
 
   return (
     <StyledFilterContainer>
-      {getCategoryKeys().map((cat) => (
-        <button
-          key={getCategoryValue(cat)}
-          onClick={() => {
-            setCategory(cat);
-            setFilter({category: cat})
-          }}
-          className={`px-4 rounded-lg text-left  ${
-            category === cat && 'bg-primary'
-          }`}
-        >
-          {getCategoryValue(cat)}
-        </button>
-      
-      ))}
-    </StyledFilterContainer>
+      <header>
+        <Heading type="h2">Filtros de busqueda</Heading>
+      </header>
+      <div>
+        <Input
+          variant="outlined"
+          placeholder="Buscar productos"
+          className="rounded-full"
 
-  )
+        ></Input>
+      </div>
+      <div>
+        <Heading type="h3" align="left">
+          Categoría
+          <ProductCategoryFilter />
+        </Heading>
+      </div>
+      <ProductPriceFilter/>
+    </StyledFilterContainer>
+  );
 }
 
 const StyledFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
   background-color: var(--primary-color-light);
-  border-radius:3rem;
+  border-radius: 3rem;
   width: 500px;
-`
+  padding: 2rem;
+  height: 100vh;
+  position: sticky;
+  top: 0; /* This will make it stick to the top of the viewport */
+  overflow-y: auto;
 
-export default ProductFilter
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
+export default ProductFilter;
