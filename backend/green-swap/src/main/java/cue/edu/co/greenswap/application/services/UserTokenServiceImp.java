@@ -117,9 +117,10 @@ public class UserTokenServiceImp implements UserTokenService {
         UserToken savedToken = save(resetPasswordToken);
 
         String magic_link = EmailConstant.URL_RESET_PASSWORD + savedToken.getToken();
+
         Map<String, Object> properties = new HashMap<>();
+        properties.put("to", userDto.get());
         properties.put("magic_link", magic_link);
-        properties.put("email", email);
 
         Mail mail = resetPasswordMailFactory.createMail(properties);
         return emailService.sendEmail(mail);
