@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Heading from '../ui/Heading';
-import Input from '../ui/Input';
 import Row from '../ui/Row';
 import { useState } from 'react';
 import { useProductFilterContext } from '@/context/ProductFilterContext';
