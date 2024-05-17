@@ -3,6 +3,7 @@ import Heading from '../ui/Heading';
 import Input from '../ui/Input';
 import ProductCategoryFilter from './ProductCategoryFilter';
 import ProductPriceFilter from './ProductPriceFilter';
+import ProductNameFilter from './ProductNameFilter';
 
 
 function ProductFilter() {
@@ -12,14 +13,7 @@ function ProductFilter() {
       <header>
         <Heading type="h2">Filtros de busqueda</Heading>
       </header>
-      <div>
-        <Input
-          variant="outlined"
-          placeholder="Buscar productos"
-          className="rounded-full"
-
-        ></Input>
-      </div>
+      <ProductNameFilter />
       <div>
         <Heading type="h3" align="left">
           Categoría

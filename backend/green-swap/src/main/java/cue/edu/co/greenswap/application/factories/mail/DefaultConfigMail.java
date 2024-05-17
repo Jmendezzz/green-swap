@@ -1,18 +1,15 @@
-package cue.edu.co.greenswap.application.factories;
+package cue.edu.co.greenswap.application.factories.mail;
 
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
 import cue.edu.co.greenswap.application.constants.EmailConstant;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Component
-public class EmailValidationMail implements MailFactory{
-    @Override
-    public Mail createMail(Map<String, Object> properties) {
+public class DefaultConfigMail {
+    public static Mail defaultMail(Map<String, Object> properties){
         UserDTO user = (UserDTO) properties.get("to");
         String magic_link = (String) properties.get("magic_link");
 
@@ -21,12 +18,11 @@ public class EmailValidationMail implements MailFactory{
         mail.setReplyTo(new Email(EmailConstant.REPLY_EMAIL));
 
         Personalization personalization = new Personalization();
+        personalization.addTo(new Email(user.email()));
         personalization.addDynamicTemplateData("username", user.firstName());
         personalization.addDynamicTemplateData("magic_link", magic_link);
-        personalization.addTo(new Email(user.email()));
         mail.addPersonalization(personalization);
 
-        mail.setTemplateId(EmailConstant.SIGNUP_TEMPLATE_ID);
         return mail;
     }
 }

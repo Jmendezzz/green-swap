@@ -28,6 +28,8 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
   private ProductMapperDBO productMapperDBO;
   private EntityManager em;
 
+  private final Integer MAX_SEARCH_SUGGESTIONS = 20;
+
   @Override
   public Product save(Product product) {
     ProductEntity productEntity = productMapperDBO.toDBO(product);
@@ -77,6 +79,28 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
     Long totalProducts = countProductsBySearchCriteria(searchCriteriaProduct);
 
     return new PageImpl<>(products, pageable, totalProducts); //Todo test
+  }
+
+  @Override
+  public List<String> findSearchSuggestions(String query) {
+    CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+    CriteriaQuery<String> criteriaQuery = criteriaBuilder.createQuery(String.class);
+
+    Root<ProductEntity> root = criteriaQuery.from(ProductEntity.class);
+
+    criteriaQuery.select(root.get("name"));
+
+    Predicate namePredicate = criteriaBuilder.like(
+            root.get("name"),
+            "%" + query
+    );
+
+    criteriaQuery.where(namePredicate);
+    criteriaQuery.distinct(true);
+
+    return em.createQuery(criteriaQuery)
+            .setMaxResults(MAX_SEARCH_SUGGESTIONS)
+            .getResultList();
   }
 
   private Long countProductsBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct) {

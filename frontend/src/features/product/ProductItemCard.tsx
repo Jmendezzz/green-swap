@@ -41,7 +41,7 @@ const StyledProductItemCard = styled.div`
   border-radius: 1rem;
   cursor: pointer;
   gap: 1rem;
-  max-height: 50%;
+  height: 500px;
   h2 {
     font-size: 2rem;
     font-weight: 700;
