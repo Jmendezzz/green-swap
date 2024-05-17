@@ -16,7 +16,7 @@ export function getProductByIdService(productId: number): Promise<AxiosResponse<
     return axiosInstace.get(`${REQUEST_MAPPING}/${productId}`);
 }
 
-export function getProductsSuggestions(query: string): Promise<AxiosResponse<Array<String>>>{
+export function getProductsSuggestions(query: string): Promise<AxiosResponse<Array<string>>>{
     return axiosInstace.get(`${REQUEST_MAPPING}/search-suggestions?query=${query}`);
 }
 
