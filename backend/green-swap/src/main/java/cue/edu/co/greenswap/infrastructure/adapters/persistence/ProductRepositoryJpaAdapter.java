@@ -118,7 +118,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
     }
 
     if (searchCriteriaProduct.minPrice() != null && searchCriteriaProduct.maxPrice() == null) {
-      Predicate minPricePredicate = criteriaBuilder.lessThanOrEqualTo(
+      Predicate minPricePredicate = criteriaBuilder.greaterThanOrEqualTo(
               root.get("price"),
               searchCriteriaProduct.minPrice()
       );
