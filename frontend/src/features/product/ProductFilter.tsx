@@ -4,6 +4,7 @@ import Input from '../ui/Input';
 import ProductCategoryFilter from './ProductCategoryFilter';
 import ProductPriceFilter from './ProductPriceFilter';
 import ProductNameFilter from './ProductNameFilter';
+import ProductQualityFilter from './ProductQualityFilter';
 
 
 function ProductFilter() {
@@ -14,13 +15,9 @@ function ProductFilter() {
         <Heading type="h2">Filtros de busqueda</Heading>
       </header>
       <ProductNameFilter />
-      <div>
-        <Heading type="h3" align="left">
-          Categoría
-          <ProductCategoryFilter />
-        </Heading>
-      </div>
+      <ProductCategoryFilter/>
       <ProductPriceFilter/>
+      <ProductQualityFilter/>
     </StyledFilterContainer>
   );
 }
@@ -28,7 +25,7 @@ function ProductFilter() {
 const StyledFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
   background-color: var(--primary-color-light);
   border-radius: 3rem;
   width: 500px;
