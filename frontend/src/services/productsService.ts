@@ -15,3 +15,8 @@ export function getProductsByCriteriaService(searchCriteria: SearchCriteriaProdu
 export function getProductByIdService(productId: number): Promise<AxiosResponse<ProductDTO>> {
     return axiosInstace.get(`${REQUEST_MAPPING}/${productId}`);
 }
+
+export function getProductsSuggestions(query: string): Promise<AxiosResponse<Array<string>>>{
+    return axiosInstace.get(`${REQUEST_MAPPING}/search-suggestions?query=${query}`);
+}
+

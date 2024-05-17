@@ -3,26 +3,32 @@ import ProductItemCard from './ProductItemCard';
 import { useProducts } from './useProducts';
 import { ClipLoader } from 'react-spinners';
 import ProductFilter from './ProductFilter';
+import Empty from '../ui/Empty';
 
 function ProductList() {
   const { data, isLoading } = useProducts();
 
   return (
-    <>
-      <div className="flex">
-        <ProductFilter />
-        <StyledProductItemsContainer>
-          {isLoading && (
-            <div className="flex w-full h-full items-center justify-center">
-              <ClipLoader color={'white'} loading={isLoading} size={150} />
-            </div>
-          )}
-          {data?.content.map((product) => (
-            <ProductItemCard key={product.id} product={product} />
-          ))}
-        </StyledProductItemsContainer>
-      </div>
-    </>
+    <div className="flex">
+      <ProductFilter />
+      <StyledProductItemsContainer>
+        {isLoading ? (
+          <div className="flex w-full h-full items-center justify-center">
+            <ClipLoader color={'white'} size={150} />
+          </div>
+        ) : (
+          <>
+            {data && data.content.length > 0 ? (
+              data.content.map((product) => (
+                <ProductItemCard key={product.id} product={product} />
+              ))
+            ) : (
+              <Empty message="No hay productos encontrados" />
+            )}
+          </>
+        )}
+      </StyledProductItemsContainer>
+    </div>
   );
 }
 const StyledProductItemsContainer = styled.div`
