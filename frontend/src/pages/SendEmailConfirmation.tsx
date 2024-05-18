@@ -28,6 +28,7 @@ function SendEmailConfirmation() {
 
 }
 const StyledSection = styled(Section)`
+  height: 100vh;
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
