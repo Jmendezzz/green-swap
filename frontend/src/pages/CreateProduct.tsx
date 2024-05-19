@@ -14,6 +14,8 @@ function CreateProduct() {
 
 const StyledCreateProductSection = styled(Section)`
   background-color: var(--primary-color);
+  width: 100%;
+  height: 100%;
 `;
 
 export default CreateProduct;

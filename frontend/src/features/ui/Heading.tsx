@@ -23,7 +23,7 @@ const Heading = styled.h1<Props>`
   ${(props: Props) =>
     props.type === 'h2' &&
     css`
-      font-size: 2rem;
+      font-size: 3.5rem;
       font-weight: 700;
       @media (max-width: ${Devices.tablet}) {
         font-size: 1.8rem;

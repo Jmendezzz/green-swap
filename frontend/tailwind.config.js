@@ -12,7 +12,7 @@ export default {
       },
       backgroundColor:{
         'primary': '#1B232E',
-        'primary-light': '#2B3648',
+        'primary-light': '#202a37',
         'contrast': '#1AC760'      
       }
     },

@@ -32,10 +32,10 @@ const StyledFilterContainer = styled.div`
   background-color: var(--primary-color-light);
   border-radius: 3rem;
   width: 500px;
-  padding: 2rem;
+  padding: 2rem 3rem;
   height: 100vh;
   position: sticky;
-  top: 0; /* This will make it stick to the top of the viewport */
+  top: 0; 
   overflow-y: auto;
 
   & > div {

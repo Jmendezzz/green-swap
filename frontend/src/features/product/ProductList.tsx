@@ -9,7 +9,7 @@ function ProductList() {
   const { data, isLoading } = useProducts();
 
   return (
-    <div className="flex">
+    <div className="flex gap-10">
       <ProductFilter />
       <StyledProductItemsContainer>
         {isLoading ? (

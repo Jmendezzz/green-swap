@@ -1,19 +1,18 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import FullScreenSpinner from '../ui/FullScreenSpinner';
-import useUser from './user/useUser';
+import { useUserContext } from '@/context/UserContext';
+import { useEffect } from 'react';
 
 function ProtectedRoute() {
-  const { user, isLoading } = useUser();
-  const navigate = useNavigate();
+
+  const {user} = useUserContext();
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  },[user, navigate]);
   
-  if (isLoading) {
-    return <FullScreenSpinner />;
-  }
-  
-  if (!user) {
-    navigate('/login');
-    return;
-  }
 
   return <Outlet />;
 }
