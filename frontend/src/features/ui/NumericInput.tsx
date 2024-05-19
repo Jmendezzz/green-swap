@@ -1,12 +1,12 @@
 import Input from "./Input";
 interface NumericInputProps {
-    value: string;
-    setValue: (value: string) => void;
-    onBlur: () => void;
-    placeholder: string;
+    value?: string;
+    setValue?: (value: string) => void;
+    onBlur?: () => void;
+    placeholder?: string;
   }
   
-  const NumericInput: React.FC<NumericInputProps> = ({ value, setValue, onBlur, placeholder }) => {
+  function NumericInput({ value, setValue, onBlur, placeholder }: NumericInputProps)  {
     const handleKeyPress = (e: React.KeyboardEvent) => {
       if (!/[0-9]/.test(e.key)) {
         e.preventDefault();
@@ -14,7 +14,9 @@ interface NumericInputProps {
     };
   
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if(setValue){
       setValue(e.target.value);
+      }
     };
   
     return (
@@ -28,6 +30,6 @@ interface NumericInputProps {
         onBlur={onBlur}
       />
     );
-  };
+  }
   
   export default NumericInput;

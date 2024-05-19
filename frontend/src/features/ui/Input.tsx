@@ -10,27 +10,27 @@ interface Props{
 
 
 
-function Input({variant = 'outlined', type, placeholder} : Props ){
-    const inputRef = useRef<HTMLInputElement>(null);
+// function Input({variant = 'outlined', type, placeholder} : Props ){
+//     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        const handleFocus = () => {
-            inputRef.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
-        }
+//     useEffect(() => {
+//         const handleFocus = () => {
+//             inputRef.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
+//         }
 
-        inputRef.current?.addEventListener('focus', handleFocus);
+//         inputRef.current?.addEventListener('focus', handleFocus);
 
-        return () => {
-            inputRef.current?.removeEventListener('focus', handleFocus);
-        }
-    },[])
+//         return () => {
+//             inputRef.current?.removeEventListener('focus', handleFocus);
+//         }
+//     },[])
 
-    return (
-        <StyledInput type={type} placeholder={placeholder} ref={inputRef} variant={variant} />
-    )
-}
+//     return (
+//         <StyledInput type={type} placeholder={placeholder} ref={inputRef} variant={variant} />
+//     )
+// }
 
-const StyledInput = styled.input<Props>`
+const Input = styled.input<Props>`
     padding: 0.8rem 2.5rem;
     border-radius: 1rem;
     font-size: 1.6rem;
@@ -64,4 +64,4 @@ const StyledInput = styled.input<Props>`
     }
 `
 
-export default StyledInput;
+export default Input;

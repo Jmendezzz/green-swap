@@ -41,7 +41,7 @@ const StyledHeroSection = styled(Section)`
     rgba(27, 35, 46, 1) 69%
   );
   width: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
   padding-bottom: 0;
   @media (max-width: ${Devices.tablet}) {
     height: 100vh;

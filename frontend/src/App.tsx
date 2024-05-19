@@ -13,6 +13,7 @@ import Products from './pages/Products';
 import { UserContextProvider } from './context/UserContext';
 import ProductDetail from './features/product/ProductDetail';
 import CreateProduct from './pages/CreateProduct';
+import ProtectedRoute from './features/auth/ProtectedRoute';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +37,12 @@ function App() {
                 path={`${ROUTES.products}/:productId`}
                 element={<ProductDetail />}
               />
-              <Route path={ROUTES.createProducts} element={<CreateProduct />} />
+
+              {/* Protected routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path={ROUTES.createProducts} element={<CreateProduct />}/>
+              </Route>
+
             </Route>
             <Route path={ROUTES.login} element={<Login />} />
             <Route path={ROUTES.signUp} element={<SignUp />} />

@@ -4,13 +4,27 @@ import { Devices } from './Devices';
 const GlobalStyles = createGlobalStyle`
     *{
         --primary-color: #1B232E;
-        --primary-color-light: #2B3648;
+        --primary-color-light: #202a37;
         --contrast-color: #1AC760;
         --white: rgb(226 232 240);
         --dark-white: rgb(209 213 219);
-        --red: rgb(185 28 28);
+        --red: rgb(255, 51, 51);
         font-family: "Space Grotesk", sans-serif;
  
+    }
+        /* Custom scrollbar */
+        *::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--primary-color-light);
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: var(--contrast-color);
+        border-radius: 20px;
+        border: 3px solid var(--primary-color-light);
     }
 
     a {

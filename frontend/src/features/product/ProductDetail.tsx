@@ -8,18 +8,21 @@ import Button from '../ui/Button';
 import GoBackButton from '../ui/GoBackButton';
 import { Devices } from '@/styles/Devices';
 import { HiPhotograph } from 'react-icons/hi';
+import Empty from '../ui/Empty';
 
 function ProductDetail() {
   const { product, isLoading } = useProduct();
 
-  if (product === undefined) {
-    return <p>Producto no encontrado</p>;
+  if(isLoading){
+    return <LoadingContainer>
+    <ClipLoader color={'white'} size={150} />
+    </LoadingContainer>
   }
+
   return (
     <StyledSection>
-      {isLoading && <ClipLoader color="#1AC760" size={150} />}
 
-      {product && (
+      {product && !isLoading ? (
         <>
           <GoBackButton />
 
@@ -47,7 +50,8 @@ function ProductDetail() {
             </StyledProductDetailContent>
           </StyledProductDetail>
         </>
-      )}
+      ) : 
+      <Empty message='Producto no encontrado' />}
     </StyledSection>
   );
 }
@@ -55,6 +59,16 @@ function ProductDetail() {
 const StyledSection = styled(Section)`
   background-color: var(--primary-color);
 `;
+
+const LoadingContainer = styled.div`
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+`;
+
 
 const StyledImageContainer = styled.div`
   width: 100%;
