@@ -10,7 +10,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 function ProductNameFilter() {
   const { setFilter, searchCriteriaProductDTO } = useProductFilterContext();
   const [isSuggestionsOpened, setIsSuggestionsOpened] = useState(false);
-  const [nameQuery, setNameQuery] = useState(searchCriteriaProductDTO.name);
+  const [nameQuery, setNameQuery] = useState(searchCriteriaProductDTO.name ? searchCriteriaProductDTO.name : '');
   const { getProductsSuggestions, isLoading, suggestions } = useProductSuggestions();
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,15 +28,21 @@ function ProductNameFilter() {
   }, [nameQuery, getProductsSuggestions]);
 
   function blurHandler() {
-    setIsSuggestionsOpened(false);
-    setFilter({
-      name: nameQuery,
-    });
+    setTimeout(() => {
+      setIsSuggestionsOpened(false);
+      setFilter({
+        name: nameQuery,
+      });
+    }, 100);
   }
   function handleKeyPress(event:React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       blurHandler();
     }
+  }
+  function handleSuggestionClick(suggestion: string) {
+    setNameQuery(suggestion);
+    setIsSuggestionsOpened(false);
   }
   const ref = useClickOutside(blurHandler);
 
@@ -61,7 +67,7 @@ function ProductNameFilter() {
             </div>
           ) : suggestions && suggestions.length > 0 ? (
             suggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => setNameQuery(suggestion)}>
+              <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
                 {suggestion}
               </li>
             ))

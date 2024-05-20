@@ -59,7 +59,6 @@ const Input = styled.input<Props>`
         props.variant === 'filled' && `
             background-color: var(--primary-color);
             color: var(--white);
-            border: 1.6px solid var(--white);
         `
     }
 `
