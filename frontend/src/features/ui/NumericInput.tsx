@@ -11,6 +11,7 @@ interface NumericInputProps {
       if (!/[0-9]/.test(e.key)) {
         e.preventDefault();
       }
+      
     };
   
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,7 @@ interface NumericInputProps {
         type="text"
         defaultValue={value}
         placeholder={placeholder}
-        variant="outlined"
+        variant="filled"
         onChange={handleInput}
         onKeyPress={handleKeyPress}
         onBlur={onBlur}

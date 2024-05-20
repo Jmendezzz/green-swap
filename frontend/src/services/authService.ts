@@ -37,7 +37,6 @@ export function signUpService(signUpData: SignUpRequestDTO) {
   return axiosInstace.post(`${REQUEST_MAPPING}/signup`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-    
     },
     withCredentials: true
   });

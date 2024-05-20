@@ -11,9 +11,10 @@ function useSignUp(){
     const navigate = useNavigate();
     const {mutate, isLoading} = useMutation({
         mutationFn: (data: SignUpRequestDTO) => signUpService(data),
-        onSuccess: () => {
-            toast.success('Te has registrado exitosamente, por favor revisa tu correo para confirmar tu cuenta');
-            navigate(ROUTES.sendEmailConfirmation);
+        onSuccess: async () => {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            toast.success('Te has registrado exitosamente, por favor revisa tu correo para confirmar tu cuenta');    
+            navigate(ROUTES.sendEmailConfirmation);        
         },
         onError: (error: AxiosError<ErrorResponse>) => {
             if(error.response?.data){
