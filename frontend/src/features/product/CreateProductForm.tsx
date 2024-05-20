@@ -8,10 +8,15 @@ import NumericInput from '../ui/NumericInput';
 import Textarea from '../ui/Textarea';
 import Button from '../ui/Button';
 import { getCategoryKeys, getCategoryValue } from '@/domain/product/Category';
-import Select from './Select';
+import Select from '../ui/Select';
 import { getQualityKeys, getQualityValue } from '@/domain/product/Condition';
 import styled from 'styled-components';
 import Heading from '../ui/Heading';
+import { ProductDTO } from '@/domain/product/ProductDTO';
+import { useUserContext } from '@/context/UserContext';
+import ProductDetailCard from './ProductDetailCard';
+import CreateProductPreview from './CreateProductPreview';
+import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
 
 function CreateProductForm() {
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -23,94 +28,116 @@ function CreateProductForm() {
     register,
     formState: { errors },
     control,
-  } = useForm<CreateProductDTO>({ mode: 'onBlur' });
+    handleSubmit,
+    watch,
+  } = useForm<CreateProductDTO>({ mode: 'onTouched' });
+
+  function onSubmit(data: CreateProductDTO) {
+    console.log(data);
+  }
+
+  const watchAllFields = watch();
+  const { user } = useUserContext();
+
+  const previewProduct: ProductDTO = {
+    ...watchAllFields,
+    urlImage: file ? URL.createObjectURL(file) : '',
+    createdAt: new Date(),
+    owner: user as BasicInfoUserDTO,
+  };
 
   return (
-    <StyledCreateProductFormContainer>
-      <header>
+    <div className='flex gap-10'>
+      <StyledCreateProductFormContainer>
+        <header>
           <Heading type="h2">Crear producto</Heading>
-      </header>
-      <StyledCreateProductForm>
-        <UploadImageInput image={file} setImage={handleFileChange} />
-        <FormRow error={errors?.name?.message}>
-          <Input
-            variant="filled"
-            placeholder="Nombre"
-            {...register('name', { required: 'El nombre es requerido' })}
-          />
-        </FormRow>
-        <FormRow error={errors?.description?.message}>
-          <Textarea
-            placeholder="Descripción"
-            {...register('description', {
-              required: 'La descripción es requerida',
-              maxLength: {
-                value: 300,
-                message: 'La descripción no puede tener más de 300 caracteres',
-              },
-            })}
-          />
-        </FormRow>
-        <FormRow error={errors?.price?.message}>
-          <Controller
-            name="price"
-            control={control}
-            rules={{
-              required: 'El precio es requerido',
-              min: { value: 0, message: 'El precio no puede ser negativo' },
-            }}
-            render={({ field }) => (
-              <NumericInput
-                placeholder="Precio"
-                value={field.value?.toString()}
-                setValue={field.onChange}
-              />
-            )}
-          />
-        </FormRow>
-        <FormRow error={errors?.category?.message}>
-          <Controller
-            name="category"
-            control={control}
-            rules={{ required: 'La categoría es requerida' }}
-            render={({ field }) => (
-              <Select {...field}>
-                <option value="" disabled selected>
-                  Selecciona una categoría
-                </option>
-                {getCategoryKeys().map((key) => (
-                  <option key={key} value={key}>
-                    {getCategoryValue(key)}
+        </header>
+        <StyledCreateProductForm onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex items-center justify-center">
+            <UploadImageInput image={file} setImage={handleFileChange} />
+          </div>
+          <FormRow error={errors?.name?.message}>
+            <Input
+              variant="filled"
+              placeholder="Nombre"
+              {...register('name', { required: 'El nombre es requerido' })}
+            />
+          </FormRow>
+          <FormRow error={errors?.description?.message}>
+            <Textarea
+              placeholder="Descripción"
+              {...register('description', {
+                required: 'La descripción es requerida',
+                maxLength: {
+                  value: 300,
+                  message:
+                    'La descripción no puede tener más de 300 caracteres',
+                },
+              })}
+            />
+          </FormRow>
+          <FormRow error={errors?.price?.message}>
+            <Controller
+              name="price"
+              control={control}
+              rules={{
+                required: 'El precio es requerido',
+                min: { value: 0, message: 'El precio no puede ser negativo' },
+              }}
+              render={({ field }) => (
+                <NumericInput
+                  placeholder="Precio"
+                  value={field.value?.toString()}
+                  setValue={field.onChange}
+                />
+              )}
+            />
+          </FormRow>
+          <FormRow error={errors?.category?.message}>
+            <Controller
+              name="category"
+              control={control}
+              rules={{ required: 'La categoría es requerida' }}
+              render={({ field }) => (
+                <Select {...field}>
+                  <option value="" disabled selected>
+                    Selecciona una categoría
                   </option>
-                ))}
-              </Select>
-            )}
-          />
-        </FormRow>
-        <FormRow error={errors?.quality?.message}>
-          <Controller
-            name="quality"
-            control={control}
-            rules={{ required: 'La calidad es requerida' }}
-            render={({ field }) => (
-              <Select {...field}>
-                <option value="" disabled selected>
-                  Selecciona una calidad
-                </option>
-                {getQualityKeys().map((key) => (
-                  <option key={key} value={key}>
-                    {getQualityValue(key)}
+                  {getCategoryKeys().map((key) => (
+                    <option key={key} value={key}>
+                      {getCategoryValue(key)}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormRow>
+          <FormRow error={errors?.quality?.message}>
+            <Controller
+              name="quality"
+              control={control}
+              rules={{ required: 'La calidad es requerida' }}
+              render={({ field }) => (
+                <Select {...field}>
+                  <option value="" disabled selected>
+                    Selecciona una calidad
                   </option>
-                ))}
-              </Select>
-            )}
-          />
-        </FormRow>
-        <Button type="submit" variant="primary">
-          Crear producto
-        </Button>
-      </StyledCreateProductForm>
-    </StyledCreateProductFormContainer>
+                  {getQualityKeys().map((key) => (
+                    <option key={key} value={key}>
+                      {getQualityValue(key)}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormRow>
+          <Button type="submit" variant="primary">
+            Crear producto
+          </Button>
+        </StyledCreateProductForm>
+      </StyledCreateProductFormContainer>
+      <CreateProductPreview product={previewProduct} />
+    </div>
   );
 }
 
@@ -119,7 +146,7 @@ const StyledCreateProductFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: 600px; /* Set a specific height */
+  height: 100%; /* Set a specific height */
   background-color: var(--primary-color-light);
   border-radius: 2rem;
   width: 500px;
@@ -132,6 +159,6 @@ const StyledCreateProductForm = styled.form`
   gap: 2rem;
   padding: 2rem;
   overflow-y: auto;
-  `
+`;
 
 export default CreateProductForm;

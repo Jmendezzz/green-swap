@@ -19,7 +19,7 @@ const StyledFormRow = styled.div<{ error: string | undefined }>`
   width: 100%;
   font-size: 1.4rem;
   ${(props) => props.error && `color: var(--red);`}
-  ${(props) => props.error && ` & > input {border: 1px solid var(--red);}`}
+  ${(props) => props.error && ` & > input, textarea, select {border: 1px solid var(--red);}`}
 `;
 
 export default FormRow;

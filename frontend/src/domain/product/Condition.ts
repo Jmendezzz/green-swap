@@ -5,7 +5,7 @@ export enum Quality {
 }
 
 export function getQualityValue(key: Quality): string {
-  return Quality[key];
+  return Quality[key as unknown as keyof typeof Quality];
 }
 export function getQualityKeys(): Quality[] {
   return Object.keys(Quality) as Quality[];
