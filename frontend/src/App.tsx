@@ -14,6 +14,7 @@ import { UserContextProvider } from './context/UserContext';
 import ProductDetail from './features/product/ProductDetail';
 import CreateProduct from './pages/CreateProduct';
 import ProtectedRoute from './features/auth/ProtectedRoute';
+import AnonymousRoute from './features/ui/AnonymousRoute';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,18 +39,23 @@ function App() {
                 element={<ProductDetail />}
               />
 
-              {/* Protected routes */}
+              {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>
-                <Route path={ROUTES.createProducts} element={<CreateProduct />}/>
+                <Route
+                  path={ROUTES.createProducts}
+                  element={<CreateProduct />}
+                />
               </Route>
-
             </Route>
-            <Route path={ROUTES.login} element={<Login />} />
-            <Route path={ROUTES.signUp} element={<SignUp />} />
-            <Route
-              path={ROUTES.sendEmailConfirmation}
-              element={<SendEmailConfirmation />}
-            />
+            {/*Anonymous Routes */}
+            <Route element={<AnonymousRoute />}>
+              <Route path={ROUTES.login} element={<Login />} />
+              <Route path={ROUTES.signUp} element={<SignUp />} />
+              <Route
+                path={ROUTES.sendEmailConfirmation}
+                element={<SendEmailConfirmation />}
+              />
+            </Route>
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
         </UserContextProvider>

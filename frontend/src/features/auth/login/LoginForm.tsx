@@ -8,7 +8,7 @@ import { ClipLoader } from 'react-spinners';
 import FormRow from '../../ui/FormRow';
 
 function LoginForm() {
-  const { login, isLoading } = useLogin();
+  const { login, isLoading, error } = useLogin();
 
   const { register, handleSubmit, formState:{errors} } = useForm<LoginRequestDTO>({
     mode: 'onTouched',

@@ -1,4 +1,5 @@
 import LoginRequestDTO from '@/domain/auth/LoginRequestDTO';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { loginService } from '@/services/authService';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
@@ -12,11 +13,15 @@ export interface ErrorResponse  {
 
 export function useLogin() {
   const navigate = useNavigate();
+  const [setValue] = useLocalStorage(false, 'isAuthenticated');
 
-  const { mutate, isLoading, error, isSuccess } = useMutation({
+  const { mutate,status, error, isSuccess } = useMutation({
     mutationFn: (loginRequest: LoginRequestDTO) =>
       loginService(loginRequest.email, loginRequest.password),
-    onSuccess: () => navigate('/'),
+    onSuccess: () => {
+      setValue(true);   
+      navigate('/')
+    },
     onError: (error: AxiosError<ErrorResponse>) => {
       if(error.response?.data){
         toast.error(error.response.data.message);
@@ -24,11 +29,12 @@ export function useLogin() {
       else{
         toast.error('Error inesperado, por favor intenta de nuevo');
       }
+      setValue(false);
     },
   });
   return {
     login: mutate,
-    isLoading,
+    status: status === 'loading',
     error,
     isSuccess,
   };

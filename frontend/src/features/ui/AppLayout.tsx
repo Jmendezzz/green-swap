@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 import Nav from './Nav';
 import { Outlet } from 'react-router-dom';
-import useUser from '../auth/user/useUser';
 import FullScreenSpinner from './FullScreenSpinner';
-import { useEffect } from 'react';
+import { useUserContext } from '@/context/UserContext';
 
 function AppLayout() {
-  const { isLoading, getUser } = useUser();
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
+  const { isLoading} = useUserContext();
 
   if (isLoading) {
     return <FullScreenSpinner />;
