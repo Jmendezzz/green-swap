@@ -92,7 +92,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
 
     Predicate namePredicate = criteriaBuilder.like(
             root.get("name"),
-            "%" + query
+            query + "%"
     );
 
     criteriaQuery.where(namePredicate);
@@ -139,6 +139,13 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
               searchCriteriaProduct.category()
       );
       predicates.add(categoryPredicate);
+    }
+    if(searchCriteriaProduct.quality() != null) {
+      Predicate qualityPredicate = criteriaBuilder.equal(
+              root.get("quality"),
+              searchCriteriaProduct.quality()
+      );
+      predicates.add(qualityPredicate);
     }
 
     if (searchCriteriaProduct.minPrice() != null && searchCriteriaProduct.maxPrice() == null) {

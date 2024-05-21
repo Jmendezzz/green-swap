@@ -50,6 +50,7 @@ public class JwtUtil {
         .build()
         .verify(token);
     } catch (Exception e){
+      System.out.println(e.getMessage());
       throw new JWTVerificationException("Invalid token");
     }
 
