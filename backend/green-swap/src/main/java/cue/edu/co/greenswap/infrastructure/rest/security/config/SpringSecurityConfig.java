@@ -2,6 +2,7 @@ package cue.edu.co.greenswap.infrastructure.rest.security.config;
 
 
 import cue.edu.co.greenswap.infrastructure.rest.security.filters.JwtTokenValidationFilter;
+import cue.edu.co.greenswap.infrastructure.rest.security.services.AuthService;
 import cue.edu.co.greenswap.infrastructure.rest.security.utils.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,14 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SpringSecurityConfig {
   private final JwtUtil jwtUtil;
-  public SpringSecurityConfig(JwtUtil jwtUtil) {
+  private final Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint;
+  private final AuthService authService;
+  public SpringSecurityConfig(JwtUtil jwtUtil, Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint, AuthService authService) {
     this.jwtUtil = jwtUtil;
+    this.http401UnauthorizedEntryPoint = http401UnauthorizedEntryPoint;
+    this.authService = authService;
   }
+
   @Value("${cookie-name}")
   private String cookieName;
 
@@ -39,6 +45,7 @@ public class SpringSecurityConfig {
             .sessionManagement(sessionManagement -> sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeRequests(authorizeRequests -> {
+              authorizeRequests.requestMatchers("/error").permitAll();
               authorizeRequests.requestMatchers("/auth/signup").permitAll();
               authorizeRequests.requestMatchers("/auth/login").permitAll();
               authorizeRequests.requestMatchers("/auth/confirm-email").permitAll();
@@ -47,7 +54,9 @@ public class SpringSecurityConfig {
               authorizeRequests.requestMatchers("/mail/send-reset-password").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
-            .addFilterBefore(new JwtTokenValidationFilter(jwtUtil,cookieName), BasicAuthenticationFilter.class)
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                    .authenticationEntryPoint(http401UnauthorizedEntryPoint))
+            .addFilterBefore(new JwtTokenValidationFilter(jwtUtil,cookieName,authService), BasicAuthenticationFilter.class)
             .build();
 
   }

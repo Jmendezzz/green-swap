@@ -1,5 +1,6 @@
 package cue.edu.co.greenswap.infrastructure.rest.advice;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import cue.edu.co.greenswap.infrastructure.exceptions.CustomHttpException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,15 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(UsernameNotFoundException.class)
   public ResponseEntity<CustomHttpExceptionResponse> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+    return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(new CustomHttpExceptionResponse(
+                    ex.getMessage(), 401)
+            );
+  }
+
+  @ExceptionHandler(JWTVerificationException.class)
+  public ResponseEntity<CustomHttpExceptionResponse> handleJWTVerificationException(JWTVerificationException ex) {
     return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
             .body(new CustomHttpExceptionResponse(
