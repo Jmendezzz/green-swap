@@ -11,7 +11,7 @@ function UpdateProfile() {
 }
 
 const StyledSection = styled(Section)`
-  height: 100vh;
+  min-height: 100%;
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;

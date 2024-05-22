@@ -3,5 +3,6 @@ export interface BasicInfoUserDTO{
     lastName: string;
     email: string;
     urlProfilePicture: string;
+    phoneNumber: string;
     isVerified: boolean;
 } 
