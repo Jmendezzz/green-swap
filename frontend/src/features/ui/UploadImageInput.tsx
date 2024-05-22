@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { FiCamera } from 'react-icons/fi';
 
 interface ImageUploadProps {
-  image: File | undefined;
+  image: File | undefined | string;
   setImage: (image: File | undefined) => void;
   optionalRender?: React.ReactNode;
 }
@@ -34,7 +34,7 @@ function UploadImageInput({
         <div className="flex justify-center">
           {image ? (
             <img
-              src={URL.createObjectURL(image)}
+              src={typeof image === 'string' ? image : URL.createObjectURL(image as File)}
               alt="preview"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
