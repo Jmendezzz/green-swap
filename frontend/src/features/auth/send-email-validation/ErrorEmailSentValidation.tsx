@@ -5,8 +5,9 @@ import { HiOutlineMail } from "react-icons/hi";
 import styled from "styled-components";
 interface Props{
   onRetry:()=>void;
+  error?:string;
 }
-function ErrorEmailSentValidation({onRetry}:Props) {
+function ErrorEmailSentValidation({onRetry,error}:Props) {
   return (
     <StyledContainer type="vertical" className="shadow-lg">
         <header className="flex flex-col items-center">
@@ -15,7 +16,7 @@ function ErrorEmailSentValidation({onRetry}:Props) {
         </header>
         <Row type="vertical">
         <p >
-            Hubo un error al enviar el correo electronico. Por favor intenta de nuevo.
+            {error ? error : "Ocurrió un error al enviar el correo electronico."}
         </p>
             <Button variant="primary" onClick={onRetry}>Re-enviar correo</Button>
         </Row>

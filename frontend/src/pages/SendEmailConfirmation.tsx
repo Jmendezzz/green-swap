@@ -12,7 +12,7 @@ function SendEmailConfirmation() {
 
   useEffect(()=>{
     sendEmailValidation();
-  },[sendEmailValidation]);
+  },[]);
 
   
     return (
@@ -20,7 +20,7 @@ function SendEmailConfirmation() {
         <div className='flex justify-center'>
         {isLoading && <FullScreenSpinner/>}
         {isSuccess && <SuccessEmailSentValidation />}
-        {error != null && <ErrorEmailSentValidation onRetry={()=> sendEmailValidation()}/>}
+        {error != null && <ErrorEmailSentValidation error={error} onRetry={()=> sendEmailValidation()}/>}
         </div>
     
       </StyledSection>
@@ -32,7 +32,6 @@ const StyledSection = styled(Section)`
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 export default SendEmailConfirmation;

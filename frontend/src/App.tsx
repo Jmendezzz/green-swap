@@ -15,6 +15,8 @@ import ProductDetail from './features/product/ProductDetail';
 import CreateProduct from './pages/CreateProduct';
 import ProtectedRoute from './features/auth/ProtectedRoute';
 import AnonymousRoute from './features/ui/AnonymousRoute';
+import ConfirmAccount from './pages/ConfirmAccount';
+import UpdateProfile from './pages/UpdateProfile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,16 +47,18 @@ function App() {
                   path={ROUTES.createProducts}
                   element={<CreateProduct />}
                 />
+                <Route path={ROUTES.updateProfile} element={<UpdateProfile />} />
               </Route>
+              <Route path={ROUTES.confirmAccount} element={<ConfirmAccount/>} />
+              <Route
+                path={ROUTES.sendEmailConfirmation}
+                element={<SendEmailConfirmation />}
+              />
             </Route>
             {/*Anonymous Routes */}
             <Route element={<AnonymousRoute />}>
               <Route path={ROUTES.login} element={<Login />} />
               <Route path={ROUTES.signUp} element={<SignUp />} />
-              <Route
-                path={ROUTES.sendEmailConfirmation}
-                element={<SendEmailConfirmation />}
-              />
             </Route>
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>

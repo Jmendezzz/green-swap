@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useLogout } from '../auth/logout/useLogout';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
   const { urlProfilePicture } = user;
@@ -37,7 +39,10 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
         >
-          <li>Editar perfil</li>
+          <li>
+            <Link to={ROUTES.updateProfile} className='w-full'>Editar perfil</Link>
+          </li>
+
           <li onClick={() => logout()}>Cerrar sesión</li>
         </DropdownMenu>
       )}
@@ -66,7 +71,7 @@ const StyledUserProfilePicture = styled.div`
 const StyledImageContainer = styled.div`
   width: 100%;
   height: 100%;
-  overflow: hidden;                                                                                         
+  overflow: hidden;
   border-radius: 50%;
 
   img {

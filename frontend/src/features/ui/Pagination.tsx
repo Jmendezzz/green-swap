@@ -54,7 +54,7 @@ const StyledPaginationButton = styled.button`
   align-items: center;
   color: var(--white);
   background-color:transparent;
-  padding: 0.3rem 1rem; 
+  padding: 10px 15px; 
   font-size: 2rem;
   font-weight: 500;
   border-radius: 0.5rem;

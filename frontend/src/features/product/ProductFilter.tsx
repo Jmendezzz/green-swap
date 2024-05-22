@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Heading from '../ui/Heading';
 import ProductCategoryFilter from './ProductCategoryFilter';
 import ProductPriceFilter from './ProductPriceFilter';
@@ -7,12 +6,13 @@ import ProductQualityFilter from './ProductQualityFilter';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import Button from '../ui/Button';
+import SidebarMenu from '../ui/SidebarMenu';
 
 
 function ProductFilter() {
 
   return (
-    <StyledFilterContainer>
+    <SidebarMenu>
       <Heading type="h2">Filtros de busqueda</Heading>
       <ProductNameFilter />
       <ProductCategoryFilter/>
@@ -21,28 +21,9 @@ function ProductFilter() {
       <Link to={ROUTES.createProducts} className='flex justify-center'>
         <Button variant="primary">Crear producto</Button>
       </Link>
-    </StyledFilterContainer>
+    </SidebarMenu>
   );
 }
 
-const StyledFilterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-  background-color: var(--primary-color-light);
-  border-radius: 3rem;
-  width: 500px;
-  padding: 2rem 3rem;
-  height: 100vh;
-  position: sticky;
-  top: 0; 
-  overflow-y: auto;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-`;
 
 export default ProductFilter;
