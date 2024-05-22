@@ -7,6 +7,7 @@ import Button from '../ui/Button';
 import { getQualityValue } from '@/domain/product/Condition';
 import { formatDate } from 'date-fns';
 import UserProfilePicture from '../ui/UserProfilePicture';
+import { formatToCOP } from '@/utils/formatCurrency';
 
 interface Props {
     product: ProductDTO;
@@ -30,14 +31,13 @@ function ProductDetailCard({ product }: Props) {
             {getQualityValue(product.quality) || 'No especificado'}
           </p>
           <p>{product.description || 'Descripición.'}</p>
-          <p>$ {product.price || 'No especificado.'}</p>
-          <footer className="flex justify-end gap-10">
-            <Button variant="secondary">Comprar</Button>
-            <Button variant="primary">Intercambiar</Button>
-          </footer>
-          <div className="space-y-10">
-            <header>Publicado por:</header>
-            <div className="flex items-center gap-10">
+          <p>{formatToCOP(product.price) || 'No especificado.'}</p>
+          <hr />
+          <div>
+            <header>
+              <Heading type="h3" align='left'>Información del vendedor</Heading>
+            </header>
+            <div className="flex items-center gap-4">
               <UserProfilePicture user={product.owner} />
               <p>
                 {product.owner.firstName} {product.owner.lastName}
@@ -45,12 +45,17 @@ function ProductDetailCard({ product }: Props) {
             </div>
             <p>{formatDate(new Date(product.createdAt.toString()), 'MM/dd/yyyy')}</p>
           </div>
+          
+          <footer className="flex justify-end gap-10">
+            <Button variant="secondary">Comprar</Button>
+            <Button variant="primary">Intercambiar</Button>
+          </footer>
         </StyledProductDetailContent>
       </StyledProductDetail>
     );
   }
 const StyledImageContainer = styled.div`
-  width: 100%;
+  width: 500px;
   height: 100%;
   @media (min-width: ${Devices.tablet}) {
     width: 50%;
@@ -66,9 +71,10 @@ const StyledImageContainer = styled.div`
 const StyledProductDetail = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  height: 80%;
+  max-height: 800px;
+  padding: 2rem;
   @media (min-width: ${Devices.tablet}) {
     flex-direction: row;
     gap: 2rem;
@@ -81,11 +87,8 @@ const StyledProductDetailContent = styled.div`
   height: 100%;
   overflow-y: auto;
   gap: 3rem;
-  max-width: 500px;
-
-  @media (min-width: ${Devices.tablet}) {
-    justify-content: space-between;
-  }
+  width: 500px;
+  height: 600px;
 `;
 
 export default ProductDetailCard;

@@ -8,12 +8,13 @@ import { useQuery, useQueryClient } from "react-query";
 export function useProducts(){
     const queryClient = useQueryClient();
 
-    const {setFilter,searchCriteriaProductDTO} = useProductFilterContext();
-    const [pageable, setPageable] = useState<Pageable>({page: 1, size: 20});
+    const {searchCriteriaProductDTO} = useProductFilterContext();
+    const [pageable, setPageable] = useState<Pageable>({page: 0, size: 20});
 
-    const {data: queryData, error, isLoading} = useQuery({
+    const {data: queryData, error, status} = useQuery({
         queryKey: ['products', searchCriteriaProductDTO, pageable],
         queryFn: () => getProductsByCriteriaService(searchCriteriaProductDTO, pageable),
+        retry: 1
     })
 
     const data = queryData?.data;
@@ -38,7 +39,8 @@ export function useProducts(){
     return {
         data,
         error,
-        isLoading,
+        isLoading: status === 'loading',
         setPageable,
+        pageable
     }
 }

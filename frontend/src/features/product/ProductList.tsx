@@ -4,9 +4,14 @@ import { useProducts } from './useProducts';
 import { ClipLoader } from 'react-spinners';
 import ProductFilter from './ProductFilter';
 import Empty from '../ui/Empty';
+import Pagination from '../ui/Pagination';
 
 function ProductList() {
-  const { data, isLoading } = useProducts();
+  const { data, isLoading, setPageable, pageable } = useProducts();
+
+  const setPage = (page: number) => {
+    setPageable({ ...pageable, page });
+  };
 
   return (
     <div className="flex gap-10">
@@ -18,10 +23,20 @@ function ProductList() {
           </div>
         ) : (
           <>
-            {data && data.content.length > 0 ? (
-              data.content.map((product) => (
-                <ProductItemCard key={product.id} product={product} />
-              ))
+            {data?.content && data.content.length > 0 ? (
+              <div className="flex flex-col justify-between gap-10">
+                <StyledProductItemsContainer>
+                  {data.content.map((product) => (
+                    <ProductItemCard key={product.id} product={product} />
+                  ))}
+                </StyledProductItemsContainer>
+
+                <Pagination
+                  pageable={pageable}
+                  totalPages={data?.totalPages}
+                  setPage={setPage}
+                />
+              </div>
             ) : (
               <Empty message="No hay productos encontrados" />
             )}
