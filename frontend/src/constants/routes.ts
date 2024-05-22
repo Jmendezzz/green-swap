@@ -7,4 +7,6 @@ export const ROUTES = {
     products: '/products',
     createProducts : '/products/create',
     contact: '/contact',
+    confirmAccount: '/confirm-account',
+    updateProfile : '/update-profile',
 }

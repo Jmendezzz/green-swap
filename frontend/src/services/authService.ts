@@ -21,15 +21,18 @@ export function signUpService(signUpData: SignUpRequestDTO) {
   const formData = new FormData();
   formData.append(
     'signUpInfo',
-    new Blob([JSON.stringify(
-      {
-        firstName: signUpData.firstName,
-        lastName: signUpData.lastName,
-        email: signUpData.email,
-        phoneNumber: signUpData.phoneNumber,
-        password: signUpData.password,
-      }
-    )], {type: 'application/json'})
+    new Blob(
+      [
+        JSON.stringify({
+          firstName: signUpData.firstName,
+          lastName: signUpData.lastName,
+          email: signUpData.email,
+          phoneNumber: signUpData.phoneNumber,
+          password: signUpData.password,
+        }),
+      ],
+      { type: 'application/json' }
+    )
   );
   if (signUpData.profilePicture) {
     formData.append('profilePicture', signUpData.profilePicture);
@@ -38,7 +41,7 @@ export function signUpService(signUpData: SignUpRequestDTO) {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    withCredentials: true
+    withCredentials: true,
   });
 }
 
@@ -46,15 +49,20 @@ export function sendEmailConfirmationService() {
   return axiosInstace.post(`/mail/send-email-validation`);
 }
 
+export function confirmAccountService(token: string) {
+  return axiosInstace.post(`${REQUEST_MAPPING}/confirm-email`, { token });
+}
 
-export async function getBasicInfoCurrentUser() : Promise<BasicInfoUserDTO | null>{
-  try{
-    return await axiosInstace.get(`${REQUEST_MAPPING}/me`).then((response) => response.data).then((data) => data as BasicInfoUserDTO);
-  }catch(error){
+export async function getBasicInfoCurrentUser(): Promise<BasicInfoUserDTO | null> {
+  try {
+    return await axiosInstace
+      .get(`${REQUEST_MAPPING}/me`)
+      .then((response) => response.data)
+      .then((data) => data as BasicInfoUserDTO);
+  } catch (error) {
     return null;
   }
 }
-
 
 export async function logoutService() {
   return axiosInstace.get(`${REQUEST_MAPPING}/logout`, {});

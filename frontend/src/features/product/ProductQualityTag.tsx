@@ -6,7 +6,6 @@ interface ProductQualityTagProps {
 }
 
 function ProductQualityTag({ quality }: ProductQualityTagProps) {
-    console.log(quality)
   return (
     <StyledProductQualityTag quality={getQualityValue(quality)}>
       {getQualityValue(quality)}
