@@ -14,15 +14,19 @@ import styled from 'styled-components';
 import Heading from '../ui/Heading';
 import { ProductDTO } from '@/domain/product/ProductDTO';
 import { useUserContext } from '@/context/UserContext';
-import ProductDetailCard from './ProductDetailCard';
 import CreateProductPreview from './CreateProductPreview';
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
+import useCreateProduct from './useCreateProduct';
+import { ClipLoader } from 'react-spinners';
+import { Status} from '@/domain/product/Status';
 
 function CreateProductForm() {
+  const { user } = useUserContext();
   const [file, setFile] = useState<File | undefined>(undefined);
   function handleFileChange(file: File | undefined) {
     setFile(file);
   }
+  const {createProduct,isLoading} = useCreateProduct();
 
   const {
     register,
@@ -33,21 +37,27 @@ function CreateProductForm() {
   } = useForm<CreateProductDTO>({ mode: 'onTouched' });
 
   function onSubmit(data: CreateProductDTO) {
-    console.log(data);
+    const product: CreateProductDTO = {
+      ...data,
+      productImage: file ,
+      status: "PUBLISHED" as keyof typeof Status,
+    }
+    console.log(product);
+    createProduct(product);
   }
-
   const watchAllFields = watch();
-  const { user } = useUserContext();
 
-  const previewProduct: ProductDTO = {
+
+  const previewProduct: Partial<ProductDTO> = {
     ...watchAllFields,
     urlImage: file ? URL.createObjectURL(file) : '',
     createdAt: new Date(),
     owner: user as BasicInfoUserDTO,
+    status: Status.PUBLISHED
   };
 
   return (
-    <div className='flex gap-10'>
+    <div className="flex gap-10">
       <StyledCreateProductFormContainer>
         <header>
           <Heading type="h2">Crear producto</Heading>
@@ -87,8 +97,9 @@ function CreateProductForm() {
               render={({ field }) => (
                 <NumericInput
                   placeholder="Precio"
-                  value={field.value?.toString()}
-                  setValue={field.onChange}
+                  value={ field.value?.toString() || ''}
+                  onBlur={field.onBlur}
+                  onChange={(value) => field.onChange(Number(value))}
                 />
               )}
             />
@@ -131,8 +142,8 @@ function CreateProductForm() {
               )}
             />
           </FormRow>
-          <Button type="submit" variant="primary">
-            Crear producto
+          <Button type="submit" variant="primary" disabled={isLoading} >
+            {isLoading ? <ClipLoader color="#1B232E" size={15} />  : 'Crear'}
           </Button>
         </StyledCreateProductForm>
       </StyledCreateProductFormContainer>
@@ -159,6 +170,7 @@ const StyledCreateProductForm = styled.form`
   gap: 2rem;
   padding: 2rem;
   overflow-y: auto;
+  max-height: 80vh;
 `;
 
 export default CreateProductForm;

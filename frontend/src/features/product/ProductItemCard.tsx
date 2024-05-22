@@ -1,10 +1,11 @@
-import { Category } from '@/domain/product/Category';
-import { Quality } from '@/domain/product/Condition';
+import {getCategoryValue } from '@/domain/product/Category';
 import { ListProductDTO } from '@/domain/product/ListProductDTO';
 import { Devices } from '@/styles/Devices';
+import { formatToCOP } from '@/utils/formatCurrency';
 import { HiPhotograph } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ProductQualityTag from './ProductQualityTag';
 
 function ProductItemCard({ product }: { product: ListProductDTO }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function ProductItemCard({ product }: { product: ListProductDTO }) {
     navigate(`${product.id}`);
   };
   return (
-    <StyledProductItemCard className="shadow-lg" onClick={clickHandler}>
+    <StyledProductItemCard className="shadow-lg relative" onClick={clickHandler}>
       <StyledProductImage>
         {product.urlImage != '' ? (
           <img
@@ -26,9 +27,9 @@ function ProductItemCard({ product }: { product: ListProductDTO }) {
       </StyledProductImage>
       <div className='text-center'>
         <h2>{product.name}</h2>
-        <p>{product.price}</p>
-        <p>{Category[product.category]}</p>
-        <p>{Quality[product.quality]}</p>
+        <p>{formatToCOP(product.price)}</p>
+        <p>{getCategoryValue(product.category)}</p>
+        <ProductQualityTag quality={product.quality}/>
       </div>
     </StyledProductItemCard>
   );
