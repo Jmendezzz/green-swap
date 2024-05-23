@@ -2,6 +2,7 @@ import Heading from '@/features/ui/Heading';
 import SidebarTab from '@/features/ui/SidebarTab';
 import PersonalnformationPanel from './PersonalnformationPanel';
 import Logout from '@/features/ui/Logout';
+import UpdatePasswodPanel from './UpdatePasswodPanel';
 
 const tabs = [
   {
@@ -12,7 +13,7 @@ const tabs = [
   {
     id: 'security',
     name: 'Seguridad',
-    content: <div>Seguridad</div>,
+    content: <UpdatePasswodPanel />,
   },
 ];
 

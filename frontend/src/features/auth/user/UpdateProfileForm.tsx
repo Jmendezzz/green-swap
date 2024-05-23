@@ -26,6 +26,7 @@ function UpdateProfileForm() {
       lastName: user?.lastName,
       phoneNumber: user?.phoneNumber,
     },
+    mode: 'onTouched',
   });
 
   const onSubmit = (data: UpdateUserProfileDTO) => {
@@ -66,7 +67,7 @@ function UpdateProfileForm() {
       </div>
 
       <div className="flex justify-between w-full gap-20">
-        <FormRow error={errors?.firstName?.message}>
+        <FormRow error={undefined}>
           <label htmlFor="email">Email</label>
           <Input
             id="email"

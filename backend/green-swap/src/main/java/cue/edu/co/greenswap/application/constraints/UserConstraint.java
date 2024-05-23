@@ -6,6 +6,7 @@ import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class UserConstraint {
 
   private UserRepository repository;
+  private PasswordEncoder passwordEncoder;
 
   public void validateRepeatedEmail(String email) {
     if (repository.findByEmail(email).isPresent()) {
@@ -41,5 +43,14 @@ public class UserConstraint {
   public void validateNewPassword(String email, String password){
     Optional<User> user = repository.findByEmail(email);
     if (user.get().getPassword().equals(password)) throw new UserException(UserConstantMessage.INVALID_NEW_PASSWORD, HttpStatus.BAD_REQUEST);
+  }
+
+  public void validateCurrentPassword(String email, String currentPassword) {
+    Optional<User> user = repository.findByEmail(email);
+    System.out.println(passwordEncoder.matches(currentPassword, user.get().getPassword()));
+    System.out.println(user.get().getPassword());
+    if (!passwordEncoder.matches(currentPassword, user.get().getPassword())) {
+      throw new UserException(UserConstantMessage.INVALID_CURRENT_PASSWORD, HttpStatus.BAD_REQUEST);
+    }
   }
 }

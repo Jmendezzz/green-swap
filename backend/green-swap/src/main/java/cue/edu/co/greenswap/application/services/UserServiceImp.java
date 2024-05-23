@@ -6,15 +6,13 @@ import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
 import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
-import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
-import cue.edu.co.greenswap.domain.dtos.user.ResetUserPasswordDTO;
-import cue.edu.co.greenswap.domain.dtos.user.UpdateUserProfileDTO;
-import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
+import cue.edu.co.greenswap.domain.dtos.user.*;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,7 @@ public class UserServiceImp implements UserService {
   private UserConstraint constraint;
   private UserMapperDTO mapper;
   private SecurityContextService securityContextService;
+  private PasswordEncoder passwordEncoder;
 
 
   /**
@@ -96,6 +95,18 @@ public class UserServiceImp implements UserService {
     }
 
     return mapper.toDTO(repository.save(currentUser));
+  }
+
+  @Override
+  public Boolean updatePassword(UpdateUserPasswordDTO updatePasswordDTO) {
+    User currentUser = securityContextService.getCurrentUser();
+
+    constraint.validateNewPassword(currentUser.getEmail(), updatePasswordDTO.newPassword());
+    constraint.validateCurrentPassword(currentUser.getEmail(), updatePasswordDTO.currentPassword());
+
+    currentUser.setPassword(passwordEncoder.encode(updatePasswordDTO.newPassword()));
+    repository.update(currentUser);
+    return true;
   }
 
   @Override

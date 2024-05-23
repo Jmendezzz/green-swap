@@ -3,6 +3,7 @@ package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
 import cue.edu.co.greenswap.application.ports.usecases.FileService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.user.UpdateUserPasswordDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UpdateUserProfileDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import jakarta.validation.Valid;
@@ -30,6 +31,12 @@ public class ProfileController {
       return ResponseEntity.ok(service.updateProfile(withProfilePicture));
     }
     return ResponseEntity.ok(service.updateProfile(updateProfileDTO));
+  }
+
+  @PutMapping(value = "/update-password")
+  public ResponseEntity<Boolean> updatePassword(@RequestBody @Valid UpdateUserPasswordDTO updatePasswordDTO){
+    service.updatePassword(updatePasswordDTO);
+    return ResponseEntity.ok(true);
   }
 
 }
