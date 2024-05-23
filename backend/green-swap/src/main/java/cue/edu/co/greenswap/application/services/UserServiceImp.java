@@ -4,9 +4,11 @@ import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
+import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
 import cue.edu.co.greenswap.domain.dtos.user.ResetUserPasswordDTO;
+import cue.edu.co.greenswap.domain.dtos.user.UpdateUserProfileDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
@@ -25,6 +27,7 @@ public class UserServiceImp implements UserService {
   private UserRepository repository;
   private UserConstraint constraint;
   private UserMapperDTO mapper;
+  private SecurityContextService securityContextService;
 
 
   /**
@@ -73,6 +76,26 @@ public class UserServiceImp implements UserService {
   @Override
   public UserDTO update(UserDTO user) {
     return mapper.toDTO(repository.save(mapper.toDomain(user)));
+  }
+
+  @Override
+  public UserDTO updateProfile(UpdateUserProfileDTO user) {
+    User currentUser = securityContextService.getCurrentUser();
+
+    if(!user.firstName().isEmpty()){
+      currentUser.setFirstName(user.firstName());
+    }
+    if(!user.lastName().isEmpty()){
+      currentUser.setLastName(user.lastName());
+    }
+    if(!user.phoneNumber().isEmpty()){
+      currentUser.setPhoneNumber(user.phoneNumber());
+    }
+    if(user.urlProfilePicture() != null){
+      currentUser.setUrlProfilePicture(user.urlProfilePicture());
+    }
+
+    return mapper.toDTO(repository.save(currentUser));
   }
 
   @Override

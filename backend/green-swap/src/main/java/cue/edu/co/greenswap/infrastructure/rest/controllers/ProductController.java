@@ -28,7 +28,7 @@ public class ProductController {
   private ProductService service;
   private FileService fileService;
 
-  @PostMapping(name="/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value="/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<ProductDTO> createProduct(
           @RequestPart("productInfo") CreateProductDTO product,
           @RequestPart(value = "productImage", required = false) MultipartFile productImage) {

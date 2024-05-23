@@ -4,7 +4,7 @@ import UpdateProfileForm from "./UpdateProfileForm"
 
 function PersonalnformationPanel() {
   return (
-    <StyledLightContainer className="flex flex-col items-center">
+    <StyledLightContainer className="flex flex-col items-center h-full">
         <Heading>Información Personal</Heading>
         <UpdateProfileForm />
     </StyledLightContainer>
