@@ -24,7 +24,7 @@ const StyledFormRow = styled.div<{ error: string | undefined }>`
     color: var(--white);
   }
   ${(props) => props.error && `color: var(--red);`}
-  ${(props) => props.error && ` & > input, textarea, select {border: 1px solid var(--red);}`}
+  ${(props) => props.error && ` & input, textarea, select {outline: 1px solid var(--red);}`}
 `;
 
 export default FormRow;

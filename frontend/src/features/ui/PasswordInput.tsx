@@ -2,27 +2,11 @@ import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';
 import { useState } from 'react';
+import Input from './Input';
 
 const PasswordInputWrapper = styled.div`
   position: relative;
   width: 100%;
-`;
-
-const StyledInput = styled.input`
-  padding: 0.8rem 2.5rem;
-  border-radius: 1rem;
-  font-size: 1.6rem;
-  transition: all 0.3s ease;
-  border: none;
-  width: 100%;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: var(--white);
-  }
-  background-color: transparent;
-  border: 1.6px solid var(--white);
 `;
 
 const PasswordAdornment = styled.div`
@@ -36,9 +20,10 @@ const PasswordAdornment = styled.div`
 interface Props {
   register: UseFormRegisterReturn;
   placeholder: string;
+  variant?: 'outlined' | 'non-outlined';
 }
 
-function PasswordInput  ({ register, placeholder }: Props) {
+function PasswordInput  ({ register, placeholder,variant }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -47,7 +32,7 @@ function PasswordInput  ({ register, placeholder }: Props) {
 
   return (
     <PasswordInputWrapper>
-      <StyledInput {...register} type={showPassword ? "text" : "password"} placeholder={placeholder} />
+      <Input variant={variant || 'outlined'} {...register} type={showPassword ? "text" : "password"}  placeholder={placeholder} />
       <PasswordAdornment onClick={togglePasswordVisibility}>
         {showPassword ? <HiEyeOff /> : <HiEye />}
       </PasswordAdornment>
