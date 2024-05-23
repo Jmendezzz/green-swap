@@ -69,7 +69,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
     }
 
     TypedQuery<ProductEntity> typedQuery = em.createQuery(criteriaQuery);
-    typedQuery.setFirstResult((pageable.getPageNumber() - 1) * pageable.getPageSize());
+    typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
     typedQuery.setMaxResults(pageable.getPageSize());
 
     List<ProductEntity> productEntities = typedQuery.getResultList();
@@ -78,7 +78,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
 
     Long totalProducts = countProductsBySearchCriteria(searchCriteriaProduct);
 
-    return new PageImpl<>(products, pageable, totalProducts); //Todo test
+    return new PageImpl<>(products, pageable, totalProducts);
   }
 
   @Override

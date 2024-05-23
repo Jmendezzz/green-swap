@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SidebarMenu from './SidebarMenu';
 import StyledLightContainer from './StyledLightContainer';
+import { Devices } from '@/styles/Devices';
 interface Tab {
   id: string;
   name: string;
@@ -17,9 +18,9 @@ interface SidebarTabProps {
 function SidebarTab({ tabs, header, footer }: SidebarTabProps) {
   const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
   return (
-    <div className="w-full h-full flex gap-10">
-      <SidebarMenu>
-        <div>{header}</div>
+    <StyledSidebarContent>
+      <StyledSideBarMenu>
+        <header>{header}</header>
         <StyledSidebarItems>
           {tabs.map((tab) => (
             <StyledSidebarItem
@@ -31,30 +32,36 @@ function SidebarTab({ tabs, header, footer }: SidebarTabProps) {
             </StyledSidebarItem>
           ))}
         </StyledSidebarItems>
-        <div className='absolute bottom-0 py-10'>{footer}</div>
-      </SidebarMenu>
+        <footer className="absolute bottom-0 py-10">{footer}</footer>
+      </StyledSideBarMenu>
 
       <StyledLightContainer className="w-full h-full">
         {currentTab.content}
       </StyledLightContainer>
-    </div>
+    </StyledSidebarContent>
   );
 }
 
-export const StyledSidebarItems = styled.ul`
+const StyledSidebarItems = styled.ul`
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+
   cursor: pointer;
-  & > li {
+  @media (min-width: ${Devices.tablet}) {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2rem;
   }
 `;
 
-export const StyledSidebarItem = styled.li<{ isActive: boolean }>`
+const StyledSidebarItem = styled.li<{ isActive: boolean }>`
+text-align: center;
   background-color: var(--primary-color);
-  padding: 3rem 1rem;
-  font-size: 2rem;
+  padding: 1rem;
   border-radius: 1.5rem;
+  font-size: 1.4rem;
   color: var(--white);
   transition: all 0.2s;
   ${(props) =>
@@ -65,5 +72,39 @@ export const StyledSidebarItem = styled.li<{ isActive: boolean }>`
     font-weight: 800;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   }
+
+  @media (min-width: ${Devices.tablet}) {
+    padding: 3rem 1rem;
+    font-size: 2rem;
+  }
 `;
+
+const StyledSidebarContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 2rem;
+  @media (min-width: ${Devices.tablet}) {
+    flex-direction: row;
+    padding: 2rem;
+  }
+`;
+const StyledSideBarMenu = styled(SidebarMenu)`
+  @media (max-width: ${Devices.tablet}) {
+    flex-direction: row;
+    padding: 2rem;
+    width: 100%;
+    max-height: 15%;
+    position: relative;
+    top: 0;
+    & > header {
+      display: none;
+    }
+    & > footer {
+      display: none;
+    }
+  }
+`;
+
 export default SidebarTab;
