@@ -30,7 +30,6 @@ public class UserTokenEntity {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
-    @CreatedBy
     private UserEntity user;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
