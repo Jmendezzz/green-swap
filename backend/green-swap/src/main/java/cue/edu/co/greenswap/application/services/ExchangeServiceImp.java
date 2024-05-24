@@ -11,11 +11,9 @@ import cue.edu.co.greenswap.application.ports.usecases.EmailService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
 import cue.edu.co.greenswap.domain.dtos.exchange.CreateExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
-import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -35,7 +33,7 @@ public class ExchangeServiceImp implements ExchangeService {
   public ExchangeDTO createExchange(CreateExchangeDTO createExchangeDTO) {
     constraint.validateProductOfferedOwner(createExchangeDTO.productOffered());
 
-    Exchange exchangeToSave = mapper.toEntity(createExchangeDTO);
+    Exchange exchangeToSave = mapper.toDomain(createExchangeDTO);
     exchangeToSave.setStatus(ExchangeStatus.AWAITING_RESPONSE);
 
     Exchange exchangeSaved = repository.save(exchangeToSave);
