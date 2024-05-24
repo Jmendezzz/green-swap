@@ -50,7 +50,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     p{
-        font-size: 1.9rem;
+        font-size: 2rem;
         @media (max-width: ${Devices.tablet}){
             font-size: 1.6rem;
         }
