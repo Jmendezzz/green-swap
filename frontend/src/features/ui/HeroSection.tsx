@@ -20,7 +20,7 @@ function HeroSection() {
             </Heading>
             <p>
               ¡Cambia lo que tienes por lo que necesitas y haz del mundo un
-              lugar más verde! ¡Únete a nosotros!
+              lugar más verde! <b>¡Únete a nosotros!</b>
             </p>
             <div className="flex justify-start">
               <Link to={ROUTES.products}>
@@ -58,7 +58,7 @@ const StyledHeroSection = styled(Section)`
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 800px;
   position: relative;
 
   & > img {
@@ -135,7 +135,7 @@ const StyledHeroContent = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: fit-content;
 
   @media (max-width: ${Devices.laptop}) {
     flex-direction: column;
