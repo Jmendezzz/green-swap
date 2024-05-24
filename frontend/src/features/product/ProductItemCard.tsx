@@ -15,7 +15,7 @@ function ProductItemCard({ product }: { product: ListProductDTO }) {
   return (
     <StyledProductItemCard className="shadow-lg relative" onClick={clickHandler}>
       <StyledProductImage>
-        {product.urlImage != '' ? (
+        {product.urlImage != '' && product.urlImage != null ? (
           <img
             src={product.urlImage}
             alt={product.name}
@@ -25,7 +25,7 @@ function ProductItemCard({ product }: { product: ListProductDTO }) {
           <HiPhotograph className="w-full h-full" />
         )}
       </StyledProductImage>
-      <div className='text-center'>
+      <div className='text-center h-[100px]'>
         <h2>{product.name}</h2>
         <p>{formatToCOP(product.price)}</p>
         <p>{getCategoryValue(product.category)}</p>
@@ -42,30 +42,34 @@ const StyledProductItemCard = styled.div`
   border-radius: 1rem;
   cursor: pointer;
   gap: 1rem;
-  height: 500px;
+  height: fit-content;
+  padding-bottom: 0.5rem;
   h2 {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 700;
   }
   p {
     margin: 0.5rem 0;
   }
-  width: 200px;
+  width: 150px;
   @media (min-width: ${Devices.tablet}) {
     width: 300px;
+    & h2{
+      font-size: 2rem;
+    }
   }
 `;
 
 const StyledProductImage = styled.div`
   width: 100%;
-  min-height: 200px;
   border-radius: 1rem;
-  max-height: 300px;
+  height: 100px;
   & > img {
     border-radius: 1rem 1rem 0 0;
+    object-fit: cover;
   }
   @media (min-width: ${Devices.tablet}) {
-    min-height: 300px;
+    height: 300px;
   }
 `;
 export default ProductItemCard;

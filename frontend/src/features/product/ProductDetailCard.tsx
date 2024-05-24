@@ -17,7 +17,7 @@ function ProductDetailCard({ product }: Props) {
     return (
       <StyledProductDetail>
         <StyledImageContainer>
-          {product.urlImage === '' ? (
+          {product.urlImage === ''  || product.urlImage == null ? (
             <HiPhotograph className="w-full h-full" />
           ) : (
             <img src={product.urlImage} alt={product.name} />

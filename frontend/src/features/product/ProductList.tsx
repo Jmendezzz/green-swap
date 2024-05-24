@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import ProductFilter from './ProductFilter';
 import Empty from '../ui/Empty';
 import Pagination from '../ui/Pagination';
+import { Devices } from '@/styles/Devices';
 
 function ProductList() {
   const { data, isLoading, setPageable, pageable } = useProducts();
@@ -51,9 +52,13 @@ const StyledProductItemsContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3rem;
+  gap: 1rem;
   width: 100%;
   min-height: 100vh;
+
+  @media (min-width:${Devices.tablet}) {
+    gap: 3rem;
+  }
 `;
 
 export default ProductList;
