@@ -1,3 +1,4 @@
+import { Devices } from "@/styles/Devices";
 import styled from "styled-components";
 
 const SidebarMenu = styled.div`
@@ -18,6 +19,10 @@ const SidebarMenu = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  @media (max-width: ${Devices.tablet}) {
+    display: none;
   }
 `;
 

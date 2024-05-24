@@ -12,12 +12,13 @@ function Pagination({ pageable, totalPages, setPage }: Props) {
   let pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const maxPages = 5;
   const page = pageable.page + 1; // Pageable starts at 0
-  pageNumbers = pageNumbers.slice(page - 1, page + maxPages - 1);
+  const startPage = Math.max(0, Math.min(page - 1, totalPages - maxPages));
+  pageNumbers = pageNumbers.slice(startPage, startPage + maxPages);
 
   return (
     <StyledPagination>
       {page > 1 && (
-        <StyledPaginationButton onClick={() => setPage(page - 1)}>
+        <StyledPaginationButton onClick={() => setPage(pageable.page - 1)}>
           <HiArrowNarrowLeft />
         </StyledPaginationButton>
       )}
@@ -25,7 +26,7 @@ function Pagination({ pageable, totalPages, setPage }: Props) {
       {pageNumbers.map((pageNumber) => (
         <StyledPaginationButton
           key={pageNumber}
-          onClick={() => setPage(pageNumber-1)}
+          onClick={() => setPage(pageNumber - 1)}
           disabled={page === pageNumber}
         >
           {pageNumber}
@@ -33,7 +34,7 @@ function Pagination({ pageable, totalPages, setPage }: Props) {
       ))}
 
       {page < totalPages && (
-        <StyledPaginationButton onClick={() => setPage(page + 1)}>
+        <StyledPaginationButton onClick={() => setPage(pageable.page + 1)}>
           <HiArrowNarrowRight />
         </StyledPaginationButton>
       )}
@@ -53,8 +54,8 @@ const StyledPaginationButton = styled.button`
   display: flex;
   align-items: center;
   color: var(--white);
-  background-color:transparent;
-  padding: 10px 15px; 
+  background-color: transparent;
+  padding: 10px 15px;
   font-size: 2rem;
   font-weight: 500;
   border-radius: 0.5rem;
