@@ -10,52 +10,56 @@ import UserProfilePicture from '../ui/UserProfilePicture';
 import { formatToCOP } from '@/utils/formatCurrency';
 
 interface Props {
-    product: ProductDTO;
-  }
-  
+  product: ProductDTO;
+}
+
 function ProductDetailCard({ product }: Props) {
-    return (
-      <StyledProductDetail>
-        <StyledImageContainer>
-          {product.urlImage === ''  || product.urlImage == null ? (
-            <HiPhotograph className="w-full h-full" />
-          ) : (
-            <img src={product.urlImage} alt={product.name} />
-          )}
-        </StyledImageContainer>
-  
-        <StyledProductDetailContent>
-          <Heading align="left">{product.name || 'Titulo'}</Heading>
-          <p>
-            <span className="font-bold">Estado:</span>{' '}
-            {getQualityValue(product.quality) || 'No especificado'}
-          </p>
-          <p>{product.description || 'Descripición.'}</p>
-          <p>{formatToCOP(product.price) || 'No especificado.'}</p>
-          <hr />
-          <div>
-            <header>
-              <Heading type="h3" align='left'>Información del vendedor</Heading>
-            </header>
-            <div className="flex items-center gap-4">
-              <UserProfilePicture user={product.owner} />
-              <p>
-                {product.owner.firstName} {product.owner.lastName}
-              </p>
-            </div>
-            <p>{formatDate(new Date(product.createdAt.toString()), 'MM/dd/yyyy')}</p>
+  return (
+    <StyledProductDetail>
+      <StyledImageContainer>
+        {product.urlImage === '' || product.urlImage == null ? (
+          <HiPhotograph className="w-full h-full" />
+        ) : (
+          <img src={product.urlImage} alt={product.name} />
+        )}
+      </StyledImageContainer>
+
+      <StyledProductDetailContent>
+        <Heading align="left">{product.name || 'Titulo'}</Heading>
+        <p>
+          <span className="font-bold">Estado:</span>{' '}
+          {getQualityValue(product.quality) || 'No especificado'}
+        </p>
+        <p>{product.description || 'Descripición.'}</p>
+        <p>{formatToCOP(product.price) || 'No especificado.'}</p>
+        <hr />
+        <div>
+          <header>
+            <Heading type="h3" align="left">
+              Información del vendedor
+            </Heading>
+          </header>
+          <div className="flex items-center gap-4">
+            <UserProfilePicture user={product.owner} />
+            <p>
+              {product.owner.firstName} {product.owner.lastName}
+            </p>
           </div>
-          
-          <footer className="flex justify-end gap-10">
-            <Button variant="secondary">Comprar</Button>
-            <Button variant="primary">Intercambiar</Button>
-          </footer>
-        </StyledProductDetailContent>
-      </StyledProductDetail>
-    );
-  }
+          <p>
+            {formatDate(new Date(product.createdAt.toString()), 'MM/dd/yyyy')}
+          </p>
+        </div>
+
+        <footer className="flex justify-end gap-10">
+          <Button variant="secondary">Comprar</Button>
+          <Button variant="primary">Intercambiar</Button>
+        </footer>
+      </StyledProductDetailContent>
+    </StyledProductDetail>
+  );
+}
 const StyledImageContainer = styled.div`
-  width: 500px;
+  width: 300px;
   height: 100%;
   @media (min-width: ${Devices.tablet}) {
     width: 50%;
@@ -75,6 +79,7 @@ const StyledProductDetail = styled.div`
   align-items: center;
   max-height: 800px;
   padding: 2rem;
+  width: 100%;
   @media (min-width: ${Devices.tablet}) {
     flex-direction: row;
     gap: 2rem;
@@ -86,9 +91,13 @@ const StyledProductDetailContent = styled.div`
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
-  gap: 3rem;
-  width: 500px;
-  height: 600px;
+  gap: 2rem;
+  width: 100%;
+
+  @media (min-width: ${Devices.tablet}) {
+    width: 500px;
+    height: 600px;
+  }
 `;
 
 export default ProductDetailCard;

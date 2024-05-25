@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useUpdateProfile from './useUpdateProfile';
 import useUser from './useUser';
-import { ClipLoader } from 'react-spinners';
+import Spinner from '@/features/ui/Spinner';
 
 function UpdateProfileForm() {
   const { user } = useUser();
@@ -39,7 +39,7 @@ function UpdateProfileForm() {
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <ClipLoader color="white" size={150} />
+        <Spinner color="white" />
       </div>
     );
   }

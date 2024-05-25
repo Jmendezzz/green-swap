@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Input from '../ui/Input';
 import { HiSearch } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
-import { ClipLoader } from 'react-spinners';
 import useClickOutside from '@/hooks/useClickOutside';
+import Spinner from '../ui/Spinner';
 
 function ProductNameFilter() {
   const { setFilter, searchCriteriaProductDTO } = useProductFilterContext();
@@ -63,7 +63,7 @@ function ProductNameFilter() {
         <SuggestionsContainer ref={ref}>
           {isLoading ? (
             <div className='w-full h-full flex items-center  justify-center'>
-                <ClipLoader color="var(--secondary-color)" />
+                <Spinner color='white'/>
             </div>
           ) : suggestions && suggestions.length > 0 ? (
             suggestions.map((suggestion, index) => (

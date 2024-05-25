@@ -4,11 +4,11 @@ import Input from '../../ui/Input';
 import { useLogin } from './useLogin';
 import { useForm } from 'react-hook-form';
 import LoginRequestDTO from '@/domain/auth/LoginRequestDTO';
-import { ClipLoader } from 'react-spinners';
 import FormRow from '../../ui/FormRow';
+import Spinner from '@/features/ui/Spinner';
 
 function LoginForm() {
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading} = useLogin();
 
   const { register, handleSubmit, formState:{errors} } = useForm<LoginRequestDTO>({
     mode: 'onTouched',
@@ -57,7 +57,7 @@ function LoginForm() {
         className="w-[200px] min-w-[100px]"
         disabled={isLoading}
       >
-        {isLoading ? <ClipLoader color="#1B232E" size={15} /> : 'Ingresar'}
+        {isLoading ? <Spinner/>: 'Ingresar'}
       </Button>
       <div className="p-10">
         <p>

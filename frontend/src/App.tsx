@@ -11,12 +11,13 @@ import Home from './pages/Home';
 import AppLayout from './features/ui/AppLayout';
 import Products from './pages/Products';
 import { UserContextProvider } from './context/UserContext';
-import ProductDetail from './features/product/ProductDetail';
+import ProductDetail from './pages/ProductDetail';
 import CreateProduct from './pages/CreateProduct';
 import ProtectedRoute from './features/auth/ProtectedRoute';
 import AnonymousRoute from './features/ui/AnonymousRoute';
 import ConfirmAccount from './pages/ConfirmAccount';
 import UpdateProfile from './pages/UpdateProfile';
+import CreateExchange from './pages/CreateExchange';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,6 +54,10 @@ function App() {
               <Route
                 path={ROUTES.sendEmailConfirmation}
                 element={<SendEmailConfirmation />}
+              />
+              <Route
+                path={`${ROUTES.createExchange}/:productId`}
+                element={<CreateExchange />}
               />
             </Route>
             {/*Anonymous Routes */}

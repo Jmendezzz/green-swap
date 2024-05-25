@@ -9,4 +9,5 @@ export const ROUTES = {
     contact: '/contact',
     confirmAccount: '/confirm-account',
     updateProfile : '/update-profile',
+    createExchange: '/create-exchange',
 }
