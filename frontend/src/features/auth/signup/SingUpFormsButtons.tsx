@@ -1,6 +1,6 @@
 import { useSignUpContext } from '@/context/SignUpContext';
 import Button from '@/features/ui/Button';
-import { ClipLoader } from 'react-spinners';
+import Spinner from '@/features/ui/Spinner';
 
 interface Props {
   onBack?: () => void;
@@ -25,7 +25,7 @@ function SingUpFormsButtons({ onBack}: Props) {
       </Button>
       <Button type="submit" variant="primary" className="w-[200px] min-w-[100px] flex items-center justify-center"
 >
-        {isLastStep ? isLoading ? <ClipLoader color="#1B232E" size={30} /> : 'Registrarse' : 'Continuar'}
+        {isLastStep ? isLoading ? <Spinner /> : 'Registrarse' : 'Continuar'}
       </Button>
     </div>
   );

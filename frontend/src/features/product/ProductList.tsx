@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import ProductItemCard from './ProductItemCard';
 import { useProducts } from './useProducts';
-import { ClipLoader } from 'react-spinners';
 import ProductFilter from './ProductFilter';
 import Empty from '../ui/Empty';
 import Pagination from '../ui/Pagination';
 import { Devices } from '@/styles/Devices';
+import Spinner from '../ui/Spinner';
 
 function ProductList() {
   const { data, isLoading, setPageable, pageable } = useProducts();
@@ -20,7 +20,7 @@ function ProductList() {
       <StyledProductItemsContainer>
         {isLoading ? (
           <div className="flex w-full h-full items-center justify-center">
-            <ClipLoader color={'white'} size={150} />
+            <Spinner color={'white'} size='lg' />
           </div>
         ) : (
           <>

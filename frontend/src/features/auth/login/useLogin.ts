@@ -33,7 +33,7 @@ export function useLogin() {
   });
   return {
     login: mutate,
-    status: status === 'loading',
+    isLoading: status === 'loading',
     error,
     isSuccess,
   };

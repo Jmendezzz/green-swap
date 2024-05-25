@@ -1,14 +1,14 @@
 import { motion } from "framer-motion"
 import ReactDOM from "react-dom"
-import { ClipLoader } from "react-spinners"
 import styled from "styled-components"
+import Spinner from "./Spinner"
 
 function FullScreenSpinner() {
   return (
     ReactDOM.createPortal(
         <FullScreenContainer
         >
-            <ClipLoader color="#1AC760"  size={150}  />
+            <Spinner color="#1AC760"  size='xl'  />
         </FullScreenContainer>,
         document.body
         )

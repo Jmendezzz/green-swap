@@ -17,8 +17,8 @@ import { useUserContext } from '@/context/UserContext';
 import CreateProductPreview from './CreateProductPreview';
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
 import useCreateProduct from './useCreateProduct';
-import { ClipLoader } from 'react-spinners';
 import { Status} from '@/domain/product/Status';
+import Spinner from '../ui/Spinner';
 
 function CreateProductForm() {
   const { user } = useUserContext();
@@ -143,7 +143,7 @@ function CreateProductForm() {
             />
           </FormRow>
           <Button type="submit" variant="primary" disabled={isLoading} >
-            {isLoading ? <ClipLoader color="#1B232E" size={15} />  : 'Crear'}
+            {isLoading ? <Spinner/>  : 'Crear'}
           </Button>
         </StyledCreateProductForm>
       </StyledCreateProductFormContainer>
