@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SidebarMenu from './SidebarMenu';
 import StyledLightContainer from './StyledLightContainer';
 import { Devices } from '@/styles/Devices';
-interface Tab {
+export interface Tab {
   id: string;
   name: string;
   content: React.ReactNode;

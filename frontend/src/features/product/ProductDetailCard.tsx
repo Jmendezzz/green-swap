@@ -8,6 +8,8 @@ import { getQualityValue } from '@/domain/product/Condition';
 import { formatDate } from 'date-fns';
 import UserProfilePicture from '../ui/UserProfilePicture';
 import { formatToCOP } from '@/utils/formatCurrency';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 interface Props {
   product: ProductDTO;
@@ -52,7 +54,10 @@ function ProductDetailCard({ product }: Props) {
 
         <footer className="flex justify-end gap-10">
           <Button variant="secondary">Comprar</Button>
+          <Link to={`${ROUTES.createExchange}/${product.id}`}>
+
           <Button variant="primary">Intercambiar</Button>
+          </Link>
         </footer>
       </StyledProductDetailContent>
     </StyledProductDetail>
