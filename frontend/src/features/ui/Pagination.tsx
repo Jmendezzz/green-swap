@@ -67,7 +67,6 @@ const StyledPaginationButton = styled.button`
   &:disabled {
     background-color: var(--contrast-color);
     color: var(--primary-color);
-    opacity: 0.8;
     cursor: not-allowed;
   }
 `;

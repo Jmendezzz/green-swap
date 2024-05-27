@@ -17,12 +17,11 @@ const StyledProductQualityTag = styled.div<{ quality: string }>`
   position: absolute;
   top:20px;
   right: 0;
-  padding: 5px;
+  padding: 0.2rem;
   clip-path: polygon(100% 0%, 100% 51%, 100% 100%, 10% 100%, 0% 50%, 10% 0%);
-  padding: 0.5rem;
   padding-left: 1rem;
   font-weight: 700;
-  width: 120px;
+  width: 12rem;
 
   background-color: ${props => {
     switch (props.quality) {
