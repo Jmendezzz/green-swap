@@ -13,6 +13,7 @@ public interface ProductRepository {
   Product save(Product product);
   Optional<Product> findById(Long id);
   List<Product> findAll(Pageable pageable);
+  Page<Product> findByUser(Long userId, Pageable pageable);
   Page<Product> findBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable);
   List<String> findSearchSuggestions(String query);
 
