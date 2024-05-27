@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface UserService {
   UserDTO create(CreateUserDTO user);
   Optional<UserDTO> getByEmail(String email);
+    Optional<UserDTO> getById(Long id);
   UserDTO setVerified(UserDTO user);
   UserDTO update(UserDTO user);
   UserDTO updateProfile(UpdateUserProfileDTO user);

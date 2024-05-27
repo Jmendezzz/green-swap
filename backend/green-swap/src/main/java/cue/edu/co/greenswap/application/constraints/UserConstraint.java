@@ -53,4 +53,9 @@ public class UserConstraint {
       throw new UserException(UserConstantMessage.INVALID_CURRENT_PASSWORD, HttpStatus.BAD_REQUEST);
     }
   }
+  public User validateUser(Long id){
+    Optional<User> user = repository.findById(id);
+    if (user.isEmpty()) throw new UserException(UserConstantMessage.INVALID_EMAIL, HttpStatus.NOT_FOUND);
+    return user.get();
+  }
 }

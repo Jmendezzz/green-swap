@@ -63,6 +63,11 @@ public class UserServiceImp implements UserService {
     return repository.findByEmail(email).map(mapper::toDTO);
   }
 
+  @Override
+  public Optional<UserDTO> getById(Long id) {
+    return repository.findById(id).map(mapper::toDTO);
+  }
+
   /**
    * Verifies the user, updating the verified status to true.
    *

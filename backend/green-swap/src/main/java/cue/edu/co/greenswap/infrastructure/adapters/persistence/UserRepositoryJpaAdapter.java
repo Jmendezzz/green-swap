@@ -31,6 +31,12 @@ public class UserRepositoryJpaAdapter implements UserRepository {
   public Optional<User> findByEmail(String email) {
     return repository.findByEmail(email).map(mapper::toDomain);
   }
+
+  @Override
+  public Optional<User> findById(Long id) {
+    return repository.findById(id).map(mapper::toDomain);
+  }
+
   @Override
   public User setVerified(User user) {
     Optional<UserEntity> userEntity = repository.findByEmail(user.getEmail());
