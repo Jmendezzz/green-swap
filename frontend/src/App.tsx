@@ -48,16 +48,22 @@ function App() {
                   path={ROUTES.createProducts}
                   element={<CreateProduct />}
                 />
-                <Route path={ROUTES.updateProfile} element={<UpdateProfile />} />
+                <Route
+                  path={ROUTES.updateProfile}
+                  element={<UpdateProfile />}
+                />
+                <Route
+                  path={`${ROUTES.createExchange}/:productId`}
+                  element={<CreateExchange />}
+                />
               </Route>
-              <Route path={ROUTES.confirmAccount} element={<ConfirmAccount/>} />
+              <Route
+                path={ROUTES.confirmAccount}
+                element={<ConfirmAccount />}
+              />
               <Route
                 path={ROUTES.sendEmailConfirmation}
                 element={<SendEmailConfirmation />}
-              />
-              <Route
-                path={`${ROUTES.createExchange}/:productId`}
-                element={<CreateExchange />}
               />
             </Route>
             {/*Anonymous Routes */}

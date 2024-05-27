@@ -38,13 +38,13 @@ function UploadImageInput({
               alt="preview"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
-              className={`w-[200px] h-[200px] rounded-full object-cover object-center cursor-pointer transition-all ${
+              className={`w-[200px] min-h-[200px] rounded-full object-cover object-center cursor-pointer transition-all ${
                 hovered ? 'opacity-50' : ''
               }`}
             />
           ) : (
             <div
-              className="w-[200px] h-[200px] bg-primary bg-opacity-90 hover:bg-slate-800 rounded-full flex items-center justify-center text-9xl transition-all duration-500 cursor-pointer"
+              className="w-[200px] min-h-[100px] bg-primary bg-opacity-90 hover:bg-slate-800 rounded-full flex items-center justify-center text-9xl transition-all duration-500 cursor-pointer"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             >

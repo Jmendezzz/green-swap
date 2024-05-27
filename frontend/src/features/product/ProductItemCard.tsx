@@ -1,4 +1,4 @@
-import {getCategoryValue } from '@/domain/product/Category';
+import { getCategoryValue } from '@/domain/product/Category';
 import { ListProductDTO } from '@/domain/product/ListProductDTO';
 import { Devices } from '@/styles/Devices';
 import { formatToCOP } from '@/utils/formatCurrency';
@@ -6,15 +6,27 @@ import { HiPhotograph } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProductQualityTag from './ProductQualityTag';
+import { ROUTES } from '@/constants/routes';
 
-function ProductItemCard({ product }: { product: ListProductDTO }) {
+interface ProductItemCardProps {
+  product: ListProductDTO;
+  size?: 'xsm' | 'sm' | 'lg' | 'xl';
+  onClick?: (product:ListProductDTO) => void;
+}
+
+function ProductItemCard({ product, size = 'sm', onClick }: ProductItemCardProps) {
   const navigate = useNavigate();
-  const clickHandler = () => {
-    navigate(`${product.id}`);
-  };
+  const clickHandler = () =>{
+    if(onClick){
+      onClick(product);
+    }else{
+      navigate(`${ROUTES.products}/${product.id}`);
+    }
+  }
+
   return (
-    <StyledProductItemCard className="shadow-lg relative" onClick={clickHandler}>
-      <StyledProductImage>
+    <StyledProductItemCard size={size} className="shadow-lg relative" onClick={clickHandler}>
+      <StyledProductImage size={size}>
         {product.urlImage != '' && product.urlImage != null ? (
           <img
             src={product.urlImage}
@@ -34,7 +46,12 @@ function ProductItemCard({ product }: { product: ListProductDTO }) {
     </StyledProductItemCard>
   );
 }
-const StyledProductItemCard = styled.div`
+
+interface StyledProps {
+  size: 'xsm' | 'sm' | 'lg' | 'xl';
+}
+
+const StyledProductItemCard = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,25 +68,77 @@ const StyledProductItemCard = styled.div`
   p {
     margin: 0.5rem 0;
   }
-  width: 150px;
-  @media (min-width: ${Devices.tablet}) {
-    width: 300px;
-    & h2{
-      font-size: 2rem;
+  width: ${({ size }) => {
+    switch (size) {
+      case 'xsm':
+        return '100px';
+      case 'sm':
+        return '150px';
+      case 'lg':
+        return '300px';
+      case 'xl':
+        return '450px';
+      default:
+        return '150px';
     }
+  }};
+  @media (min-width: ${Devices.tablet}) {
+    width: ${({ size }) => {
+      switch (size) {
+        case 'xsm':
+          return '200px';
+        case 'sm':
+          return '300px';
+        case 'lg':
+          return '450px';
+        case 'xl':
+          return '600px';
+        default:
+          return '300px';
+      }
+    }};
   }
 `;
 
-const StyledProductImage = styled.div`
+const StyledProductImage = styled.div<StyledProps>`
   width: 100%;
   border-radius: 1rem;
-  height: 100px;
-  & > img {
+  img{
     border-radius: 1rem 1rem 0 0;
     object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
+  height: ${({ size }) => {
+    switch (size) {
+      case 'xsm':
+        return '50px';
+      case 'sm':
+        return '100px';
+      case 'lg':
+        return '200px';
+      case 'xl':
+        return '300px';
+      default:
+        return '100px';
+    }
+  }};
   @media (min-width: ${Devices.tablet}) {
-    height: 300px;
+    height: ${({ size }) => {
+      switch (size) {
+        case 'xsm':
+          return '100px';
+        case 'sm':
+          return '200px';
+        case 'lg':
+          return '300px';
+        case 'xl':
+          return '400px';
+        default:
+          return '200px';
+      }
+    }};
   }
 `;
+
 export default ProductItemCard;

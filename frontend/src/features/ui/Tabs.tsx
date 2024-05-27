@@ -20,7 +20,7 @@ function Tabs({ tabs }: TabsProps) {
           ))}
         </ul>
       </header>
-      <div>{currentTab.content}</div>
+      {currentTab.content}
     </StyledTabs>
   );
 }
@@ -53,13 +53,7 @@ const StyledTabs = styled.div`
       }
     }
   }
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
+
 `;
 
 export default Tabs;

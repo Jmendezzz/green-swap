@@ -51,7 +51,7 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
 
   @Override
   public Page<Product> findByUser(Long userId, Pageable pageable) {
-    return repository.findAllByOwner(userId, pageable).map(productMapperDBO::toDomain);
+    return repository.findAllByOwner_Id(userId, pageable).map(productMapperDBO::toDomain);
   }
 
   @Override
