@@ -1,10 +1,27 @@
+import CreateProductForm from '@/features/product/CreateProductForm';
 import { useProduct } from '@/features/product/useProduct';
 import Heading from '@/features/ui/Heading';
 import Section from '@/features/ui/Section';
 import Spinner from '@/features/ui/Spinner';
+import Tabs from '@/features/ui/Tabs';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { HiPhoto } from 'react-icons/hi2';
 import styled from 'styled-components';
+
+
+const selectProductTabs =[
+  {
+    id:"createProduct",
+    name:"Crear producto",
+    content:<CreateProductForm showPreview={false} />
+  },
+  {
+    id:"myProducts",
+    name:"Mis productos",
+    content:<div>Seleccionar producto</div>
+  
+  }
+]
 
 function CreateExchange() {
   const { isLoading, product: productToExchange } = useProduct();
@@ -28,7 +45,7 @@ function CreateExchange() {
   return (
     <StyledCreateExchangeSection>
       <div className='flex flex-col gap-20'>
-        <Heading>Intercambiar <span className='text-contrast'>{productToExchange?.name}</span></Heading>
+        <Heading type='h2'>Intercambiar <span className='text-contrast'>{productToExchange?.name}</span></Heading>
         <StyledExchangeContainer>
           <StyledProductToExchange>
             {productToExchange.urlImage != null &&
@@ -44,13 +61,17 @@ function CreateExchange() {
             <Heading type="h2">{productToExchange.name}</Heading>
           </StyledProductToExchange>
 
-          <FaExchangeAlt size={80} className="exchange-icon text-contrast" />
+          <div className='flex items-center'>
+            <FaExchangeAlt size={80} className="exchange-icon text-contrast" />
+          </div>
+
 
           <div className='w-full h-full flex flex-col justify-center'>
-            <Heading type="h2">
+            <Heading type="h3">
               Selecciona un producto para intercambiar
             </Heading>
             <div className='h-full'>
+              <Tabs tabs={selectProductTabs} />
 
             </div>
           </div>

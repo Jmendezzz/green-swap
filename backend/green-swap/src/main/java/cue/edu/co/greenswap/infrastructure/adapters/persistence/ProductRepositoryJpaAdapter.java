@@ -50,6 +50,11 @@ public class ProductRepositoryJpaAdapter implements ProductRepository {
   }
 
   @Override
+  public Page<Product> findByUser(Long userId, Pageable pageable) {
+    return repository.findAllByOwner(userId, pageable).map(productMapperDBO::toDomain);
+  }
+
+  @Override
   public Page<Product> findBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable) {
     CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
     CriteriaQuery<ProductEntity> criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);

@@ -20,7 +20,7 @@ import useCreateProduct from './useCreateProduct';
 import { Status} from '@/domain/product/Status';
 import Spinner from '../ui/Spinner';
 
-function CreateProductForm() {
+function CreateProductForm({showPreview = true}: {showPreview?: boolean}) {
   const { user } = useUserContext();
   const [file, setFile] = useState<File | undefined>(undefined);
   function handleFileChange(file: File | undefined) {
@@ -42,7 +42,6 @@ function CreateProductForm() {
       productImage: file ,
       status: "PUBLISHED" as keyof typeof Status,
     }
-    console.log(product);
     createProduct(product);
   }
   const watchAllFields = watch();
@@ -147,7 +146,7 @@ function CreateProductForm() {
           </Button>
         </StyledCreateProductForm>
       </StyledCreateProductFormContainer>
-      <CreateProductPreview product={previewProduct} />
+      {showPreview && <CreateProductPreview product={previewProduct} />}
     </div>
   );
 }

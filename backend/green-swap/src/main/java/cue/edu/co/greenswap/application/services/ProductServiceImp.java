@@ -60,6 +60,12 @@ public class ProductServiceImp implements ProductService {
   }
 
   @Override
+  public Page<ListProductDTO> getByUser(Long userId, Pageable pageable) {
+    Page<Product> products = repository.findByUser(userId, pageable);
+    return new PageImpl<>(mapper.toDTO(products.getContent()), pageable, products.getTotalElements());
+  }
+
+  @Override
   public List<String> getSearchSuggestions(String query) {
     return repository.findSearchSuggestions(query);
   }

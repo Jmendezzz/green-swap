@@ -15,5 +15,6 @@ public interface ProductService {
   ProductDTO create(CreateProductDTO product);
   Optional<ProductDTO> getById(Long id);
   Page<ListProductDTO> getBySearchCriteria(SearchCriteriaProduct searchCriteriaProduct, Pageable pageable);
+  Page<ListProductDTO> getByUser(Long userId, Pageable pageable);
   List<String> getSearchSuggestions(String query);
 }

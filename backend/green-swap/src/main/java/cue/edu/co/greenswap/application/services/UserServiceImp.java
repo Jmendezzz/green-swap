@@ -3,19 +3,26 @@ package cue.edu.co.greenswap.application.services;
 import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
+import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
+import cue.edu.co.greenswap.application.ports.usecases.ProductService;
 import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
+import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.*;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +30,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
   private UserRepository repository;
+  private ProductService productService;
   private UserConstraint constraint;
   private UserMapperDTO mapper;
   private SecurityContextService securityContextService;
@@ -117,5 +125,11 @@ public class UserServiceImp implements UserService {
     User user = repository.findByEmail(email).get();
     user.setPassword(password);
     repository.save(user);
+  }
+
+  @Override
+  public Page<ListProductDTO> getUserProducts(Pageable pageable) {
+    User currentUser = securityContextService.getCurrentUser();
+    return productService.getByUser(currentUser.getId(), pageable);
   }
 }
