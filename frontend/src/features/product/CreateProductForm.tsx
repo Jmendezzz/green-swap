@@ -169,7 +169,7 @@ const StyledCreateProductForm = styled.form`
   gap: 2rem;
   padding: 2rem;
   overflow-y: auto;
-  max-height: 80vh;
+  max-height: 100%;
 `;
 
 export default CreateProductForm;

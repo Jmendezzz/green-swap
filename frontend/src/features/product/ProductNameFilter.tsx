@@ -104,7 +104,7 @@ const SuggestionsContainer = styled.div`
   position: absolute;
   top: 80%;
   padding: 2rem;
-  min-height: 200px;
+  min-height: 250px;
   background-color: var(--primary-color);
   width: 100%;
 
