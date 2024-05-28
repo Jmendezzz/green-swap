@@ -3,7 +3,7 @@ import Button from '@/features/ui/Button';
 import FormRow from '@/features/ui/FormRow';
 import Input from '@/features/ui/Input';
 import UploadImageInput from '@/features/ui/UploadImageInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useUpdateProfile from './useUpdateProfile';
 import useUser from './useUser';
@@ -16,16 +16,15 @@ function UpdateProfileForm() {
     user?.urlProfilePicture
   );
 
+  useEffect(()=>{
+    setImage(user?.urlProfilePicture)
+  }, [user]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateUserProfileDTO>({
-    defaultValues: {
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      phoneNumber: user?.phoneNumber,
-    },
     mode: 'onTouched',
   });
 
@@ -51,6 +50,7 @@ function UpdateProfileForm() {
         <FormRow error={errors?.firstName?.message}>
           <label htmlFor="name">Nombre</label>
           <Input
+            defaultValue={user?.firstName}
             id="name"
             variant="non-outlined"
             {...register('firstName', { required: 'Este campo es requerido' })}
@@ -60,6 +60,7 @@ function UpdateProfileForm() {
           <label htmlFor="lastName">Apellidos</label>
           <Input
             id="lastName"
+            defaultValue={user?.lastName}
             variant="non-outlined"
             {...register('lastName', { required: 'Este campo es requerido' })}
           />
@@ -79,6 +80,7 @@ function UpdateProfileForm() {
         <FormRow error={errors?.lastName?.message}>
           <label htmlFor="phoneNumber">Número de celular</label>
           <Input
+            defaultValue={user?.phoneNumber}
             id="phoneNumber"
             variant="non-outlined"
             {...register('phoneNumber', {

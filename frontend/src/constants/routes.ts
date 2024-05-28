@@ -10,4 +10,5 @@ export const ROUTES = {
     confirmAccount: '/confirm-account',
     updateProfile : '/update-profile',
     createExchange: '/create-exchange',
+    userProfile: 'user'
 }
