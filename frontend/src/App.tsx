@@ -18,6 +18,7 @@ import AnonymousRoute from './features/ui/AnonymousRoute';
 import ConfirmAccount from './pages/ConfirmAccount';
 import UpdateProfile from './pages/UpdateProfile';
 import CreateExchange from './pages/CreateExchange';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ function App() {
                 path={`${ROUTES.products}/:productId`}
                 element={<ProductDetail />}
               />
+              <Route path={`${ROUTES.userProfile}/:userId`} element={<Profile />} />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>

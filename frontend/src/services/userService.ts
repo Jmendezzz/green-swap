@@ -10,6 +10,6 @@ export function getUserProductsService(pageable:Pageable): Promise<AxiosResponse
   return axiosInstace.get(`${REQUEST_MAPPING}/products?page=${pageable.page}&size=${pageable.size}`);
 }
 
-export function getUserByIdService(id: string): Promise<AxiosResponse<BasicInfoUserDTO>> {
+export function getUserByIdService(id: string): Promise<AxiosResponse<BasicInfoUserDTO | null>> {
   return axiosInstace.get(`${REQUEST_MAPPING}/${id}`);
 }
