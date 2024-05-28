@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("reports")
 @AllArgsConstructor
 public class ReportController {
   private final ReportService reportService;
