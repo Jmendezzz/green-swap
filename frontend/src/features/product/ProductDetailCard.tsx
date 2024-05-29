@@ -44,7 +44,9 @@ function ProductDetailCard({ product }: Props) {
           <div className="flex items-center gap-4">
             <UserProfilePicture user={product.owner} />
             <p>
-              {product.owner.firstName} {product.owner.lastName}
+              <Link to={`/${ROUTES.userProfile}/${product.owner.id}`}>
+                {product.owner.firstName} {product.owner.lastName}
+              </Link>
             </p>
           </div>
           <p>
@@ -55,8 +57,7 @@ function ProductDetailCard({ product }: Props) {
         <footer className="flex justify-end gap-10">
           <Button variant="secondary">Comprar</Button>
           <Link to={`${ROUTES.createExchange}/${product.id}`}>
-
-          <Button variant="primary">Intercambiar</Button>
+            <Button variant="primary">Intercambiar</Button>
           </Link>
         </footer>
       </StyledProductDetailContent>

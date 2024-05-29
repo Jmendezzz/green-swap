@@ -7,7 +7,8 @@ import { useLogout } from '../auth/logout/useLogout';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
-function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
+
+function UserProfilePicture({ user, size = 'sm' }: { user: BasicInfoUserDTO, size?: 'xsm' | 'sm' | 'lg' | 'xl'}) {
   const { urlProfilePicture } = user;
   const [showDropdown, setShowDropDown] = useState(false);
 
@@ -20,7 +21,7 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
   };
 
   return (
-    <StyledUserProfilePicture onClick={onClickHandler} ref={ref}>
+    <StyledUserProfilePicture onClick={onClickHandler} ref={ref} size={size}>
       {user.urlProfilePicture ? (
         <StyledImageContainer>
           <img src={urlProfilePicture} alt="Foto de perfil" />
@@ -49,17 +50,59 @@ function UserProfilePicture({ user }: { user: BasicInfoUserDTO }) {
     </StyledUserProfilePicture>
   );
 }
+interface StyledProps {
+  size: 'xsm' | 'sm' | 'lg' | 'xl';
+}
 
-const StyledUserProfilePicture = styled.div`
+const StyledUserProfilePicture = styled.div<StyledProps>`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: ${({ size }) => {
+    switch (size) {
+      case 'xsm':
+        return '25px';
+      case 'sm':
+        return '50px';
+      case 'lg':
+        return '100px';
+      case 'xl':
+        return '150px';
+      default:
+        return '50px';
+    }
+  }};
+  height: ${({ size }) => {
+    switch (size) {
+      case 'xsm':
+        return '25px';
+      case 'sm':
+        return '50px';
+      case 'lg':
+        return '100px';
+      case 'xl':
+        return '150px';
+      default:
+        return '50px';
+    }
+  }};
   background-color: var(--primary-color-light);
-  font-size: 2rem;
+  font-size: ${({ size }) => {
+    switch (size) {
+      case 'xsm':
+        return '1rem';
+      case 'sm':
+        return '2rem';
+      case 'lg':
+        return '4rem';
+      case 'xl':
+        return '6rem';
+      default:
+        return '2rem';
+    }
+  }};
   cursor: pointer;
   h1 {
     width: 100%;
