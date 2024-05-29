@@ -10,6 +10,6 @@ import java.util.List;
 public interface SaleMapperDBO {
     SaleEntity toEntity(Sale sale);
     Sale toDomain(SaleEntity saleEntity);
-    List<Sale> toEntity(List<SaleEntity> salesEntity);
-    List<SaleEntity> toDomain(List<Sale> sales);
+    List<SaleEntity> toEntity(List<Sale> salesEntity);
+    List<Sale> toDomain(List<SaleEntity> sales);
 }
