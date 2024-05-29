@@ -8,6 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ExchangeMapperDTO {
     ExchangeDTO toDTO(Exchange exchange);
-    Exchange toEntity(ExchangeDTO exchangeDTO);
-    Exchange toEntity(CreateExchangeDTO exchangeDTO);
+    Exchange toDomain(ExchangeDTO exchangeDTO);
+    Exchange toDomain(CreateExchangeDTO exchangeDTO);
 }

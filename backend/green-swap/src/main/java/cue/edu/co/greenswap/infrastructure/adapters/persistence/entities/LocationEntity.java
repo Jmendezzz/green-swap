@@ -1,6 +1,5 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
-import cue.edu.co.greenswap.domain.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,29 +8,23 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "user_tokens")
+@Table(name = "locations")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class UserTokenEntity {
+public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String token;
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
+    private String city;
+    private String department;
+    private String address;
+    private String zipCode;
+    private String comment;
     @ManyToOne
+    @CreatedBy
     private UserEntity user;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TokenType type;
 }

@@ -69,7 +69,7 @@ const StyledNav = styled.nav`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3rem 2rem;
+  padding: 1.4rem 2rem;
   width: 100%;
   &.fixed {
     position: fixed;
@@ -81,7 +81,7 @@ const StyledNav = styled.nav`
   &.relative {
     position: relative;
   }
-  @media (max-width: ${Devices.tablet}) {
+  @media (max-width: ${Devices.laptop}) {
     padding: 2rem 1rem;
   }
 `;
