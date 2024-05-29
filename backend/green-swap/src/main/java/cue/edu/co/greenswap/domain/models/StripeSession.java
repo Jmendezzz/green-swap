@@ -8,6 +8,6 @@ public class StripeSession {
     private LocalDateTime createdAt;
     private String sessionId;
     private User user;
-    private String payment_intent_id;
-    private String payment_status;
+    private String paymentIntentId;
+    private String paymentStatus;
 }

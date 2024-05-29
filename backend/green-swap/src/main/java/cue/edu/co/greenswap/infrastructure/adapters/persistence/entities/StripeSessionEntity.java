@@ -29,7 +29,7 @@ public class StripeSessionEntity {
     @ManyToOne
     @CreatedBy
     private UserEntity user;
-    private String payment_intent_id;
-    private String payment_status;
+    private String paymentIntentId;
+    private String paymentStatus;
 
 }

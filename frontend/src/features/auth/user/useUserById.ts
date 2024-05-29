@@ -14,7 +14,7 @@ function useUserById(){
     })
 
     return {
-        user: data,
+        user: data?.data,
         isLoading: status === 'loading',
     }
 }
