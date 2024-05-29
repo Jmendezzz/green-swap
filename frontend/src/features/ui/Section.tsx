@@ -21,7 +21,7 @@ const StyledSection = styled.section`
   min-height: 100%;
   display: flex;
   justify-content: center;
-  padding:4rem 2rem;
+  padding:2rem 2rem;
 `
 const StyledSecytionContent = styled.div`
   width: 100%;

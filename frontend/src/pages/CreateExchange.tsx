@@ -88,6 +88,7 @@ const StyledCreateExchangeSection = styled(Section)`
 const StyledExchangeContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
   width: 100%;
   height: 100%;
@@ -99,12 +100,11 @@ const StyledProductToExchange = styled.div`
   align-items: center;
   gap: 1rem;
   width: 100%;
-  height: 100%;
-
-  & img {
+  & > img {
     object-fit: cover;
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    min-height: 400px;
+    border-radius: 2rem;
   }
 `;
 

@@ -92,7 +92,7 @@ public class UserTokenServiceImp implements UserTokenService {
 
         expireLastUserToken(userMapperDTO.toDomain(userDto));
 
-        UserToken confirmationToken = validationMailTokenFactory.createUserToken(TokenType.VALIDATE_MAIL);
+        UserToken confirmationToken = validationMailTokenFactory.createUserToken(TokenType.VALIDATE_MAIL, userMapperDTO.toDomain(userDto));
 
         UserToken savedToken = save(confirmationToken);
         String magic_link = EmailConstant.URL_VALIDATE_EMAIL + savedToken.getToken();
@@ -113,7 +113,7 @@ public class UserTokenServiceImp implements UserTokenService {
         }
         userTokenConstraint.validateNonExistingValidTokens(userMapperDTO.toDomain(userDto.get()));
 
-        UserToken resetPasswordToken = resetPasswordTokenFactory.createUserToken(TokenType.RESET_PASSWORD);
+        UserToken resetPasswordToken = resetPasswordTokenFactory.createUserToken(TokenType.RESET_PASSWORD, userMapperDTO.toDomain(userDto.get()));
         UserToken savedToken = save(resetPasswordToken);
 
         String magic_link = EmailConstant.URL_RESET_PASSWORD + savedToken.getToken();

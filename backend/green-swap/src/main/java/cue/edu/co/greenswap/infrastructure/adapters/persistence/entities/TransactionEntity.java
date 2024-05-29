@@ -1,37 +1,35 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
-import cue.edu.co.greenswap.domain.enums.TokenType;
+import cue.edu.co.greenswap.domain.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_tokens")
+@Table(name = "transactions")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class UserTokenEntity {
+public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String token;
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
-    @ManyToOne
-    private UserEntity user;
-    @Column(nullable = false)
+    @OneToOne
+    private ExchangeEntity exchange;
+    @OneToOne
+    private SaleEntity sale;
     @Enumerated(EnumType.STRING)
-    private TokenType type;
+    private TransactionStatus status;
+    @OneToOne
+    private LocationEntity shippingLocation;
+    @OneToOne
+    private LocationEntity returnLocation;
+    private LocalDateTime createdAt;
 }

@@ -14,13 +14,14 @@ import java.util.UUID;
 public class ResetPasswordToken implements TokenFactory{
 
     @Override
-    public UserToken createUserToken(TokenType type) {
+    public UserToken createUserToken(TokenType type, User user) {
         String token = UUID.randomUUID().toString();
         return UserToken.builder()
                 .token(token)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(EmailConstant.RESET_PASSWORD_TOKEN_EXPIRATION_TIME))
                 .type(type)
+                .user(user)
                 .build();
     }
 }
