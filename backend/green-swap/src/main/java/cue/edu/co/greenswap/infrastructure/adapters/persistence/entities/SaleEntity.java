@@ -1,11 +1,12 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence.entities;
 
-import cue.edu.co.greenswap.domain.enums.PaymentMethod;
+import cue.edu.co.greenswap.domain.enums.SaleStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -26,13 +27,13 @@ public class SaleEntity {
     @ManyToOne
     private UserEntity buyerUser;
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
+    private SaleStatus status;
 
-    private String stripePaymentIntentId;
-    private String stripeChargeId;
-    private String stripePaymentStatus;
+    @OneToOne
+    private StripeSessionEntity stripeSession;
 
     private LocalDateTime paymentDate;
-
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
 }
