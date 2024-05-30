@@ -5,9 +5,11 @@ import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
+import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
 import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.*;
@@ -31,6 +33,7 @@ import java.util.UUID;
 public class UserServiceImp implements UserService {
   private UserRepository repository;
   private ProductService productService;
+  private ExchangeService exchangeService;
   private UserConstraint constraint;
   private UserMapperDTO mapper;
   private SecurityContextService securityContextService;
@@ -90,6 +93,13 @@ public class UserServiceImp implements UserService {
     return mapper.toDTO(repository.save(mapper.toDomain(user)));
   }
 
+  /**
+   * Updates the profile of the auth current user.
+   *
+   * @param user the DTO containing the updated profile information
+   * @return the DTO representation of the updated user
+   */
+
   @Override
   public UserDTO updateProfile(UpdateUserProfileDTO user) {
     User currentUser = securityContextService.getCurrentUser();
@@ -110,6 +120,13 @@ public class UserServiceImp implements UserService {
     return mapper.toDTO(repository.save(currentUser));
   }
 
+  /**
+   * Updates the password of the auth current user.
+   *
+   * @param updatePasswordDTO the DTO containing the current and new passwords
+   * @return true if the password was updated successfully
+   */
+
   @Override
   public Boolean updatePassword(UpdateUserPasswordDTO updatePasswordDTO) {
     User currentUser = securityContextService.getCurrentUser();
@@ -122,6 +139,13 @@ public class UserServiceImp implements UserService {
     return true;
   }
 
+  /**
+   * Resets the password of the user with the specified email.
+   *
+   * @param email the email of the user whose password is to be reset
+   * @param password the new password
+   * @param confirmPassword the confirmation of the new password
+   */
   @Override
   public void resetPassword(String email, String password, String confirmPassword) {
     constraint.validateUserEmail(email);
@@ -131,10 +155,42 @@ public class UserServiceImp implements UserService {
     user.setPassword(password);
     repository.save(user);
   }
+  /**
+   * Retrieves the products owned by the auth current user.
+   *
+   * @param pageable the pagination information
+   * @return a page of product DTOs representing the products owned by the current user
+   */
 
   @Override
   public Page<ListProductDTO> getUserProducts(Pageable pageable) {
     User currentUser = securityContextService.getCurrentUser();
     return productService.getByUser(currentUser.getId(), pageable);
+  }
+
+  /**
+   * Retrieves the exchanges offers that other users have made to any product of the auth current user.
+   *
+   * @param pageable the pagination information
+   * @return a page of exchange DTOs representing the exchanges offered by the current user
+   */
+
+  @Override
+  public Page<ExchangeDTO> getUserExchangesOffers(Pageable pageable) {
+    User currentUser = securityContextService.getCurrentUser();
+    return exchangeService.getExchangesOffersByUser(currentUser.getId(), pageable);
+  }
+
+  /**
+   * Retrieves the exchanges requested by the auth current user.
+   *
+   * @param pageable the pagination information
+   * @return a page of exchange DTOs representing the exchanges requested by the current user
+   */
+
+  @Override
+  public Page<ExchangeDTO> getUserExchangesRequested(Pageable pageable) {
+    User currentUser = securityContextService.getCurrentUser();
+    return exchangeService.getExchangesRequestedByUser(currentUser.getId(), pageable);
   }
 }

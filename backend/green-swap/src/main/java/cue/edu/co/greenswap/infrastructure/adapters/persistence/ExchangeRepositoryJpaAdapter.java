@@ -7,6 +7,8 @@ import cue.edu.co.greenswap.infrastructure.adapters.persistence.entities.Exchang
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.ExchangeRepositoryJpa;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.mappers.ExchangeMapperDBO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -45,5 +47,15 @@ public class ExchangeRepositoryJpaAdapter implements ExchangeRepository {
   public List<Exchange> findAllByProductRequested(Product productRequested) {
     List<ExchangeEntity> exchanges = repository.findAllByProductRequestedId(productRequested.getId());
     return mapper.toDomain(exchanges);
+  }
+
+  @Override
+  public Page<Exchange> findAllOffersByUser(Long userId, Pageable pageable) {
+    return repository.findAllByProductRequested_Owner_Id(userId, pageable).map(mapper::toDomain);
+  }
+
+  @Override
+  public Page<Exchange> findAllRequestedByUser(Long userId, Pageable pageable) {
+    return repository.findAllByProductOffered_Owner_Id(userId, pageable).map(mapper::toDomain);
   }
 }
