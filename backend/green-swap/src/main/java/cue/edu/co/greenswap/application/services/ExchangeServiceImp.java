@@ -14,6 +14,8 @@ import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -69,6 +71,17 @@ public class ExchangeServiceImp implements ExchangeService {
 
     return mapper.toDTO(exchange);
   }
+
+  @Override
+  public Page<ExchangeDTO> getExchangesOffersByUser(Long userId, Pageable pageable) {
+    return repository.findAllOffersByUser(userId, pageable).map(mapper::toDTO);
+  }
+
+  @Override
+  public Page<ExchangeDTO> getExchangesRequestedByUser(Long userId, Pageable pageable) {
+    return repository.findAllRequestedByUser(userId, pageable).map(mapper::toDTO);
+  }
+
   private void declineAfterAccept(Exchange exchange) {
     repository.findAllByProductRequested(exchange.getProductRequested())
       .stream()
