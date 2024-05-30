@@ -14,13 +14,17 @@ function Tabs({ tabs }: TabsProps) {
       <header>
         <ul>
           {tabs.map((tab) => (
-            <li key={tab.id} className={currentTab.id == tab.id ? 'active' : ''} onClick={() => setCurrentTab(tab)}>
+            <li
+              key={tab.id}
+              className={currentTab.id == tab.id ? 'active' : ''}
+              onClick={() => setCurrentTab(tab)}
+            >
               {tab.name}
             </li>
           ))}
         </ul>
       </header>
-      {currentTab.content}
+        {currentTab.content}
     </StyledTabs>
   );
 }
@@ -47,13 +51,12 @@ const StyledTabs = styled.div`
           font-weight: bold;
         }
 
-        &.active{
+        &.active {
           font-weight: bold;
         }
       }
     }
   }
-
 `;
 
 export default Tabs;

@@ -31,6 +31,13 @@ public class ExchangeServiceImp implements ExchangeService {
   private final ExchangeMapperDTO mapper;
   private final UserMapperDTO userMapperDTO;
   private final EmailService emailService;
+
+  /**
+   * Method to create an exchange
+   * @param createExchangeDTO
+   * @throws cue.edu.co.greenswap.infrastructure.exceptions.ExchangeException
+   * @return ExchangeDTO
+   */
   @Override
   public ExchangeDTO createExchange(CreateExchangeDTO createExchangeDTO) {
     constraint.validateProductOfferedOwner(createExchangeDTO.productOffered());
@@ -42,16 +49,28 @@ public class ExchangeServiceImp implements ExchangeService {
     return mapper.toDTO(exchangeSaved);
   }
 
+  /**
+   * Method to get an exchange by id
+   * @param id
+   * @return Optional<ExchangeDTO>
+   */
+
   @Override
   public Optional<ExchangeDTO> getExchangeById(Long id) {
     return repository.findById(id).map(mapper::toDTO);
   }
+
 
   @Override
   public void deleteExchange(Long id) {
     repository.deleteById(id);
   }
 
+  /**
+   * Method to accept an exchange
+   * @param id
+   * @return ExchangeDTO
+   */
   @Override
   public ExchangeDTO acceptExchange(Long id) {
     Exchange exchange = constraint.validateExchangeExists(id);
@@ -72,10 +91,24 @@ public class ExchangeServiceImp implements ExchangeService {
     return mapper.toDTO(exchange);
   }
 
+
+  /**
+   * Method to get all the exchanges offers that have been made to an user
+   * @param userId  the user id
+   * @param pageable the pagination
+   * @return ExchangeDTO
+   */
   @Override
   public Page<ExchangeDTO> getExchangesOffersByUser(Long userId, Pageable pageable) {
     return repository.findAllOffersByUser(userId, pageable).map(mapper::toDTO);
   }
+
+  /**
+   * Method to get all the exchanges that have been offered by an user
+   * @param userId  the user id
+   * @param pageable the pagination
+   * @return ExchangeDTO
+   */
 
   @Override
   public Page<ExchangeDTO> getExchangesRequestedByUser(Long userId, Pageable pageable) {

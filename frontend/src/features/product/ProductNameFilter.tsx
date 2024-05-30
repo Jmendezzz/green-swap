@@ -11,6 +11,7 @@ function ProductNameFilter() {
   const { setFilter, searchCriteriaProductDTO } = useProductFilterContext();
   const [isSuggestionsOpened, setIsSuggestionsOpened] = useState(false);
   const [nameQuery, setNameQuery] = useState(searchCriteriaProductDTO.name ? searchCriteriaProductDTO.name : '');
+  const [isClickOnSuggestion, setIsClickOnSuggestion] = useState(false);
   const { getProductsSuggestions, isLoading, suggestions } = useProductSuggestions();
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,6 +29,11 @@ function ProductNameFilter() {
   }, [nameQuery, getProductsSuggestions]);
 
   function blurHandler() {
+    if (isClickOnSuggestion) {
+      setIsClickOnSuggestion(false);
+      return;
+    }
+
     setTimeout(() => {
       setIsSuggestionsOpened(false);
       setFilter({
@@ -35,15 +41,20 @@ function ProductNameFilter() {
       });
     }, 100);
   }
-  function handleKeyPress(event:React.KeyboardEvent<HTMLInputElement>) {
+
+  function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       blurHandler();
     }
   }
+
   function handleSuggestionClick(suggestion: string) {
+    setIsClickOnSuggestion(true);
+    setFilter({ name: suggestion });
     setNameQuery(suggestion);
     setIsSuggestionsOpened(false);
   }
+
   const ref = useClickOutside(blurHandler);
 
   return (
@@ -59,15 +70,15 @@ function ProductNameFilter() {
       <SearchAdornment>
         <HiSearch />
       </SearchAdornment>
-      { isSuggestionsOpened &&  (
+      {isSuggestionsOpened && (
         <SuggestionsContainer ref={ref}>
           {isLoading ? (
-            <div className='w-full h-full flex items-center  justify-center'>
+            <div className='w-full h-full flex items-center justify-center'>
                 <Spinner color='white'/>
             </div>
           ) : suggestions && suggestions.length > 0 ? (
             suggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+              <li key={index} onMouseDown={() => handleSuggestionClick(suggestion)}>
                 {suggestion}
               </li>
             ))
@@ -79,10 +90,12 @@ function ProductNameFilter() {
     </SearchInputWrapper>
   );
 }
+
 const StyledInputSearch = styled(Input)`
   background-color: var(--primary-color);
   border: none;
 `;
+
 const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -108,13 +121,13 @@ const SuggestionsContainer = styled.div`
   background-color: var(--primary-color);
   width: 100%;
 
-  & > li{
+  & > li {
     list-style: none;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: background-color 0.3s;
-    &:hover{
+    &:hover {
       background-color: var(--primary-color-light);
     }
   }
