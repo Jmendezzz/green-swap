@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.infrastructure.adapters.persistence;
 
 import cue.edu.co.greenswap.application.ports.persistence.NotificationRepository;
+import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.models.Notification;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.NotificationRepositoryJpa;
@@ -19,8 +20,8 @@ public class NotificationRepositoryJpaAdapter implements NotificationRepository 
     private final UserMapperDBO userMapperDBO;
 
     @Override
-    public void save(Notification notification) {
-        repository.save(notificationMapperDBO.toDBO(notification));
+    public Notification save(Notification notification) {
+        return notificationMapperDBO.toDomain(repository.save(notificationMapperDBO.toDBO(notification)));
     }
 
     @Override

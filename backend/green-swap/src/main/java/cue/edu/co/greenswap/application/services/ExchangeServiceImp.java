@@ -2,6 +2,7 @@ package cue.edu.co.greenswap.application.services;
 
 import com.sendgrid.helpers.mail.Mail;
 import cue.edu.co.greenswap.application.constants.EmailConstant;
+import cue.edu.co.greenswap.application.constants.NotificationConstantMessage;
 import cue.edu.co.greenswap.application.constraints.ExchangeConstraint;
 import cue.edu.co.greenswap.application.factories.mail.ExchangeAcceptedMail;
 import cue.edu.co.greenswap.application.mappers.ExchangeMapperDTO;
@@ -9,10 +10,14 @@ import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.ExchangeRepository;
 import cue.edu.co.greenswap.application.ports.usecases.EmailService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
+import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
 import cue.edu.co.greenswap.domain.dtos.exchange.CreateExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
+import cue.edu.co.greenswap.domain.dtos.notification.CreateNotificationDTO;
+import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
+import cue.edu.co.greenswap.infrastructure.websocket.controllers.NotificationController;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +36,11 @@ public class ExchangeServiceImp implements ExchangeService {
   private final ExchangeMapperDTO mapper;
   private final UserMapperDTO userMapperDTO;
   private final EmailService emailService;
+  private final NotificationController notificationController;
+  private final NotificationService notificationService;
 
   /**
-   * Method to create an exchange
+   * Method to create an exchange, and send the notification to the user that has the product requested
    * @param createExchangeDTO
    * @throws cue.edu.co.greenswap.infrastructure.exceptions.ExchangeException
    * @return ExchangeDTO
@@ -46,6 +53,13 @@ public class ExchangeServiceImp implements ExchangeService {
     exchangeToSave.setStatus(ExchangeStatus.AWAITING_RESPONSE);
 
     Exchange exchangeSaved = repository.save(exchangeToSave);
+    NotificationDTO notification = notificationService.save(new CreateNotificationDTO(
+            userMapperDTO.toDTO(exchangeSaved.getProductRequested().getOwner()),
+            String.format(NotificationConstantMessage.NEW_OFFER_RECEIVED, exchangeSaved.getProductOffered().getName()),
+            true,
+            EmailConstant.URL_FRONTEND + "/my-exchanges/"
+    ));
+    notificationController.sendNotification(exchangeSaved.getProductRequested().getOwner().getEmail(), notification);
     return mapper.toDTO(exchangeSaved);
   }
 

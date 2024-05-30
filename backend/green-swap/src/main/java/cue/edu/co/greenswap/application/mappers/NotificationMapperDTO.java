@@ -1,5 +1,6 @@
 package cue.edu.co.greenswap.application.mappers;
 
+import cue.edu.co.greenswap.domain.dtos.notification.CreateNotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.models.Notification;
 import org.mapstruct.Mapper;
@@ -12,4 +13,5 @@ public interface NotificationMapperDTO {
     NotificationDTO toDTO(Notification notification);
     List<Notification> toDomain(List<NotificationDTO> notificationDTOs);
     List<NotificationDTO> toDTO(List<Notification> notifications);
+    Notification toDomain(CreateNotificationDTO createNotificationDTO);
 }
