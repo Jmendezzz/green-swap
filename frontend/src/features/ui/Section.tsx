@@ -4,11 +4,12 @@ import styled from "styled-components"
 interface Props {
     children: React.ReactNode | React.ReactNode[],
     className?: string
+    id?: string
 }
 
-function Section({ children, className }: Props) {
+function Section({ children, className, id }: Props) {
   return (
-    <StyledSection className={className}>
+    <StyledSection className={className} id={id || undefined}>
         <StyledSecytionContent>
             {children}
         </StyledSecytionContent>
