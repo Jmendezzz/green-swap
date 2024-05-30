@@ -19,6 +19,7 @@ import ConfirmAccount from './pages/ConfirmAccount';
 import UpdateProfile from './pages/UpdateProfile';
 import CreateExchange from './pages/CreateExchange';
 import Profile from './pages/Profile';
+import MyExchanges from './pages/MyExchanges';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,18 +47,24 @@ function App() {
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>
+
                 <Route
                   path={ROUTES.createProducts}
                   element={<CreateProduct />}
                 />
+
                 <Route
                   path={ROUTES.updateProfile}
                   element={<UpdateProfile />}
                 />
+
                 <Route
                   path={`${ROUTES.createExchange}/:productId`}
                   element={<CreateExchange />}
                 />
+
+                <Route path={ROUTES.myExchanges} element={<MyExchanges />} />
+
               </Route>
               <Route
                 path={ROUTES.confirmAccount}

@@ -26,7 +26,7 @@ const LoginSection = styled(Section)`
   background-size: cover;
   background-position:bottom;
   background-repeat: no-repeat;
-  min-height: 100%;
+  min-height: 100vh;
 `;
 
 export default Login;
