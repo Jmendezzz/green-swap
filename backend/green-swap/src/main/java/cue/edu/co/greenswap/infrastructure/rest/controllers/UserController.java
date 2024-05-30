@@ -3,6 +3,7 @@ package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
 import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
@@ -17,11 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
   private final UserService service;
+
   @GetMapping("/products")
   public ResponseEntity<Page<ListProductDTO>> getUserProducts(@PageableDefault(page = 0, size = 20) Pageable pageable) {
     return ResponseEntity.ok(service.getUserProducts(pageable));
@@ -35,5 +39,10 @@ public class UserController {
                             UserConstantMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND
                     ))
     );
+  }
+
+  @GetMapping("/notifications")
+  public ResponseEntity<List<NotificationDTO>> getByUser() {
+    return ResponseEntity.ok(service.getUserNotifications());
   }
 }

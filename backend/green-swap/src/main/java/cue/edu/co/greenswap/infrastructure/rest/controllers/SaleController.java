@@ -21,7 +21,7 @@ public class SaleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SaleDTO> ggetById(@PathVariable Long id){
+    public ResponseEntity<SaleDTO> getById(@PathVariable Long id){
         return service.getSaleById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new SaleException(

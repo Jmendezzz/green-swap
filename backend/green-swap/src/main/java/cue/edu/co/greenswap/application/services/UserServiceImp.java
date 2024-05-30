@@ -5,9 +5,11 @@ import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
+import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
 import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.*;
@@ -31,6 +33,7 @@ import java.util.UUID;
 public class UserServiceImp implements UserService {
   private UserRepository repository;
   private ProductService productService;
+    private NotificationService notificationService;
   private UserConstraint constraint;
   private UserMapperDTO mapper;
   private SecurityContextService securityContextService;
@@ -136,5 +139,11 @@ public class UserServiceImp implements UserService {
   public Page<ListProductDTO> getUserProducts(Pageable pageable) {
     User currentUser = securityContextService.getCurrentUser();
     return productService.getByUser(currentUser.getId(), pageable);
+  }
+
+  @Override
+  public List<NotificationDTO> getUserNotifications() {
+    User currentUser = securityContextService.getCurrentUser();
+    return notificationService.findByUser(mapper.toDTO(currentUser));
   }
 }
