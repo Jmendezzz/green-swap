@@ -1,5 +1,6 @@
 package cue.edu.co.greenswap.application.ports.usecases;
 
+import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
@@ -9,6 +10,7 @@ import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -25,4 +27,5 @@ public interface UserService {
 
   Page<ExchangeDTO> getUserExchangesOffers(Pageable pageable);
   Page<ExchangeDTO> getUserExchangesRequested(Pageable pageable);
+  List<NotificationDTO> getUserNotifications();
 }
