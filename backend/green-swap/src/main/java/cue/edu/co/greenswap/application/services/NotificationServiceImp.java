@@ -4,6 +4,7 @@ import cue.edu.co.greenswap.application.mappers.NotificationMapperDTO;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.NotificationRepository;
 import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
+import cue.edu.co.greenswap.domain.dtos.notification.CreateNotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.Notification;
@@ -21,8 +22,8 @@ public class NotificationServiceImp implements NotificationService {
     private final UserMapperDTO userMapperDTO;
 
     @Override
-    public void save(NotificationDTO notificationDTO) {
-        repository.save(notificationMapperDTO.toDomain(notificationDTO));
+    public NotificationDTO save(CreateNotificationDTO notificationDTO) {
+        return notificationMapperDTO.toDTO(repository.save(notificationMapperDTO.toDomain(notificationDTO)));
     }
 
     @Override

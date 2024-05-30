@@ -7,7 +7,7 @@ function ListUserExchangesRequested() {
     const { data, isLoading } = useUserExchangesRequested();
 
     return (
-      <Table isLoading={isLoading} columns="1fr 1fr 0.4fr ">
+      <Table isLoading={isLoading} columns="1fr 1fr 1fr ">
         <Table.Header>
           <div>Producto Ofrecido</div>
           <div>Producto Solicitado</div>

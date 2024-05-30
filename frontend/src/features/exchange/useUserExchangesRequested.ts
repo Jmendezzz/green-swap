@@ -14,7 +14,8 @@ function useUserExchangesRequested(){
     return {
         data: data?.data,
         isLoading: status === 'loading',
-        setPageable
+        setPageable,
+        pageable
     }
 
 }
