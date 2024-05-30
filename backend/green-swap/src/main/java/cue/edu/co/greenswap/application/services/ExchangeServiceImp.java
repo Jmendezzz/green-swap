@@ -53,6 +53,7 @@ public class ExchangeServiceImp implements ExchangeService {
     exchangeToSave.setStatus(ExchangeStatus.AWAITING_RESPONSE);
 
     Exchange exchangeSaved = repository.save(exchangeToSave);
+    /*
     NotificationDTO notification = notificationService.save(new CreateNotificationDTO(
             userMapperDTO.toDTO(exchangeSaved.getProductRequested().getOwner()),
             String.format(NotificationConstantMessage.NEW_OFFER_RECEIVED, exchangeSaved.getProductOffered().getName()),
@@ -60,6 +61,7 @@ public class ExchangeServiceImp implements ExchangeService {
             EmailConstant.URL_FRONTEND + "/my-exchanges/"
     ));
     notificationController.sendNotification(exchangeSaved.getProductRequested().getOwner().getEmail(), notification);
+    */
     return mapper.toDTO(exchangeSaved);
   }
 
@@ -98,6 +100,8 @@ public class ExchangeServiceImp implements ExchangeService {
     Map<String, Object> properties = new HashMap<>();
     properties.put("to", userMapperDTO.toDTO(exchange.getProductOffered().getOwner()));
     properties.put("magic_link", EmailConstant.URL_CONTINUE_EXCHANGE_PROCESS);
+    properties.put("ProductOffered", exchange.getProductOffered());
+    properties.put("ProductRequested", exchange.getProductRequested());
 
     Mail mail = exchangeAcceptedMailFactory.createMail(properties);
     emailService.sendEmail(mail);

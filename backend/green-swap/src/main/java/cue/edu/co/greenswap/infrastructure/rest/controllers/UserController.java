@@ -51,7 +51,7 @@ public class UserController {
   public ResponseEntity<List<NotificationDTO>> getByUser() {
     return ResponseEntity.ok(service.getUserNotifications());
   }
-}
+
 
     @GetMapping("/exchanges/requested")
     public ResponseEntity<Page<ExchangeDTO>> getUserExchangesRequested(@PageableDefault(page = 0, size = 20) Pageable pageable) {

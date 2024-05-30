@@ -30,6 +30,7 @@ const StyledHeader = styled(CommonRow)`
   background-color: var(--primary-color-light);
   border-bottom: 1px solid var(--primary-color-light);
   text-transform: uppercase;
+  font-size: 1.8rem;
   letter-spacing: 0.4px;
   text-align:center;
   font-weight: 600;

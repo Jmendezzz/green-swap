@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-@Controller
+@Controller("webSocketNotificationController")
 @AllArgsConstructor
 public class NotificationController {
     private final SimpMessagingTemplate simpMessageTemplate;

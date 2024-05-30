@@ -1,32 +1,31 @@
 import { ExchangeDTO } from '@/domain/exchange/ExchangeDTO';
-import List from '../ui/List';
 import useUserExchangesOffers from './useUserExchangesOffers';
-import ExchangeOfferItemCard from './ExchangeOfferItemCard';
+import Table from '../ui/Table';
+import ExchangeOffersRow from './ExchangeOffersRow';
 
 function ListUserExchangesOffers() {
   const { data, isLoading, pageable, setPageable } = useUserExchangesOffers();
 
   return (
-    <List>
-      <List.Items
+    <Table isLoading={isLoading} columns="1fr 1fr 1fr ">
+      <Table.Header>
+        <div>Tu producto</div>
+        <div>Producto Ofertado</div>
+        <div>Acciones</div>
+      </Table.Header>
+      <Table.Body
         data={data?.content}
-        isLoading={isLoading}
-        direction="col"
         render={(exchange: ExchangeDTO) => (
-          <ExchangeOfferItemCard exchange={exchange} />
+          <ExchangeOffersRow exchange={exchange} />
         )}
       />
-      <List.Pagination
+
+      <Table.Pagination
         pageable={pageable}
-        totalPages={data?.totalPages}
-        setPage={(page: number) =>
-          setPageable({
-            ...pageable,
-            page,
-          })
-        }
+        setPage={(page) => setPageable({ ...pageable, page })}
       />
-    </List>
+
+    </Table>
   );
 }
 

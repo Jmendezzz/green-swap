@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import Hamburger from 'hamburger-react';
 import NavMobileMenu from './NavMobileMenu';
 import { AnimatePresence } from 'framer-motion';
+import Notification from '../notification/Notification';
 
 function Nav() {
   const { user } = useUserContext();
@@ -36,6 +37,10 @@ function Nav() {
         <div className="flex items-center gap-20">
           <StyledNavLink to={ROUTES.products}>Productos</StyledNavLink>
           <StyledNavLink to={ROUTES.contact}>Contacto</StyledNavLink>
+          <li>
+          {user && <Notification />}
+
+          </li>
           <li>
             {user && <UserProfilePicture user={user} />}
             {!user && (
