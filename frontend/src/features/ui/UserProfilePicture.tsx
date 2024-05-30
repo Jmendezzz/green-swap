@@ -43,6 +43,9 @@ function UserProfilePicture({ user, size = 'sm' }: { user: BasicInfoUserDTO, siz
           <li>
             <Link to={ROUTES.updateProfile} className='w-full'>Editar perfil</Link>
           </li>
+          <li>
+            <Link to={ROUTES.myExchanges} className='w-full'>Mis intercambios</Link>
+          </li>
 
           <li onClick={() => logout()}>Cerrar sesión</li>
         </DropdownMenu>

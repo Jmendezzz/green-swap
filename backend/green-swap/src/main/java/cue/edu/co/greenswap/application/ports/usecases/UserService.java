@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.application.ports.usecases;
 
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
+import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.CreateUserDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UpdateUserPasswordDTO;
@@ -23,5 +24,8 @@ public interface UserService {
   void resetPassword(String email, String password, String confirmPassword);
 
   Page<ListProductDTO> getUserProducts(Pageable pageable);
+
+  Page<ExchangeDTO> getUserExchangesOffers(Pageable pageable);
+  Page<ExchangeDTO> getUserExchangesRequested(Pageable pageable);
   List<NotificationDTO> getUserNotifications();
 }

@@ -8,7 +8,7 @@ interface Props{
 function Empty({message}: Props) {
   return (
     <Row type="vertical">
-        <HiOutlineEmojiSad className="text-8xl text-gray-400"/>
+        <HiOutlineEmojiSad className="text-8xl text-white"/>
         <Heading type="h2">{message}</Heading>
     </Row>
   )

@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,6 @@ public class ExchangeEntity {
   @OneToOne
   @Cascade(CascadeType.ALL)
   private ChatEntity chat;
-  @CreatedBy
+  @CreatedDate
   private LocalDateTime createdAt;
 }

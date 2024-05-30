@@ -67,7 +67,7 @@ function ProductDetailCard({ product }: Props) {
 const StyledImageContainer = styled.div`
   width: 300px;
   height: 100%;
-  @media (min-width: ${Devices.tablet}) {
+  @media (min-width: ${Devices.laptop}) {
     width: 50%;
   }
   img {
@@ -86,7 +86,7 @@ const StyledProductDetail = styled.div`
   max-height: 800px;
   padding: 2rem;
   width: 100%;
-  @media (min-width: ${Devices.tablet}) {
+  @media (min-width: ${Devices.laptop}) {
     flex-direction: row;
     gap: 2rem;
   }
@@ -100,7 +100,7 @@ const StyledProductDetailContent = styled.div`
   gap: 2rem;
   width: 100%;
 
-  @media (min-width: ${Devices.tablet}) {
+  @media (min-width: ${Devices.laptop}) {
     width: 500px;
     height: 600px;
   }

@@ -1,4 +1,5 @@
 import useClickOutside from '@/hooks/useClickOutside';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   ReactElement,
   ReactNode,
@@ -11,12 +12,8 @@ import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
 
-
-const StyledModal = styled.div`
+const StyledModal = styled(motion.div)`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--primary-color-light);
   border-radius: 2rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,8 +24,13 @@ const StyledModal = styled.div`
 `;
 
 const Overlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 100vh;
@@ -56,15 +58,12 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `;
-interface ContextStructure{
-  open:(name:string)=> void,
-  windowName:string
+interface ContextStructure {
+  open: (name: string) => void;
+  windowName: string;
 }
 const ModalContext = createContext<ContextStructure>({} as ContextStructure);
 
@@ -93,12 +92,23 @@ function Window({ children, name }: { children: ReactElement; name: string }) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={windowRef as React.RefObject<HTMLDivElement>}>
-        <Button onClick={() => open('')}>
-          <HiXMark />
-        </Button>
-        {cloneElement(children, { onCloseModal: () => open('') })}
-      </StyledModal>
+      <AnimatePresence>
+        {windowName === name && (
+          <StyledModal
+            key={name}
+            ref={windowRef as React.RefObject<HTMLDivElement>}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Button onClick={() => open('')}>
+              <HiXMark />
+            </Button>
+            {cloneElement(children, { onCloseModal: () => open('') })}
+          </StyledModal>
+        )}
+      </AnimatePresence>
     </Overlay>,
     document.body
   );

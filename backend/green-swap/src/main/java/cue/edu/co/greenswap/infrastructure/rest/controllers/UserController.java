@@ -3,6 +3,7 @@ package cue.edu.co.greenswap.infrastructure.rest.controllers;
 
 import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.ports.usecases.UserService;
+import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
@@ -41,8 +42,19 @@ public class UserController {
     );
   }
 
+  @GetMapping("/exchanges/offers")
+  public ResponseEntity<Page<ExchangeDTO>> getUserExchangesOffers(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+    return ResponseEntity.ok(service.getUserExchangesOffers(pageable));
+  }
+
   @GetMapping("/notifications")
   public ResponseEntity<List<NotificationDTO>> getByUser() {
     return ResponseEntity.ok(service.getUserNotifications());
   }
+}
+
+    @GetMapping("/exchanges/requested")
+    public ResponseEntity<Page<ExchangeDTO>> getUserExchangesRequested(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+      return ResponseEntity.ok(service.getUserExchangesRequested(pageable));
+    }
 }
