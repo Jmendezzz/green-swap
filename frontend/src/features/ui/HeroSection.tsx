@@ -81,6 +81,7 @@ const StyledHeroSection = styled(Section)`
 const StyledImageContainer = styled.div`
   width: 100%;
   position: relative;
+  height: 500px;
 
   & > img {
     height: 100%;

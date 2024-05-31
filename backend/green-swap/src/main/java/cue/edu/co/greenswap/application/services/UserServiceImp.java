@@ -36,7 +36,7 @@ public class UserServiceImp implements UserService {
   private UserRepository repository;
   private ProductService productService;
   private ExchangeService exchangeService;
-    private NotificationService notificationService;
+  private NotificationService notificationService;
   private UserConstraint constraint;
   private UserMapperDTO mapper;
   private SecurityContextService securityContextService;
