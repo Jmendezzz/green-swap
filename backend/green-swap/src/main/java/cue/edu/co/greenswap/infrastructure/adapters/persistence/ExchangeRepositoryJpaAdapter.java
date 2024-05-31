@@ -50,6 +50,12 @@ public class ExchangeRepositoryJpaAdapter implements ExchangeRepository {
   }
 
   @Override
+  public List<Exchange> findAllByProductOfferedId(Long productOfferedId) {
+    List<ExchangeEntity> exchanges = repository.findAllByProductOfferedId(productOfferedId);
+    return mapper.toDomain(exchanges);
+  }
+
+  @Override
   public Page<Exchange> findAllOffersByUser(Long userId, Pageable pageable) {
     return repository.findAllByProductRequested_Owner_Id(userId, pageable).map(mapper::toDomain);
   }

@@ -14,6 +14,7 @@ public interface ExchangeRepository {
   List<Exchange> findByProduct(Long productId);
   void deleteById(Long id);
   List<Exchange> findAllByProductRequested(Product productRequested);
+  List<Exchange> findAllByProductOfferedId(Long productOfferedId);
   Page<Exchange> findAllOffersByUser(Long userId, Pageable pageable);
   Page<Exchange> findAllRequestedByUser(Long userId, Pageable pageable);
 }
