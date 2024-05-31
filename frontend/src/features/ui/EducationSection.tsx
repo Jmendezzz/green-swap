@@ -27,7 +27,7 @@ const educationItems = [
 
 function EducationSection() {
   return (
-    <StlyedEducationSection>
+    <StlyedEducationSection id="education-section">
       <StyledEducationContent>
         <header className="flex flex-col items-center">
           <Heading className="text-primary" type="h1">

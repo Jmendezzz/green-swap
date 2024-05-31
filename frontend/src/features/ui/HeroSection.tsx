@@ -7,8 +7,15 @@ import { Devices } from '@/styles/Devices';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { FaRecycle, FaLeaf, FaGlobeAmericas } from 'react-icons/fa';
+import { HiArrowNarrowDown } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 
 function HeroSection() {
+  const handleArrowClick = () => {
+    const nextSection = document.getElementById('education-section');
+    nextSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+  
   return (
     <StyledHeroSection>
       <StyledHeroContent>
@@ -37,6 +44,21 @@ function HeroSection() {
             <FaGlobeAmericas className="icon top-right" />
           </IconContainer>
         </StyledImageContainer>
+        <StyledArrowContainer onClick={handleArrowClick}>
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          >
+            <StyledArrowDown  />
+        </motion.div>
+        <p className='text-primary font-bold'>Conoce más del mundo del reciclaje y GreenSwap</p>
+        </StyledArrowContainer>
       </StyledHeroContent>
     </StyledHeroSection>
   );
@@ -58,7 +80,6 @@ const StyledHeroSection = styled(Section)`
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  height: 800px;
   position: relative;
 
   & > img {
@@ -141,6 +162,30 @@ const StyledHeroContent = styled.div`
     flex-direction: column;
     justify-content: space-around;
     gap: 2rem;
+  }
+`;
+const StyledArrowDown = styled(motion(HiArrowNarrowDown))`
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+`;
+
+const StyledArrowContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 

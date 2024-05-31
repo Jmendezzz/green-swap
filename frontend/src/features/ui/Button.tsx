@@ -21,13 +21,16 @@ const Button = styled.button<Props>`
   }
 
   &:disabled {
-    background-color: #abbea5;
+    background-color: #909A87
+    ;
     cursor: not-allowed;
+    border:none;
   }
 
   &:disabled:hover {
-    background-color: #abbea5;
     cursor: not-allowed;
+    border:none;
+
   }
 
   ${(props: Props) => {

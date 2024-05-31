@@ -10,12 +10,14 @@ import UserProfilePicture from '../ui/UserProfilePicture';
 import { formatToCOP } from '@/utils/formatCurrency';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { useUserContext } from '@/context/UserContext';
 
 interface Props {
   product: ProductDTO;
 }
 
 function ProductDetailCard({ product }: Props) {
+  const {user} = useUserContext();
   return (
     <StyledProductDetail>
       <StyledImageContainer>
@@ -55,9 +57,9 @@ function ProductDetailCard({ product }: Props) {
         </div>
 
         <footer className="flex justify-end gap-10">
-          <Button variant="secondary">Comprar</Button>
+          <Button variant="secondary" disabled={product.owner.id === user?.id}>Comprar</Button>
           <Link to={`${ROUTES.createExchange}/${product.id}`}>
-            <Button variant="primary">Intercambiar</Button>
+            <Button variant="primary" disabled={product.owner.id === user?.id}>Intercambiar</Button>
           </Link>
         </footer>
       </StyledProductDetailContent>
