@@ -4,6 +4,7 @@ import { ListProductDTO } from '@/domain/product/ListProductDTO';
 import { Pageable, PageableResult } from '@/domain/pageable/Pageable';
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
 import { ExchangeDTO } from '@/domain/exchange/ExchangeDTO';
+import { NotificationDTO } from '@/domain/notification/NotificationDTO';
 
 const REQUEST_MAPPING = '/user';
 
@@ -21,4 +22,8 @@ export function getUserExchangesOffers(pageable: Pageable): Promise<AxiosRespons
 
 export function getUserExchangesRequested(pageable: Pageable): Promise<AxiosResponse<PageableResult<ExchangeDTO>>>{
   return axiosInstace.get(`${REQUEST_MAPPING}/exchanges/requested?page=${pageable.page}&size=${pageable.size}`);
+}
+
+export function getUserNotificationsService(): Promise<AxiosResponse<NotificationDTO[]>>{
+  return axiosInstace.get(`${REQUEST_MAPPING}/notifications`);
 }

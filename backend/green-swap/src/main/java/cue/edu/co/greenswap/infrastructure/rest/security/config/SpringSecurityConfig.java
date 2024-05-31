@@ -53,6 +53,7 @@ public class SpringSecurityConfig {
               authorizeRequests.requestMatchers("/products/create").authenticated();
               authorizeRequests.requestMatchers("/products/{id}").permitAll();
               authorizeRequests.requestMatchers("/mail/send-reset-password").permitAll();
+              authorizeRequests.requestMatchers("/ws/**").permitAll();
               authorizeRequests.anyRequest().authenticated();
             })
             .exceptionHandling(exceptionHandling -> exceptionHandling

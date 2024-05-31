@@ -18,13 +18,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   public void configureMessageBroker(MessageBrokerRegistry registry) {
     registry.enableSimpleBroker("/topic", "/notifications");
     registry.setApplicationDestinationPrefixes("/app");
-    registry.setUserDestinationPrefix("/user");
   }
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/exchange-chat", "notification")
-            .setAllowedOrigins("*")
+    registry.addEndpoint("/ws/exchange-chat", "/ws/notification")
+            .setAllowedOrigins("http://localhost:5173")
             .withSockJS();
   }
 
