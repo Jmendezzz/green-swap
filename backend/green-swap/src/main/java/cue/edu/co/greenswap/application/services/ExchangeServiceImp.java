@@ -113,9 +113,9 @@ public class ExchangeServiceImp implements ExchangeService {
             userMapperDTO.toDTO(exchange.getProductOffered().getOwner()),
             String.format(NotificationConstantMessage.OFFER_ACCEPTED, exchange.getProductRequested().getName()),
             false,
-            EmailConstant.URL_FRONTEND + "/my-exchanges/"
+            EmailConstant.URL_FRONTEND + "my-exchanges/"
     ));
-    notificationController.sendNotification(exchange.getProductOffered().getOwner().getEmail(), notification);
+    notificationController.sendNotification(notification);
 
     return mapper.toDTO(exchange);
   }
@@ -157,7 +157,7 @@ public class ExchangeServiceImp implements ExchangeService {
                 false,
                 EmailConstant.URL_FRONTEND + "/my-exchanges/"
         ));
-        notificationController.sendNotification(e.getProductRequested().getOwner().getEmail(), notification);
+        notificationController.sendNotification(notification);
       });
   }
 }
