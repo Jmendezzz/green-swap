@@ -11,5 +11,5 @@ public interface NotificationService {
     List<NotificationDTO> findByUser(UserDTO userDTO);
     void delete(Long id);
     void deleteAllByUser(UserDTO userDTO);
-    void markAsReadByIdList(List<NotificationDTO> notifications);
+    void markAsReadByList(List<NotificationDTO> notifications);
 }

@@ -42,7 +42,7 @@ public class NotificationServiceImp implements NotificationService {
     }
 
     @Override
-    public void markAsReadByIdList(List<NotificationDTO> notifications) {
+    public void markAsReadByList(List<NotificationDTO> notifications) {
         for (NotificationDTO notificationDTO : notifications) {
             Notification notification = notificationMapperDTO.toDomain(notificationDTO);
             notification.setRead(true);

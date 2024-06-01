@@ -13,4 +13,5 @@ public interface ExchangeRepositoryJpa extends JpaRepository<ExchangeEntity, Lon
   List<ExchangeEntity> findAllByProductRequestedId(Long id);
   Page<ExchangeEntity> findAllByProductOffered_Owner_Id(Long userId, Pageable pageable);
   Page<ExchangeEntity> findAllByProductRequested_Owner_Id(Long userId, Pageable pageable);
+  List<ExchangeEntity> findAllByProductOfferedId(Long id);
 }

@@ -16,6 +16,7 @@ import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.CreateNotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import cue.edu.co.greenswap.infrastructure.websocket.controllers.NotificationController;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,7 @@ public class ExchangeServiceImp implements ExchangeService {
   @Override
   public ExchangeDTO createExchange(CreateExchangeDTO createExchangeDTO) {
     constraint.validateProductOfferedOwner(createExchangeDTO.productOffered());
+    constraint.validateProductsAvailability(createExchangeDTO);
 
     Exchange exchangeToSave = mapper.toDomain(createExchangeDTO);
     exchangeToSave.setStatus(ExchangeStatus.AWAITING_RESPONSE);
@@ -92,6 +94,8 @@ public class ExchangeServiceImp implements ExchangeService {
     constraint.validateProductRequestedOwner(exchange);
 
     exchange.setStatus(ExchangeStatus.ACCEPTED);
+    exchange.getProductRequested().setStatus(ProductStatus.EXCHANGED);
+    exchange.getProductOffered().setStatus(ProductStatus.EXCHANGED);
     declineAfterAccept(exchange);
 
     repository.save(exchange);
@@ -104,6 +108,14 @@ public class ExchangeServiceImp implements ExchangeService {
 
     Mail mail = exchangeAcceptedMailFactory.createMail(properties);
     emailService.sendEmail(mail);
+
+    NotificationDTO notification = notificationService.save(new CreateNotificationDTO(
+            userMapperDTO.toDTO(exchange.getProductOffered().getOwner()),
+            String.format(NotificationConstantMessage.OFFER_ACCEPTED, exchange.getProductRequested().getName()),
+            false,
+            EmailConstant.URL_FRONTEND + "my-exchanges/"
+    ));
+    notificationController.sendNotification(notification);
 
     return mapper.toDTO(exchange);
   }
@@ -139,6 +151,13 @@ public class ExchangeServiceImp implements ExchangeService {
       .forEach(e -> {
         e.setStatus(ExchangeStatus.DECLINED);
         repository.save(e);
+        NotificationDTO notification = notificationService.save(new CreateNotificationDTO(
+                userMapperDTO.toDTO(e.getProductOffered().getOwner()),
+                String.format(NotificationConstantMessage.OFFER_REJECTED, e.getProductRequested().getName()),
+                false,
+                EmailConstant.URL_FRONTEND + "/my-exchanges/"
+        ));
+        notificationController.sendNotification(notification);
       });
   }
 }

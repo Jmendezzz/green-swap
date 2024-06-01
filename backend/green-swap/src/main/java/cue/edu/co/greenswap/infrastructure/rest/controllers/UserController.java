@@ -48,7 +48,7 @@ public class UserController {
   }
 
   @GetMapping("/notifications")
-  public ResponseEntity<List<NotificationDTO>> getByUser() {
+  public ResponseEntity<List<NotificationDTO>> getUserNotifications() {
     return ResponseEntity.ok(service.getUserNotifications());
   }
 

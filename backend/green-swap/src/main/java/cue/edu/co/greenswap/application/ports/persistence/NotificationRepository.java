@@ -1,6 +1,5 @@
 package cue.edu.co.greenswap.application.ports.persistence;
 
-import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.models.Notification;
 import cue.edu.co.greenswap.domain.models.User;
 

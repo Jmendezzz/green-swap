@@ -3,6 +3,7 @@ package cue.edu.co.greenswap.infrastructure.rest.controllers;
 import cue.edu.co.greenswap.application.ports.usecases.FileService;
 import cue.edu.co.greenswap.application.ports.usecases.UserTokenService;
 import cue.edu.co.greenswap.domain.dtos.token.UserTokenDTO;
+import cue.edu.co.greenswap.domain.dtos.user.ResetUserPasswordDTO;
 import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthSignupRequestDTO;
 import cue.edu.co.greenswap.infrastructure.rest.security.dtos.AuthLoginRequestDTO;
@@ -61,4 +62,9 @@ public class AuthController {
   public ResponseEntity<Boolean> validateUserEmail(@RequestBody UserTokenDTO token){
     return ResponseEntity.ok(userTokenService.confirmEmailToken(token));
   }
+
+  @PostMapping("reset-password")
+    public ResponseEntity<Boolean> resetPassword(@RequestBody ResetUserPasswordDTO resetUserPasswordDTO){
+        return ResponseEntity.ok(userTokenService.resetUserPassword(resetUserPasswordDTO));
+    }
 }

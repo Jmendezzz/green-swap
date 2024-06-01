@@ -2,7 +2,9 @@ package cue.edu.co.greenswap.application.constraints;
 
 import cue.edu.co.greenswap.application.constants.ExchangeConstantMessage;
 import cue.edu.co.greenswap.application.ports.persistence.ExchangeRepository;
+import cue.edu.co.greenswap.domain.dtos.exchange.CreateExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import cue.edu.co.greenswap.infrastructure.exceptions.ExchangeException;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -40,5 +43,14 @@ public class ExchangeConstraint {
       );
     }
     return exchange.get();
+  }
+
+  public void validateProductsAvailability(CreateExchangeDTO createExchangeDTO) {
+    if(createExchangeDTO.productOffered().status().equals(ProductStatus.EXCHANGED) || createExchangeDTO.productOffered().status().equals(ProductStatus.SOLD)){
+      throw new ExchangeException(ExchangeConstantMessage.PRODUCT_OFFERED_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
+    }
+    if(createExchangeDTO.productRequested().status().equals(ProductStatus.EXCHANGED) || createExchangeDTO.productRequested().status().equals(ProductStatus.SOLD)){
+      throw new ExchangeException(ExchangeConstantMessage.PRODUCT_REQUESTED_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
+    }
   }
 }
