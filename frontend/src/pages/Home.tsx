@@ -1,5 +1,6 @@
 import EducationSection from '@/features/ui/EducationSection';
 import HeroSection from '@/features/ui/HeroSection';
+import StepGuideSection from '@/features/ui/StepGuideSection';
 
 
 function Home() {
@@ -7,6 +8,7 @@ function Home() {
     <div className='flex flex-col '>
       <HeroSection />
       <EducationSection />
+      <StepGuideSection />
     </div>
   );
 }

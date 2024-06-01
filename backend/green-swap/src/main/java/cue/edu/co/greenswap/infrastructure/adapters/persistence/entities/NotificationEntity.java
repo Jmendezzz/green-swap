@@ -21,6 +21,7 @@ public class NotificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "user_id",updatable = false)
     private UserEntity user;
     private String message;
     private boolean isRead;

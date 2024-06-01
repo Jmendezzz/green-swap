@@ -4,6 +4,7 @@ import cue.edu.co.greenswap.application.ports.persistence.NotificationRepository
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.models.Notification;
 import cue.edu.co.greenswap.domain.models.User;
+import cue.edu.co.greenswap.infrastructure.adapters.persistence.entities.NotificationEntity;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.jpa.NotificationRepositoryJpa;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.mappers.NotificationMapperDBO;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.mappers.UserMapperDBO;

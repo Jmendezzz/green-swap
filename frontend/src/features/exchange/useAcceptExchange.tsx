@@ -1,13 +1,16 @@
 import { acceptExchangeService } from "@/services/exchangeService";
 import toast from "react-hot-toast";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 
 function useAcceptExchange(){
 
+    const queryClient = useQueryClient();
+
     const {mutate:acceptExchange, status} = useMutation({
         mutationFn: (exchangeId: string) => acceptExchangeService(exchangeId),
         onSuccess: () => {
+            queryClient.invalidateQueries('userExchangesOffers');
             toast.success('El intercambio fue aceptado con éxito');
         },
         onError: () => {

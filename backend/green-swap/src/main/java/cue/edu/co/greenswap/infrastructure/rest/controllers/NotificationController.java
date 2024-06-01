@@ -29,7 +29,7 @@ public class NotificationController {
 
     @PatchMapping("/mark-as-read")
     public ResponseEntity<Void> markAsRead(@RequestBody List<NotificationDTO> notificationsDTO) {
-        notificationService.markAsReadByIdList(notificationsDTO);
+        notificationService.markAsReadByList(notificationsDTO);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,25 +1,30 @@
-import { useUserContext } from '@/context/UserContext';
 import { NotificationDTO } from '@/domain/notification/NotificationDTO';
 import { Client } from '@stomp/stompjs';
 import { useState, useEffect } from 'react';
-import { IoIosNotifications} from 'react-icons/io';
+import { IoIosNotifications } from 'react-icons/io';
 import SockJS from 'sockjs-client';
 import styled from 'styled-components';
 import Dropdown from '../ui/Dropdown';
 import useUserNotifications from './useUserNotifications';
+import useMarkAsReadNotifications from './useMarkAsReadNotifications';
+import { Link } from 'react-router-dom';
 
 function Notification() {
-  const {notifications:userNotifications} = useUserNotifications();
+  const { notifications: userNotifications } = useUserNotifications();
+
+  const { isLoading, markAsReadNotifications } = useMarkAsReadNotifications();
 
   const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
-  
-  const { user } = useUserContext();
+
+  function markAsReadHandler() {
+    markAsReadNotifications(notifications);
+  }
 
   useEffect(() => {
-    if(userNotifications){
+    if (userNotifications) {
       setNotifications(userNotifications);
     }
-  },[userNotifications]);
+  }, [userNotifications]);
 
   useEffect(() => {
     const socket = new SockJS('http://localhost:8080/ws/notification');
@@ -33,7 +38,6 @@ function Notification() {
     stompClient.onConnect = (frame) => {
       console.log('Connected: ' + frame);
       stompClient.subscribe(`/user/notifications`, (message) => {
-        console.log(message);
         if (message.body) {
           console.log(message.body);
           setNotifications((notifications) => [
@@ -56,18 +60,26 @@ function Notification() {
         stompClient.deactivate();
       }
     };
-  }, [user]);
+  }, []);
+
+  const numberOfUnreadNotifications = notifications.filter(
+    (noti) => !noti.isRead
+  ).length;
 
   return (
-    <div>
+    <div onClick={markAsReadHandler}>
       <Dropdown>
         <Dropdown.Toggle>
           <>
             <div style={{ position: 'relative' }}>
-              <IoIosNotifications  className="w-[40px] h-[30px]" />
-              {notifications.filter(noti => !noti.isRead).length > 0 && (
+              <IoIosNotifications className="w-[40px] h-[30px]" />
+              {numberOfUnreadNotifications > 0 && (
                 <StyledNotificationCounter>
-                  {notifications.length}
+                  {isLoading
+                    ? '...'
+                    : numberOfUnreadNotifications > 9
+                    ? '9+'
+                    : numberOfUnreadNotifications}
                 </StyledNotificationCounter>
               )}
             </div>
@@ -75,9 +87,17 @@ function Notification() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <StyledNotificationsContainer>
-            {notifications.map((notification) => (
-              <div key={notification.id}>{notification.message}</div>
-            ))}
+            {notifications.length === 0 ? (
+              <div>No tienes notificaciones</div>
+            ) : (
+              notifications.map((noti) => (
+                <Link to={noti.url} key={noti.id} >
+                  <StyledNotification isRead={noti.isRead}>
+                    {noti.message}
+                  </StyledNotification>
+                </Link>
+              ))
+            )}
           </StyledNotificationsContainer>
         </Dropdown.Menu>
       </Dropdown>
@@ -103,10 +123,22 @@ const StyledNotificationsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  & > div{
-    &:hover{
+  border-radius: 0.5rem;
+  & > div {
+    &:hover {
       background-color: var(--primary-color-light);
     }
   }
-`
+`;
+
+const StyledNotification = styled.div<{ isRead: boolean }>`
+  background-color: ${({ isRead }) =>
+    isRead ? 'transparent' : 'var(--primary-color-light)'};
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--primary-color-light);
+  }
+`;
 export default Notification;

@@ -43,7 +43,7 @@ function EducationSection() {
           {educationItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-10  bg-primary-light p-10  rounded-3xl w-full shadow-2xl"
+              className="flex flex-col items-center gap-10  bg-primary-light p-10  rounded-3xl w-full shadow-2x md:flex-row text-center"
             >
               <header className='w-[300px]'>
                 <Heading type="h2" className="text-contrast">

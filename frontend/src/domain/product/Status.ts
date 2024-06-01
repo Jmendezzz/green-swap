@@ -3,4 +3,5 @@ export enum Status{
     TO_EXCHANGE = 'Para intercambiar',
     EXCHANGED = 'Intercambiado',
     DECLINED = 'Rechazado',
+    SOLD = 'Vendido',
 }
