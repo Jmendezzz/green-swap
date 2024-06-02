@@ -12,4 +12,5 @@ export const ROUTES = {
     createExchange: '/create-exchange',
     userProfile: 'user',
     myExchanges: '/my-exchanges',
+    resetPassword: '/reset-password',
 }

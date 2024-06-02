@@ -20,6 +20,7 @@ import UpdateProfile from './pages/UpdateProfile';
 import CreateExchange from './pages/CreateExchange';
 import Profile from './pages/Profile';
 import MyExchanges from './pages/MyExchanges';
+import ResetPassword from './pages/ResetPassword';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -79,6 +80,7 @@ function App() {
             <Route element={<AnonymousRoute />}>
               <Route path={ROUTES.login} element={<Login />} />
               <Route path={ROUTES.signUp} element={<SignUp />} />
+              <Route path={ROUTES.resetPassword} element={<ResetPassword />} />
             </Route>
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
