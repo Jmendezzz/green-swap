@@ -63,7 +63,7 @@ public class AuthController {
     return ResponseEntity.ok(userTokenService.confirmEmailToken(token));
   }
 
-  @PostMapping("reset-password")
+  @PostMapping("/reset-password")
     public ResponseEntity<Boolean> resetPassword(@RequestBody ResetUserPasswordDTO resetUserPasswordDTO){
         return ResponseEntity.ok(userTokenService.resetUserPassword(resetUserPasswordDTO));
     }

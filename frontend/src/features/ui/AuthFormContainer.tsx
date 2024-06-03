@@ -5,7 +5,7 @@ import { Devices } from "@/styles/Devices";
 const AuthFormContainer = styled(Row)`
   background-color: #212b38;
   background-color: rgba(33, 43, 56, 0.5);
-  width: 60%;
+  width: 100%;
   gap: 2rem;
   height:50%;
   max-height: 700px;
@@ -14,6 +14,11 @@ const AuthFormContainer = styled(Row)`
   padding: 5rem 3rem;
   border-radius: 2.5rem;
   box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.2);
+
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: ${Devices.tablet}) {
     width: 90%;

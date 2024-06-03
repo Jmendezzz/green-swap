@@ -21,6 +21,7 @@ import CreateExchange from './pages/CreateExchange';
 import Profile from './pages/Profile';
 import MyExchanges from './pages/MyExchanges';
 import ResetPassword from './pages/ResetPassword';
+import ResetPasswordRequest from './pages/ResetPasswordRequest';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,6 +82,7 @@ function App() {
               <Route path={ROUTES.login} element={<Login />} />
               <Route path={ROUTES.signUp} element={<SignUp />} />
               <Route path={ROUTES.resetPassword} element={<ResetPassword />} />
+              <Route path={ROUTES.resetPasswordRequest} element={<ResetPasswordRequest/>} />
             </Route>
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>

@@ -1,6 +1,8 @@
 import SignUpRequestDTO from '@/domain/auth/SignUpRequestDTO';
 import { axiosInstace } from './axiosConfig';
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
+import { ResetPasswordRequestDTO } from '@/domain/auth/ResetPasswordRequestDTO';
+import { ResetPasswordDTO } from '@/domain/auth/ResetPasswordDTO';
 
 const REQUEST_MAPPING = '/auth';
 
@@ -66,4 +68,12 @@ export async function getBasicInfoCurrentUser(): Promise<BasicInfoUserDTO | null
 
 export async function logoutService() {
   return axiosInstace.get(`${REQUEST_MAPPING}/logout`, {});
+}
+
+export async function sendResetPasswordService(data: ResetPasswordRequestDTO){
+  return axiosInstace.post(`mail/send-reset-password`,data);
+}
+
+export async function resetPasswordService(data:ResetPasswordDTO){
+  return axiosInstace.post(`${REQUEST_MAPPING}/reset-password`,data);
 }
