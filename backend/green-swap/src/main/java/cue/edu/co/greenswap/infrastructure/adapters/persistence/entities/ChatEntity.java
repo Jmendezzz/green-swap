@@ -21,8 +21,12 @@ public class ChatEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @ManyToOne
+  private UserEntity user1;
+  @ManyToOne
+  private UserEntity user2;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "chat_id")
   private List<MessageEntity> messages;
   @CreatedDate

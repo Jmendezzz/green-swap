@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.domain.dtos.product;
 
 import cue.edu.co.greenswap.domain.enums.Category;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.enums.Quality;
 
 public record ListProductDTO(
@@ -10,6 +11,7 @@ public record ListProductDTO(
     Double price,
     String urlImage,
     Category category,
-    Quality quality
+    Quality quality,
+    ProductStatus status
 ) {
 }

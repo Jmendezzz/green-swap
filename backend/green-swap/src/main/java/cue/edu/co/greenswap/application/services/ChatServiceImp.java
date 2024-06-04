@@ -1,5 +1,6 @@
 package cue.edu.co.greenswap.application.services;
 
+import cue.edu.co.greenswap.application.constants.ChatConstantMessage;
 import cue.edu.co.greenswap.application.mappers.ChatMapperDTO;
 import cue.edu.co.greenswap.application.mappers.MessageMapperDTO;
 import cue.edu.co.greenswap.application.ports.persistence.ChatRepository;
@@ -12,6 +13,7 @@ import cue.edu.co.greenswap.domain.dtos.message.SendMessageDTO;
 import cue.edu.co.greenswap.domain.models.Chat;
 import cue.edu.co.greenswap.domain.models.Message;
 import cue.edu.co.greenswap.infrastructure.exceptions.ChatException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class ChatServiceImp implements ChatService {
   public MessageDTO sendMessage(Long chatId, SendMessageDTO message) {
     Optional<Chat> chat = chatRepository.findById(chatId);
     if(chat.isEmpty()){
-      throw new ChatException("Chat not found", HttpStatus.BAD_REQUEST); //Todo: Change message exception
+      throw new ChatException(ChatConstantMessage.CHAT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
     MessageDTO messageSaved = messageService.save(message);
     List<Message> messages = chat.get().getMessages();
@@ -42,6 +44,7 @@ public class ChatServiceImp implements ChatService {
   }
 
   @Override
+  @Transactional
   public Optional<ChatDTO> getChatById(Long id) {
     return chatRepository.findById(id).map(chatMapper::toDTO);
   }

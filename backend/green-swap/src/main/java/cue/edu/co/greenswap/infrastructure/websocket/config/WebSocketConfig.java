@@ -1,9 +1,15 @@
 package cue.edu.co.greenswap.infrastructure.websocket.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.converter.*;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -16,7 +22,7 @@ import java.util.List;
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
-    registry.enableSimpleBroker("/topic", "/notifications");
+    registry.enableSimpleBroker("/chat", "/notifications");
     registry.setApplicationDestinationPrefixes("/app");
   }
 
@@ -33,11 +39,26 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     resolver.setDefaultMimeType(MimeTypeUtils.APPLICATION_JSON);
 
     MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-    converter.setObjectMapper(new ObjectMapper());
+    converter.setObjectMapper(objectMapper());
     converter.setContentTypeResolver(resolver);
 
     messageConverters.add(converter);
 
     return false;
   }
+
+  @Bean
+  public MappingJackson2MessageConverter messageConverter() {
+    MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+    converter.setObjectMapper(objectMapper());
+    return converter;
+  }
+  @Bean
+  public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    return objectMapper;
+  }
+
 }
