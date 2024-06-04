@@ -10,6 +10,7 @@ public record UserDTO(
         String urlProfilePicture,
         String phoneNumber,
         LocalDateTime createdAt,
+        Integer coins,
         boolean isVerified
 ) {
 }

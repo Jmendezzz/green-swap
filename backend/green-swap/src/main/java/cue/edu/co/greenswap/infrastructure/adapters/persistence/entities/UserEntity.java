@@ -33,5 +33,7 @@ public class UserEntity {
   private String password;
   @CreatedDate
   private LocalDateTime createdAt;
+  @Column(name = "coins", nullable = false, columnDefinition = "int default 0")
+  private Integer coins = 0;
   private boolean isVerified;
 }

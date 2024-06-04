@@ -11,6 +11,7 @@ import Hamburger from 'hamburger-react';
 import NavMobileMenu from './NavMobileMenu';
 import { AnimatePresence } from 'framer-motion';
 import Notification from '../notification/Notification';
+import Coins from './Coins';
 
 function Nav() {
   const { user } = useUserContext();
@@ -37,12 +38,12 @@ function Nav() {
         <div className="flex items-center gap-20">
           <StyledNavLink to={ROUTES.products}>Productos</StyledNavLink>
           <StyledNavLink to={ROUTES.contact}>Contacto</StyledNavLink>
-          <li>
-          {user && <Notification />}
-
-          </li>
-          <li>
-            {user && <UserProfilePicture user={user} />}
+          <li className='flex items-center gap-10'>
+            {user && <>
+              <Notification />
+              <UserProfilePicture user={user} />
+              <Coins coins={user.coins} />
+            </>}
             {!user && (
               <Link to={ROUTES.login}>
                 <Button variant="primary" size="small">

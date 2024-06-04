@@ -6,7 +6,8 @@ const GlobalStyles = createGlobalStyle`
         --primary-color: #1B232E;
         --primary-color-light: #202a37;
         --contrast-color: #1AC760;
-        --white: rgb(226 232 240);
+        --contrast-color-dark: rgba(26, 199, 96, 0.1); // Change this line
+        --white: #ffffff;
         --dark-white: rgb(209 213 219);
         --red: rgb(255, 51, 51);
         font-family: "Space Grotesk", sans-serif;

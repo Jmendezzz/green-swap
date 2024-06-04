@@ -47,8 +47,6 @@ const StyledSidebarItems = styled.ul`
   justify-content: space-around;
   width: 100%;
   height: 100%;
-
-  cursor: pointer;
   @media (min-width: ${Devices.tablet}) {
     flex-direction: column;
     justify-content: flex-start;
