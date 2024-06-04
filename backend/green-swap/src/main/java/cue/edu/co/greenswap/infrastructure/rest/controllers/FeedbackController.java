@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/exchanges")
+@RequestMapping("/feedbacks")
 @AllArgsConstructor
 public class FeedbackController {
     private final FeedbackService service;
