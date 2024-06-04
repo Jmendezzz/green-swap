@@ -99,7 +99,7 @@ function Header({ children }: { children: ReactElement[] }) {
   );
 }
 
-function Row({ children }: { children: ReactElement[] }) {
+function Row({ children }: { children: ReactElement[] | ReactElement }) {
   const { columns } = useContext(TableContext);
   return (
     <StyledRow role="row" columns={columns}>

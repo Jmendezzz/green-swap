@@ -22,6 +22,7 @@ import Profile from './pages/Profile';
 import MyExchanges from './pages/MyExchanges';
 import ResetPassword from './pages/ResetPassword';
 import ResetPasswordRequest from './pages/ResetPasswordRequest';
+import ExchangeDetail from './pages/ExchangeDetail';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -66,6 +67,7 @@ function App() {
                 />
 
                 <Route path={ROUTES.myExchanges} element={<MyExchanges />} />
+                <Route path={`${ROUTES.exchanges}/:exchangeId`} element={<ExchangeDetail />} />
 
               </Route>
               <Route
