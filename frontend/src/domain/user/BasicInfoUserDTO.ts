@@ -7,4 +7,5 @@ export interface BasicInfoUserDTO{
     phoneNumber: string;
     isVerified: boolean;
     createdAt: string;
+    coins:number
 } 

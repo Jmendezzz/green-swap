@@ -40,7 +40,7 @@ function ResetPasswordRequestForm() {
             <Input
               type="text"
               placeholder="Correo electronico"
-              variant="outlined"
+              variant='filled'
               {...register('email', {
                 required: {
                   value: true,

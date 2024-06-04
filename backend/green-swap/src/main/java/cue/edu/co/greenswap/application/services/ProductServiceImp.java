@@ -1,14 +1,18 @@
 package cue.edu.co.greenswap.application.services;
 
 import cue.edu.co.greenswap.application.mappers.ProductMapperDTO;
+import cue.edu.co.greenswap.application.ports.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
+import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
+import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.product.CreateProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
 import cue.edu.co.greenswap.domain.models.Product;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.searchcriteria.SearchCriteriaProduct;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +24,11 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class  ProductServiceImp implements ProductService {
-  private ProductRepository repository;
-  private ProductMapperDTO mapper;
+  private final ProductRepository repository;
+  private final ProductMapperDTO mapper;
+  private final SecurityContextService securityContextService;
+  private final ApplicationEventPublisher eventPublisher;
+
 
   /**
    * Creates a new product based on the provided data.
@@ -32,6 +39,9 @@ public class  ProductServiceImp implements ProductService {
   @Override
   public ProductDTO create(CreateProductDTO product) {
     Product productSaved =  repository.save(mapper.toDomain(product));
+
+    eventPublisher.publishEvent(new ProductCreatedEvent(securityContextService.getCurrentUser()));
+
     return mapper.toDTO(productSaved);
   }
 

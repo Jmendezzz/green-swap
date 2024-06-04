@@ -17,7 +17,7 @@ interface Props {
 }
 
 function ProductDetailCard({ product }: Props) {
-  const {user} = useUserContext();
+  const { user } = useUserContext();
   return (
     <StyledProductDetail>
       <StyledImageContainer>
@@ -57,9 +57,13 @@ function ProductDetailCard({ product }: Props) {
         </div>
 
         <footer className="flex justify-end gap-10">
-          <Button variant="secondary" disabled={product.owner.id === user?.id}>Comprar</Button>
+          <Button variant="secondary" disabled={product.owner.id === user?.id}>
+            Comprar
+          </Button>
           <Link to={`${ROUTES.createExchange}/${product.id}`}>
-            <Button variant="primary" disabled={product.owner.id === user?.id}>Intercambiar</Button>
+            <Button variant="primary" disabled={product.owner.id === user?.id}>
+              Intercambiar
+            </Button>
           </Link>
         </footer>
       </StyledProductDetailContent>
@@ -67,24 +71,27 @@ function ProductDetailCard({ product }: Props) {
   );
 }
 const StyledImageContainer = styled.div`
-  width: 300px;
+  display: flex;
+  align-items: flex-start; // Add this line
+
+  width: 100%;
   height: 100%;
   @media (min-width: ${Devices.laptop}) {
     width: 50%;
   }
   img {
-    width: 100%;
-    height: 100%;
+    min-width: 300px;
+    height: 400px; // Change this line
     object-fit: cover;
     border-radius: 3rem;
   }
 `;
-
 const StyledProductDetail = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
   max-height: 800px;
   padding: 2rem;
   width: 100%;

@@ -124,21 +124,16 @@ const StyledNotificationsContainer = styled.div`
   flex-direction: column;
   gap: 3rem;
   border-radius: 0.5rem;
-  & > div {
-    &:hover {
-      background-color: var(--primary-color-light);
-    }
-  }
 `;
 
 const StyledNotification = styled.div<{ isRead: boolean }>`
   background-color: ${({ isRead }) =>
-    isRead ? 'transparent' : 'var(--primary-color-light)'};
+    isRead ? 'transparent' : 'var(--contrast-color-dark)'};
   padding: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
   &:hover {
-    background-color: var(--primary-color-light);
+    background-color:var(--contrast-color-dark);
   }
 `;
 export default Notification;

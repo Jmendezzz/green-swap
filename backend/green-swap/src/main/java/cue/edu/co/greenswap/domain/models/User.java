@@ -18,6 +18,7 @@ public class User {
   private String phoneNumber;
   private String urlProfilePicture;
   private String password;
+  private Integer coins;
   private LocalDateTime createdAt;
   private boolean isVerified;
 }

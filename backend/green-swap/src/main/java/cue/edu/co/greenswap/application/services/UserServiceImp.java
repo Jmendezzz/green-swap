@@ -1,9 +1,8 @@
 package cue.edu.co.greenswap.application.services;
 
-import cue.edu.co.greenswap.application.constants.UserConstantMessage;
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
-import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
+import cue.edu.co.greenswap.application.ports.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
 import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
@@ -13,22 +12,18 @@ import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.exchange.ExchangeDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
-import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
 import cue.edu.co.greenswap.domain.dtos.user.*;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -201,5 +196,19 @@ public class UserServiceImp implements UserService {
   public List<NotificationDTO> getUserNotifications() {
     User currentUser = securityContextService.getCurrentUser();
     return notificationService.findByUser(mapper.toDTO(currentUser));
+  }
+
+
+  private final Integer COINS_GIVEN_FOR_CREATING_PRODUCT = 1;
+  @Override
+  public void addCoins(User user,  Integer coins) {
+    User currentUser = securityContextService.getCurrentUser();
+    currentUser.setCoins(currentUser.getCoins() + coins);
+    repository.save(currentUser);
+  }
+
+  @EventListener
+  public void onProductCreated(ProductCreatedEvent event) {
+    addCoins(event.getUser(), COINS_GIVEN_FOR_CREATING_PRODUCT);
   }
 }

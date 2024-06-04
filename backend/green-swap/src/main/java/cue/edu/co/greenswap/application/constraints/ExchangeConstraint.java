@@ -46,6 +46,7 @@ public class ExchangeConstraint {
   }
 
   public void validateProductsAvailability(CreateExchangeDTO createExchangeDTO) {
+
     if(createExchangeDTO.productOffered().status().equals(ProductStatus.EXCHANGED) || createExchangeDTO.productOffered().status().equals(ProductStatus.SOLD)){
       throw new ExchangeException(ExchangeConstantMessage.PRODUCT_OFFERED_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
     }
