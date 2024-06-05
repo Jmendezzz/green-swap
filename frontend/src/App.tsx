@@ -23,6 +23,7 @@ import MyExchanges from './pages/MyExchanges';
 import ResetPassword from './pages/ResetPassword';
 import ResetPasswordRequest from './pages/ResetPasswordRequest';
 import ExchangeDetail from './pages/ExchangeDetail';
+import Contact from './pages/Contact';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ function App() {
                 element={<ProductDetail />}
               />
               <Route path={`${ROUTES.userProfile}/:userId`} element={<Profile />} />
+              <Route path={ROUTES.contact} element={<Contact />} />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>

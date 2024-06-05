@@ -62,3 +62,8 @@ export function createProductService(
     },
   });
 }
+
+
+export function getUserProductsByIdService(userId: string, pageable: Pageable): Promise<AxiosResponse<PageableResult<ListProductDTO>>>  {
+  return axiosInstace.get(`${REQUEST_MAPPING}/user/${userId}?page=${pageable.page}&size=${pageable.size}`);
+}
