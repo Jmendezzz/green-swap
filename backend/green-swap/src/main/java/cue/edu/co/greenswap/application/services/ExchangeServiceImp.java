@@ -133,6 +133,14 @@ public class ExchangeServiceImp implements ExchangeService {
     return mapper.toDTO(exchange);
   }
 
+  @Override
+  public ExchangeDTO rejectExchange(Long id) {
+    Exchange exchange = constraint.validateExchangeExists(id);
+    exchange.setStatus(ExchangeStatus.DECLINED);
+    repository.save(exchange);
+    return mapper.toDTO(exchange);
+  }
+
 
   /**
    * Method to get all the exchanges offers that have been made to an user
