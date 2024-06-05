@@ -7,6 +7,7 @@ import cue.edu.co.greenswap.application.constraints.ExchangeConstraint;
 import cue.edu.co.greenswap.application.factories.mail.ExchangeAcceptedMail;
 import cue.edu.co.greenswap.application.mappers.ExchangeMapperDTO;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
+import cue.edu.co.greenswap.application.ports.events.ExchangeAcceptedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.ExchangeRepository;
 import cue.edu.co.greenswap.application.ports.usecases.EmailService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
@@ -21,6 +22,7 @@ import cue.edu.co.greenswap.domain.models.Chat;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import cue.edu.co.greenswap.infrastructure.websocket.controllers.NotificationController;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,7 @@ public class ExchangeServiceImp implements ExchangeService {
   private final EmailService emailService;
   private final NotificationController notificationController;
   private final NotificationService notificationService;
+  private final ApplicationEventPublisher eventPublisher;
 
   /**
    * Method to create an exchange, and send the notification to the user that has the product requested
@@ -103,8 +106,9 @@ public class ExchangeServiceImp implements ExchangeService {
     constraint.validateProductRequestedOwner(exchange);
 
     exchange.setStatus(ExchangeStatus.ACCEPTED);
-    exchange.getProductRequested().setStatus(ProductStatus.EXCHANGED);
-    exchange.getProductOffered().setStatus(ProductStatus.EXCHANGED);
+
+    eventPublisher.publishEvent(new ExchangeAcceptedEvent(exchange.getProductOffered(), exchange.getProductRequested()));
+
     declineAfterAccept(exchange);
 
     repository.save(exchange);

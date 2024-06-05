@@ -1,6 +1,7 @@
 package cue.edu.co.greenswap.application.services;
 
 import cue.edu.co.greenswap.application.mappers.ProductMapperDTO;
+import cue.edu.co.greenswap.application.ports.events.ExchangeAcceptedEvent;
 import cue.edu.co.greenswap.application.ports.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
@@ -9,10 +10,12 @@ import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.product.CreateProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;
+import cue.edu.co.greenswap.domain.enums.ProductStatus;
 import cue.edu.co.greenswap.domain.models.Product;
 import cue.edu.co.greenswap.infrastructure.adapters.persistence.searchcriteria.SearchCriteriaProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -78,5 +81,17 @@ public class  ProductServiceImp implements ProductService {
   @Override
   public List<String> getSearchSuggestions(String query) {
     return repository.findSearchSuggestions(query);
+  }
+
+  @EventListener
+  public void onExchangeAccepted(ExchangeAcceptedEvent exchangeAcceptedEvent){
+    Product productOffered = exchangeAcceptedEvent.getProductOffered();
+    Product productRequested = exchangeAcceptedEvent.getProductRequested();
+
+    productOffered.setStatus(ProductStatus.EXCHANGED);
+    productRequested.setStatus(ProductStatus.EXCHANGED);
+
+    repository.save(productOffered);
+    repository.save(productRequested);
   }
 }
