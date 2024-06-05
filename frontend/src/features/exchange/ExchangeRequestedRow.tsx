@@ -2,6 +2,8 @@ import { ExchangeDTO } from '@/domain/exchange/ExchangeDTO';
 import Table from '../ui/Table';
 import styled from 'styled-components';
 import { Status } from '@/domain/exchange/Status';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 interface Props {
   exchange: ExchangeDTO;
@@ -23,7 +25,10 @@ function ExchangeRequestedRow({ exchange }: Props) {
         />
         <p>{exchange.productRequested.name}</p>
       </StyledExchangeRequestedRowImage>
-      <div className='text-center'>{Status[exchange.status]}</div>
+      <div className='text-center flex flex-col'>
+        {Status[exchange.status]}
+        {exchange.status === 'ACCEPTED' && <Link to={`${ROUTES.exchanges}/${exchange.id}`} className='text-contrast'>Ver detalles</Link>}
+        </div>
     </Table.Row>
   );
 }

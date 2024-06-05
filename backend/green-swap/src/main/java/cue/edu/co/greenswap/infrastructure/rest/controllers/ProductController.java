@@ -53,6 +53,13 @@ public class ProductController {
             );
   }
 
+  @GetMapping("/user/{id}")
+  public ResponseEntity<Page<ListProductDTO>> getProductsByUser(@PathVariable Long id, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+    return ResponseEntity.ok(
+            service.getByUser(id, pageable)
+    );
+  }
+
   @PostMapping("/search")
   public ResponseEntity<Page<ListProductDTO>> getProducts(@PageableDefault(page = 0, size = 20) Pageable pageable,
                                                           @RequestBody SearchCriteriaProduct searchCriteriaProduct) {

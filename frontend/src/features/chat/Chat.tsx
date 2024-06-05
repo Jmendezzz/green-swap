@@ -96,7 +96,7 @@ const Message = ({
   const isCurrentUser = currentUser.id === message.sender.id;
   return (
     <StyledMessage isCurrentUser={isCurrentUser}>
-      {!isCurrentUser && <Sender>{message.sender.lastName}</Sender>}
+      {!isCurrentUser && <Sender>{message.sender.firstName}</Sender>}
       <Content>{message.content}</Content>
     </StyledMessage>
   );

@@ -11,20 +11,21 @@ import { format } from 'date-fns';
 import styled from 'styled-components';
 import Modal from '@/features/ui/Modal';
 import ReportUserForm from '@/features/report/ReportUserForm';
+import useUserProductsById from '@/features/product/useUserProductsById';
+import List from '@/features/ui/List';
+import ProductItemCard from '@/features/product/ProductItemCard';
 
-const tabs = [
-  {
-    id: 'products',
-    name: 'Productos',
-    content: <p>Productos publicados</p>,
-  },
-];
 function Profile() {
   const { user, isLoading } = useUserById();
 
-  if (isLoading) {
+  const { data, isLoading: isLoadingUserProducts, pageable, setPageable } = useUserProductsById();
+  const setPage = (page: number) => {
+    setPageable({ ...pageable, page });
+  };
+
+  if (isLoading && isLoadingUserProducts) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex items-center justify-center w-full h-full  bg-primary">
         <Spinner />
       </div>
     );
@@ -48,15 +49,39 @@ function Profile() {
         </SidebarMenu>
 
         <StyledLightContainer className="flex flex-col items-center  w-full">
-          <Tabs tabs={tabs} />
+          <Tabs
+            tabs={[
+              {
+                id: 'products',
+                name: 'Productos',
+                content: (
+                  <>
+                    <List>
+                      <List.Items
+                        isLoading={isLoading}
+                        data={data?.content}
+                        render={(product) => (
+                          <ProductItemCard size='sm' key={product.id} product={product} />
+                        )}
+                      />
+                      <List.Pagination
+                        pageable={pageable}
+                        totalPages={data?.totalPages}
+                        setPage={setPage}
+                      />
+                    </List>
+                  </>
+                ),
+              },
+            ]}
+          />
         </StyledLightContainer>
-
       </div>
       <Modal>
-        <Modal.Open opens='report-user' >
-          <Report/>
+        <Modal.Open opens="report-user">
+          <Report />
         </Modal.Open>
-        <Modal.Window name='report-user'>
+        <Modal.Window name="report-user">
           <ReportUserForm user={user} />
         </Modal.Window>
       </Modal>

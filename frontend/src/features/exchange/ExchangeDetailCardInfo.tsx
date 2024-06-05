@@ -1,13 +1,16 @@
 import { ExchangeDTO } from '@/domain/exchange/ExchangeDTO';
-import { MdSwapVert } from 'react-icons/md';
+import { MdSwapHoriz} from 'react-icons/md';
 import styled from 'styled-components';
 import UserProfilePicture from '../ui/UserProfilePicture';
+import Row from '../ui/Row';
+import { formatDate } from 'date-fns';
 
 interface Props {
   exchange: ExchangeDTO;
 }
 function ExchangeDetailCardInfo({ exchange }: Props) {
   return (
+    <Row type='vertical'>
     <ExchangeContainer>
       <ProductCard>
         <div className='flex items-center gap-10'>
@@ -22,7 +25,7 @@ function ExchangeDetailCardInfo({ exchange }: Props) {
         />
         <ProductName>{exchange.productRequested.name}</ProductName>
       </ProductCard>
-      <MdSwapVert size={80} className="text-contrast" />
+      <MdSwapHoriz className="text-contrast text-[200px]" />
       <ProductCard>
         <div className='flex items-center gap-10'>
             <UserProfilePicture
@@ -36,23 +39,33 @@ function ExchangeDetailCardInfo({ exchange }: Props) {
         />
         <ProductName>{exchange.productOffered.name}</ProductName>
       </ProductCard>
+
     </ExchangeContainer>
+    <StyledAditionalInfo>
+      <p>Fecha de creación: {formatDate(exchange.createdAt,'MM/dd/yyyy')}</p>
+    </StyledAditionalInfo>
+    </Row>
+
   );
 }
 
 const ExchangeContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   gap: 2rem;
 `;
 
 const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: var(--primary-color-light);
+  align-items: center;
   border-radius: 10px;
   width:100%;
-  padding: 1rem;
+  padding: 2rem;
 `;
 
 const ProductImage = styled.img`
@@ -66,4 +79,14 @@ const ProductName = styled.p`
   font-weight: 800;
   font-size: 2rem;
 `;
+
+const StyledAditionalInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1.4rem;
+  gap: 1rem;
+  background-color: var(--primary-color-light);
+`
 export default ExchangeDetailCardInfo;
