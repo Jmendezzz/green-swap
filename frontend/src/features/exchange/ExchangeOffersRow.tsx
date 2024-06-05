@@ -5,6 +5,7 @@ import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import useAcceptExchange from './useAcceptExchange';
 import Spinner from '../ui/Spinner';
+import { ROUTES } from '@/constants/routes';
 
 interface Props {
   exchange: ExchangeDTO;
@@ -44,7 +45,14 @@ function ExchangeOffersRow({ exchange }: Props) {
         ) : (
             <>
                 {
-                        exchange.status === 'ACCEPTED' ? <p className='text-contrast'>Intercambio aceptado</p> :
+                        exchange.status === 'ACCEPTED' ? (
+                          <div className='flex flex-col'>
+                            <p className='text-contrast'>Intercambio aceptado</p>
+                            <Link to={`${ROUTES.exchanges}/${exchange.id}`}>
+                              Ver detalles
+                            </Link>
+                          </div>
+                        ) :
                         (
                             <>
                                 <HiCheckCircle

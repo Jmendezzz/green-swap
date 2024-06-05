@@ -1,6 +1,8 @@
 package cue.edu.co.greenswap.domain.dtos.message;
 
+
 public record SendMessageDTO(
-        String content
+        String content,
+        Long senderId
 ) {
 }

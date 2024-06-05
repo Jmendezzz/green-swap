@@ -9,27 +9,23 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Entity(name = "chats")
+@Entity
+@Table(name = "feedbacks")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class ChatEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  @ManyToOne
-  private UserEntity user1;
-  @ManyToOne
-  private UserEntity user2;
-
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JoinColumn(name = "chat_id")
-  private List<MessageEntity> messages;
-  @CreatedDate
-  private LocalDateTime createdAt;
-
+public class FeedbackEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private int rating;
+    private String comment;
+    @OneToOne
+    private TransactionEntity transaction;
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 }

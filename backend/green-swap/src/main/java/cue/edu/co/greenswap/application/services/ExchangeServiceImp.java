@@ -17,6 +17,7 @@ import cue.edu.co.greenswap.domain.dtos.notification.CreateNotificationDTO;
 import cue.edu.co.greenswap.domain.dtos.notification.NotificationDTO;
 import cue.edu.co.greenswap.domain.enums.ExchangeStatus;
 import cue.edu.co.greenswap.domain.enums.ProductStatus;
+import cue.edu.co.greenswap.domain.models.Chat;
 import cue.edu.co.greenswap.domain.models.Exchange;
 import cue.edu.co.greenswap.infrastructure.websocket.controllers.NotificationController;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,7 @@ public class ExchangeServiceImp implements ExchangeService {
 
     Exchange exchangeToSave = mapper.toDomain(createExchangeDTO);
     exchangeToSave.setStatus(ExchangeStatus.AWAITING_RESPONSE);
+    exchangeToSave.setChat(createChat(exchangeToSave));
 
     Exchange exchangeSaved = repository.save(exchangeToSave);
 
@@ -64,6 +66,13 @@ public class ExchangeServiceImp implements ExchangeService {
     ));
     notificationController.sendNotification(notification);
     return mapper.toDTO(exchangeSaved);
+  }
+
+  private Chat createChat(Exchange exchange) {
+    Chat chat = new Chat();
+    chat.setUser1(exchange.getProductOffered().getOwner());
+    chat.setUser2(exchange.getProductRequested().getOwner());
+    return chat;
   }
 
   /**

@@ -15,10 +15,9 @@ import java.time.LocalDateTime;
 @Setter
 public class Transaction {
     private Long id;
-    private ExchangeEntity exchange;
+    private Exchange exchange;
     private SaleEntity sale;
     private TransactionStatus status;
-    private LocationEntity shippingLocation;
-    private LocationEntity returnLocation;
+    private Chat chat;
     private LocalDateTime createdAt;
 }
