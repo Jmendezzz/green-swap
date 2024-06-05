@@ -36,4 +36,8 @@ public class ExchangeController {
   public ResponseEntity<ExchangeDTO> accept(@PathVariable Long id) {
     return ResponseEntity.ok(service.acceptExchange(id));
   }
+  @PutMapping("/{id}/reject")
+  public ResponseEntity<ExchangeDTO> reject(@PathVariable Long id) {
+    return ResponseEntity.ok(service.rejectExchange(id));
+  }
 }

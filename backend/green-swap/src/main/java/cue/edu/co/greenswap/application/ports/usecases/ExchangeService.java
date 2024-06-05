@@ -15,6 +15,7 @@ public interface ExchangeService {
   Optional<ExchangeDTO> getExchangeById(Long id);
   void deleteExchange(Long id);
   ExchangeDTO acceptExchange(Long id);
+  ExchangeDTO rejectExchange(Long id);
   Page<ExchangeDTO> getExchangesOffersByUser(Long userId, Pageable pageable);
   Page<ExchangeDTO> getExchangesRequestedByUser(Long userId, Pageable pageable);
 }
