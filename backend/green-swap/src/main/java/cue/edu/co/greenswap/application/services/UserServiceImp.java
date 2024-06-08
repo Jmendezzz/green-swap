@@ -2,7 +2,7 @@ package cue.edu.co.greenswap.application.services;
 
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
-import cue.edu.co.greenswap.application.ports.events.ProductCreatedEvent;
+import cue.edu.co.greenswap.domain.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
 import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;

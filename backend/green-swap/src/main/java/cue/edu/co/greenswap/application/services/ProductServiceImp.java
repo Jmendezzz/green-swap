@@ -1,12 +1,11 @@
 package cue.edu.co.greenswap.application.services;
 
 import cue.edu.co.greenswap.application.mappers.ProductMapperDTO;
-import cue.edu.co.greenswap.application.ports.events.ExchangeAcceptedEvent;
-import cue.edu.co.greenswap.application.ports.events.ProductCreatedEvent;
+import cue.edu.co.greenswap.domain.events.ExchangeAcceptedEvent;
+import cue.edu.co.greenswap.domain.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.ProductRepository;
 import cue.edu.co.greenswap.application.ports.usecases.ProductService;
 import cue.edu.co.greenswap.application.ports.usecases.SecurityContextService;
-import cue.edu.co.greenswap.application.ports.usecases.UserService;
 import cue.edu.co.greenswap.domain.dtos.product.CreateProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ListProductDTO;
 import cue.edu.co.greenswap.domain.dtos.product.ProductDTO;

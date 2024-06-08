@@ -1,4 +1,4 @@
-package cue.edu.co.greenswap.application.ports.events;
+package cue.edu.co.greenswap.domain.events;
 
 import cue.edu.co.greenswap.domain.models.User;
 import lombok.Getter;
