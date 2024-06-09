@@ -1,14 +1,12 @@
 package cue.edu.co.greenswap.domain.events;
 
+import cue.edu.co.greenswap.domain.dtos.user.UserDTO;
 import cue.edu.co.greenswap.domain.models.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class ProductCreatedEvent {
-  private final User user;
-
-  public ProductCreatedEvent(User user) {
-    this.user = user;
-  }
-
+  private final UserDTO user;
 }

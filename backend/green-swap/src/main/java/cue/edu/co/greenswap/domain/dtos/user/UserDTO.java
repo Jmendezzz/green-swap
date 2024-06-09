@@ -13,4 +13,7 @@ public record UserDTO(
         Integer coins,
         boolean isVerified
 ) {
+  public UserDTO addCoins(Integer coins) {
+    return new UserDTO(id, firstName, lastName, email, urlProfilePicture, phoneNumber, createdAt, this.coins + coins, isVerified);
+  }
 }

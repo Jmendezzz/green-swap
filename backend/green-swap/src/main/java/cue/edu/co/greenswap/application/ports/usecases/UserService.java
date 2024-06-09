@@ -29,5 +29,4 @@ public interface UserService {
   Page<ExchangeDTO> getUserExchangesOffers(Pageable pageable);
   Page<ExchangeDTO> getUserExchangesRequested(Pageable pageable);
   List<NotificationDTO> getUserNotifications();
-  void addCoins(User user, Integer coins);
 }
