@@ -2,7 +2,6 @@ package cue.edu.co.greenswap.application.services;
 
 import cue.edu.co.greenswap.application.constraints.UserConstraint;
 import cue.edu.co.greenswap.application.mappers.UserMapperDTO;
-import cue.edu.co.greenswap.domain.events.ProductCreatedEvent;
 import cue.edu.co.greenswap.application.ports.persistence.UserRepository;
 import cue.edu.co.greenswap.application.ports.usecases.NotificationService;
 import cue.edu.co.greenswap.application.ports.usecases.ExchangeService;
@@ -16,7 +15,6 @@ import cue.edu.co.greenswap.domain.dtos.user.*;
 import cue.edu.co.greenswap.domain.models.User;
 import cue.edu.co.greenswap.infrastructure.exceptions.UserException;
 import lombok.AllArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -100,7 +98,7 @@ public class UserServiceImp implements UserService {
 
   @Override
   public UserDTO updateProfile(UpdateUserProfileDTO user) {
-    User currentUser = securityContextService.getCurrentUser();
+    User currentUser =  mapper.toDomain(securityContextService.getCurrentUser());
 
     if(!user.firstName().isEmpty()){
       currentUser.setFirstName(user.firstName());
@@ -127,7 +125,7 @@ public class UserServiceImp implements UserService {
 
   @Override
   public Boolean updatePassword(UpdateUserPasswordDTO updatePasswordDTO) {
-    User currentUser = securityContextService.getCurrentUser();
+    User currentUser =  mapper.toDomain(securityContextService.getCurrentUser());
 
     constraint.validateNewPassword(currentUser.getEmail(), updatePasswordDTO.newPassword());
     constraint.validateCurrentPassword(currentUser.getEmail(), updatePasswordDTO.currentPassword());
@@ -162,8 +160,8 @@ public class UserServiceImp implements UserService {
 
   @Override
   public Page<ListProductDTO> getUserProducts(Pageable pageable) {
-    User currentUser = securityContextService.getCurrentUser();
-    return productService.getByUser(currentUser.getId(), pageable);
+    UserDTO currentUser = securityContextService.getCurrentUser();
+    return productService.getByUser(currentUser.id(), pageable);
   }
 
   /**
@@ -175,8 +173,8 @@ public class UserServiceImp implements UserService {
 
   @Override
   public Page<ExchangeDTO> getUserExchangesOffers(Pageable pageable) {
-    User currentUser = securityContextService.getCurrentUser();
-    return exchangeService.getExchangesOffersByUser(currentUser.getId(), pageable);
+    UserDTO currentUser = securityContextService.getCurrentUser();
+    return exchangeService.getExchangesOffersByUser(currentUser.id(), pageable);
   }
 
   /**
@@ -188,27 +186,13 @@ public class UserServiceImp implements UserService {
 
   @Override
   public Page<ExchangeDTO> getUserExchangesRequested(Pageable pageable) {
-    User currentUser = securityContextService.getCurrentUser();
-    return exchangeService.getExchangesRequestedByUser(currentUser.getId(), pageable);
+    UserDTO currentUser = securityContextService.getCurrentUser();
+    return exchangeService.getExchangesRequestedByUser(currentUser.id(), pageable);
   }
 
   @Override
   public List<NotificationDTO> getUserNotifications() {
-    User currentUser = securityContextService.getCurrentUser();
-    return notificationService.findByUser(mapper.toDTO(currentUser));
-  }
-
-
-  private final Integer COINS_GIVEN_FOR_CREATING_PRODUCT = 1;
-  @Override
-  public void addCoins(User user,  Integer coins) {
-    User currentUser = securityContextService.getCurrentUser();
-    currentUser.setCoins(currentUser.getCoins() + coins);
-    repository.save(currentUser);
-  }
-
-  @EventListener
-  public void onProductCreated(ProductCreatedEvent event) {
-    addCoins(event.getUser(), COINS_GIVEN_FOR_CREATING_PRODUCT);
+    UserDTO currentUser = securityContextService.getCurrentUser();
+    return notificationService.findByUser(currentUser);
   }
 }
