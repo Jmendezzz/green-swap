@@ -1,27 +1,16 @@
 import { BasicInfoUserDTO } from '@/domain/user/BasicInfoUserDTO';
-import useClickOutside from '@/hooks/useClickOutside';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { useLogout } from '../auth/logout/useLogout';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
 
+interface Props{
+  user: BasicInfoUserDTO;
+  size?: 'xsm' | 'sm' | 'lg' | 'xl';
 
-function UserProfilePicture({ user, size = 'sm' }: { user: BasicInfoUserDTO, size?: 'xsm' | 'sm' | 'lg' | 'xl'}) {
+}
+
+function UserProfilePicture({ user, size = 'sm' }: Props) {
   const { urlProfilePicture } = user;
-  const [showDropdown, setShowDropDown] = useState(false);
-
-  const { logout } = useLogout();
-
-  const ref = useClickOutside(() => setShowDropDown(false));
-
-  const onClickHandler = () => {
-    setShowDropDown((prev) => !prev);
-  };
-
   return (
-    <StyledUserProfilePicture onClick={onClickHandler} ref={ref} size={size}>
+    <StyledUserProfilePicture size={size}>
       {user.urlProfilePicture ? (
         <StyledImageContainer>
           <img src={urlProfilePicture} alt="Foto de perfil" />
@@ -33,22 +22,6 @@ function UserProfilePicture({ user, size = 'sm' }: { user: BasicInfoUserDTO, siz
             {user.lastName.charAt(0)}
           </h1>
         </div>
-      )}
-      {showDropdown && (
-        <DropdownMenu
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-        >
-          <li>
-            <Link to={ROUTES.updateProfile} className='w-full'>Editar perfil</Link>
-          </li>
-          <li>
-            <Link to={ROUTES.myExchanges} className='w-full'>Mis intercambios</Link>
-          </li>
-
-          <li onClick={() => logout()}>Cerrar sesión</li>
-        </DropdownMenu>
       )}
     </StyledUserProfilePicture>
   );
@@ -127,38 +100,4 @@ const StyledImageContainer = styled.div`
     object-position: center;
   }
 `;
-const DropdownMenu = styled(motion.ul)`
-  position: absolute;
-  top: calc(100% + 9.1px);
-  right: calc(15%);
-  background-color: var(--primary-color-light);
-  border-radius: 4px;
-  padding: 1rem;
-  list-style: none;
-  z-index: 1000;
-  width: 200px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid var(--primary-color-light);
-  }
-
-  & > li {
-    padding: 0.5rem 1rem;
-    font-size: 1.6rem;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-      background-color: var(--primary-color);
-    }
-  }
-`;
-
 export default UserProfilePicture;

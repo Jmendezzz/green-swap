@@ -27,6 +27,7 @@ const StyledSection = styled.section`
 const StyledSecytionContent = styled.div`
   width: 100%;
   max-width: ${Devices.desktop};
+  min-height: 100%;
   position:relative;
   `
 

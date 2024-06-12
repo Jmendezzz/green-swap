@@ -22,7 +22,7 @@ function Contact() {
   });
   return (
     <StyledContact>
-      <div className="flex flex-col w-full gap-28">
+      <div className="flex flex-col w-full h-screen gap-28">
         <header className='text-center'>
           <Heading>Contactanos</Heading>
           <p>

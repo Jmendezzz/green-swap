@@ -13,5 +13,6 @@ public class CreateExchangeFactory implements  ExchangeFactory<Exchange, CreateE
   @Override
   public Exchange createExchange(CreateExchangeDTO input) {
     Exchange exchangeToSave = mapper.toDomain(input);
+    return null;
   }
 }

@@ -5,17 +5,21 @@ import { Link, NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import Button from './Button';
 import { useUserContext } from '@/context/UserContext';
-import UserProfilePicture from './UserProfilePicture';
 import { useState, useEffect } from 'react';
 import Hamburger from 'hamburger-react';
 import NavMobileMenu from './NavMobileMenu';
 import { AnimatePresence } from 'framer-motion';
 import Notification from '../notification/Notification';
 import Coins from './Coins';
+import UserProfilePictureNavBar from './UserProfilePictureNavBar';
+import useInScrollDown from '@/hooks/useInScrollDown';
 
 function Nav() {
   const { user } = useUserContext();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const isInScrollDown = useInScrollDown();
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -30,7 +34,7 @@ function Nav() {
   }, [isMenuOpen]);
 
   return (
-    <StyledNav className={isMenuOpen ? 'fixed' : 'relative'}>
+    <StyledNav className={`${isMenuOpen ? 'fixed' : 'relative'} ${isInScrollDown && 'scrolled'}`}>
       <StyledUl>
         <NavLink to={ROUTES.home}>
           <Logo />
@@ -41,7 +45,7 @@ function Nav() {
           <li className='flex items-center gap-10'>
             {user && <>
               <Notification />
-              <UserProfilePicture user={user} />
+              <UserProfilePictureNavBar user={user} />
               <Coins coins={user.coins} />
             </>}
             {!user && (
@@ -77,6 +81,9 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 1.4rem 2rem;
   width: 100%;
+  transition: all 0.3s ease-in-out; /* Apply transition to all properties */
+  position: fixed;
+
   &.fixed {
     position: fixed;
     top: 0;
@@ -90,6 +97,8 @@ const StyledNav = styled.nav`
   @media (max-width: ${Devices.laptop}) {
     padding: 2rem 1rem;
   }
+
+
 `;
 
 const StyledUl = styled.ul`
