@@ -1,7 +1,8 @@
+import useClickOutside from '@/hooks/useClickOutside';
 import { createContext, useContext, useState } from 'react';
 import styled from 'styled-components';
 
-const DropdownContext = createContext({ toggle: () => {}, isOpen: false });
+const DropdownContext = createContext({ toggle: () => {}, isOpen: false, closeDropdown: () => {}});
 
 interface Props {
   children: React.ReactNode;
@@ -9,9 +10,10 @@ interface Props {
 const Dropdown = ({ children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((prev) => !prev);
+  const closeDropdown = () => setIsOpen(false);
 
   return (
-    <DropdownContext.Provider value={{ toggle, isOpen }}>
+    <DropdownContext.Provider value={{ toggle, isOpen, closeDropdown }}>
       <DropdownWrapper>{children}</DropdownWrapper>
     </DropdownContext.Provider>
   );
@@ -26,8 +28,13 @@ const DropdownWrapper = styled.div`
 `;
 
 function DropdownMenu({ children }: Props) {
-  const { isOpen } = useContext(DropdownContext);
-  return <StyledDropdownMenu isOpen={isOpen}>{children}</StyledDropdownMenu>;
+  const { isOpen, closeDropdown } = useContext(DropdownContext);
+  const ref = useClickOutside(closeDropdown);
+  return (
+    <StyledDropdownMenu isOpen={isOpen} ref={ref}>
+      {children}
+    </StyledDropdownMenu>
+  );
 }
 const StyledDropdownMenu = styled.div<{ isOpen: boolean }>`
   position: absolute;

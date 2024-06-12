@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 function Notification() {
   const { notifications: userNotifications } = useUserNotifications();
 
+
   const { isLoading, markAsReadNotifications } = useMarkAsReadNotifications();
 
   const [notifications, setNotifications] = useState<NotificationDTO[]>([]);

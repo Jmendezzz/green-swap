@@ -13,7 +13,7 @@ function ProductFilter() {
 
   return (
     <SidebarMenu>
-      <Heading type="h2">Filtros de busqueda</Heading>
+      <Heading type="h3">Filtros de busqueda</Heading>
       <ProductNameFilter />
       <ProductCategoryFilter/>
       <ProductPriceFilter/>

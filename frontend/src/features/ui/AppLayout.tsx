@@ -21,14 +21,15 @@ function AppLayout() {
   );
 }
 const StyledAppLayout = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const Main = styled.main`
   flex: 1;
+  overflow-y: auto;
 `;
 
 export default AppLayout;
