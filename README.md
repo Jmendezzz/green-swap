@@ -1,0 +1,1 @@
+GreenSwap is an application that allows users to publish used products to exchange them with other users. The main purpose of the platform is to contribute to sustainability by promoting the reuse and recycling of items, reducing waste, and fostering a community-driven approach to consumption.
